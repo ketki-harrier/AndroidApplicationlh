@@ -1,0 +1,1 @@
+include ':app', ':effectivenavigation', ':fingerprintauth', ':expandablelistview', ':bottomnavigation', ':moxtra', ':horizontalcalendar'

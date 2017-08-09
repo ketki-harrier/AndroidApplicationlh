@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:gravity="center"
+                android:text="@string/verify_screen_title"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult.Title"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:text="@string/verify_screen_description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextCountryCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/bg_edittexbottom_line_black"
+                    android:gravity="center"
+                    android:hint="@string/hint_country_code"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:minHeight="@dimen/edittext_min_height"/>
+
+                <EditText
+                    android:id="@+id/editTextMobileNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra__extra_large"
+                    android:layout_marginStart="@dimen/margin_extra__extra_large"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/bg_edittexbottom_line_black"
+                    android:gravity="center"
+                    android:hint="@string/hint_mobile_number"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:minHeight="@dimen/edittext_min_height"/>
+
+                <ImageView
+                    android:id="@+id/editMobileNumberBTN"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:clickable="true"
+                    android:src="@drawable/ic_pencil"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_extra__extra_large"
+                android:text="@string/verify_screen_instruction"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <Button
+                android:id="@+id/btnSendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra__extra_large"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/btn_send_code"
+                android:textColor="@drawable/selector_text_login_btn"/>
+
+            <Button
+                android:id="@+id/btnUpdateNSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra__extra_large"
+                android:background="@drawable/selector_login_btn"
+                android:padding="@dimen/margin"
+                android:text="@string/btn_update_and_send"
+                android:textColor="@drawable/selector_text_login_btn"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra__extra_large">
+
+                <EditText
+                    android:id="@+id/editTextFirstNumber"
+                    style="@style/VerifyMobileEditText_square_BLACk"/>
+
+                <EditText
+                    android:id="@+id/editTextSecondNumber"
+                    style="@style/VerifyMobileEditText_square_BLACk"/>
+
+                <EditText
+                    android:id="@+id/editTextThirdNumber"
+                    style="@style/VerifyMobileEditText_square_BLACk"/>
+
+                <EditText
+                    android:id="@+id/editTextFourthNumber"
+                    style="@style/VerifyMobileEditText_square_BLACk"
+                    android:imeOptions="actionDone"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_extra__extra_large"
+                android:text="@string/verify_screen_instruction_exp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra__extra_large">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/WhiteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel"/>
+
+                <Button
+                    android:id="@+id/btnVerify"
+                    style="@style/GreenButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_verify_code"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

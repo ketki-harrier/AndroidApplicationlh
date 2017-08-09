@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_extra__extra_large">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/instructionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra__extra_large"
+                android:text="@string/step_two_instruction_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/userNameTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/instructionCheckEmailTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/step_two_instruction_email"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra__extra_large">
+
+                <EditText
+                    android:id="@+id/editTextFirstNumber"
+                    style="@style/VerifyMobileEditText_square_WHITE"/>
+
+                <EditText
+                    android:id="@+id/editTextSecondNumber"
+                    style="@style/VerifyMobileEditText_square_WHITE"/>
+
+                <EditText
+                    android:id="@+id/editTextThirdNumber"
+                    style="@style/VerifyMobileEditText_square_WHITE"/>
+
+                <EditText
+                    android:id="@+id/editTextFourthNumber"
+                    style="@style/VerifyMobileEditText_square_WHITE"
+                    android:imeOptions="actionDone"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/instructionExpiryTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/step_two_instruction_expiry"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/resendCodeTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/step_two_request_authorization_code"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorPrimary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra__extra_large"
+                >
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/WhiteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel"/>
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    style="@style/GreenButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_verify_code"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

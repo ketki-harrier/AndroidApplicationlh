@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_extra__extra_large">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--INSTRUCTION-->
+            <TextView
+                android:id="@+id/instructionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:text="@string/step_one_instruction"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+            <!--USER NAME-->
+            <EditText
+                android:id="@+id/userNameEditText"
+                android:focusableInTouchMode="true"
+                style="@style/LoginScreen_EditText"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:hint="@string/hint_username"
+                android:imeOptions="actionDone"/>
+             <!--ERROR VIEW-->
+            <TextView
+                android:id="@+id/errorViewUserNameTv"
+                style="@style/LoginScreen_Error_Text"
+                android:text="@string/error_username"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                >
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/WhiteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel"/>
+
+                <Button
+                    android:id="@+id/btnSendCode"
+                    style="@style/GreenButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_send_code"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

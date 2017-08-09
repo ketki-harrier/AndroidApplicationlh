@@ -1,0 +1,158 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
+        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+        <!-- actionMenuTextColor is the color of the text of action (menu) items  -->
+        <item name="actionMenuTextColor">@android:color/holo_green_light</item>
+        <!-- Tints the input fields like checkboxes and text fields -->
+        <item name="colorAccent">@color/cursorAccent</item>
+        <!-- Applies to views in their normal state. -->
+        <item name="colorControlNormal">@color/controlNormal</item>
+        <!-- Applies to views in their activated state (i.e checked or switches) -->
+        <item name="colorControlActivated">@color/controlActivated</item>
+        <!-- Applied to framework control highlights (i.e ripples or list selectors) -->
+        <item name="colorControlHighlight">@color/controlActivated</item>
+
+        <!-- Enable these below if you want clicking icons to trigger a ripple effect -->
+        <!--
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        -->
+    </style>
+
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="MessageCount">
+        <item name="android:layout_marginTop">@dimen/margin_large</item>
+        <item name="android:minHeight">@dimen/message_count_tv_min_size</item>
+        <item name="android:minWidth">@dimen/message_count_tv_min_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small
+        </item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/message_count_tv_padding</item>
+        <item name="android:background">@drawable/bg_shape_circle</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomAlertDialogStyle">
+        <item name="android:bottomBright">@android:color/transparent</item>
+        <item name="android:bottomDark">@android:color/transparent</item>
+        <item name="android:bottomMedium">@android:color/transparent</item>
+        <item name="android:centerBright">@android:color/transparent</item>
+        <item name="android:centerDark">@android:color/transparent</item>
+        <item name="android:centerMedium">@android:color/transparent</item>
+        <item name="android:fullBright">@android:color/transparent</item>
+        <item name="android:fullDark">@android:color/transparent</item>
+        <item name="android:topBright">@android:color/transparent</item>
+        <item name="android:topDark">@android:color/transparent</item>
+    </style>
+
+    THEME BUTTON
+
+    <style name="WhiteButton">
+        <item name="android:textColor">@drawable/selector_text_btn_black_to_gray</item>
+        <item name="android:background">@drawable/selector_btn_theme_white</item>
+    </style>
+
+    <style name="GreenButton">
+        <item name="android:textColor">@drawable/selector_text_login_btn</item>
+        <item name="android:background">@drawable/selector_login_btn</item>
+    </style>
+    <!--DIALOG ANIMATION-->
+    <style name="dialog_animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="dialog_animation_info">
+        <item name="android:windowEnterAnimation">@anim/anim_zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_zoom_out</item>
+    </style>
+    <!--LOGIN SCREEN-->
+    <style name="LoginScreen_EditText">
+        <item name="android:background">@drawable/bg_edittext_bottom_line</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="LoginScreen_Error_Text">
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AppTheme.NoStatusBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--VERIFY_MOBILE_CODE-->
+    <style name="VerifyMobileEditText_square_BLACk">
+        <item name="android:maxLength">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/margin</item>
+        <item name="android:background">@drawable/bg_edittext_square_black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/edittext_min_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:digits">0123456789</item>
+    </style>
+    <!--FORGOT PASSWORD-->
+    <style name="VerifyMobileEditText_square_WHITE">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/margin</item>
+        <item name="android:background">@drawable/bg_edittext_square_white</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/edittext_min_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:digits">0123456789</item>
+    </style>
+    <style name="Line">
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="Line.Black">
+        <item name="android:background">@color/black</item>
+    </style>
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_small">3dp</dimen>
+    <dimen name="margin">5dp</dimen>
+    <dimen name="margin_large">7dp</dimen>
+    <dimen name="margin_extra_large">10dp</dimen>
+    <dimen name="margin_extra__extra_large">15dp</dimen>
+    <dimen name="toolbar_bottom_line">1dp</dimen>
+    <dimen name="message_count_tv_padding">2dp</dimen>
+    <dimen name="message_count_tv_min_size">20dp</dimen>
+
+    <dimen name="corner_round">20dp</dimen>
+    <dimen name="image_size">80dp</dimen>
+    <!--DIALOG-->
+    <dimen name="dialog_contain_btn_margin">25dp</dimen>
+    <!--ANIMATIONS-->
+    <integer name="anim_duration">400</integer>
+    <integer name="anim_duration_long">600</integer>
+
+    <!--LOGIN SCREEN-->
+    <dimen name="logo_margin_top">50dp</dimen>
+    <dimen name="minimum_height_dialog">150dp</dimen>
+    <dimen name="line_height_dialog">0.8dp</dimen>
+
+    <!--VERIFY SCREEN-->
+    <dimen name="edittext_min_height">35dp</dimen>
+
+    <!--FORGOT PASSWORD-->
+    <dimen name="margin_20">20dp</dimen>
+
+   <dimen name="padding_survey_list_right">5dp</dimen>
+
+</resources>

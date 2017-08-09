@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <!-- Load the toolbar here -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"
+        android:gravity="start"
+        android:groupIndicator="@drawable/selector_survey_list"
+        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight"
+        android:indicatorEnd="?android:attr/expandableListPreferredItemIndicatorRight"
+        />
+
+    <!--<com.nhaarman.supertooltips.ToolTipRelativeLayout-->
+        <!--android:layout_margin="@dimen/margin_extra_large"-->
+        <!--android:id="@+id/toolTipFrameLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
+</RelativeLayout>

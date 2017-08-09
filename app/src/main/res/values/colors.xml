@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/life_cycle_color</color>
+    <color name="colorPrimaryDark">@color/life_cycle_color_dark</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="cursorAccent">#E23651</color>
+    <color name="controlNormal">#A53ABD</color>
+    <color name="controlActivated">#FF8881</color>
+
+    <color name="white_alpha_50">#4DFFFFFF</color>
+    <color name="white">@android:color/white</color>
+    <color name="off_white">#59dddddd</color>
+    <color name="black">@android:color/black</color>
+
+    <color name="colorPrimaryGreen">#42b039</color>
+    <color name="life_cycle_color">#259b24</color>
+    <color name="life_cycle_color_dark">#1d7c1c</color>
+    <color name="message_count_bg_color">#FF0000</color>
+    <color name="indeterminate_drawable_color">#9942b039</color>
+    <!--<color name="indeterminate_drawable_color">#A53ABD</color>-->
+   <color name="light_gray">#ddd</color>
+    <color name="text_color">@android:color/black</color>
+    <color name="text_color_grey">@android:color/darker_gray</color>
+
+    <color name="radio_button_bg_color">#40259b24</color>
+
+</resources>

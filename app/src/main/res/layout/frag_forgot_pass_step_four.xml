@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_extra__extra_large">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/instructionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:text="@string/step_four_instruction_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/instructionSuccessTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:drawableLeft="@drawable/ic_right_check"
+                android:drawableStart="@drawable/ic_right_check"
+                android:text="@string/step_four_instruction_success"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorPrimary"/>
+
+
+            <TextView
+                android:id="@+id/instructionRedirectTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:text="@string/step_four_instruction_redirect_prefix"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/logIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/step_four_btn_sign_in"
+                android:textColor="@drawable/selector_text_login_btn"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

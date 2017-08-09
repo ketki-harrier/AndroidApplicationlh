@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_extra__extra_large">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--NEW PASSWORD -->
+            <EditText
+                android:focusableInTouchMode="true"
+                android:id="@+id/newPasswordEditText"
+                android:inputType="textPassword"
+                style="@style/LoginScreen_EditText"
+                android:hint="@string/hint_new_password"
+                android:imeOptions="actionNext"/>
+
+            <TextView
+                android:id="@+id/errorViewUserNameTv"
+                style="@style/LoginScreen_Error_Text"
+                android:text="@string/error_in_password_new"/>
+
+            <!--CONFIRM PASSWORD -->
+            <EditText
+                android:focusableInTouchMode="true"
+                android:id="@+id/confirmPasswordEditText"
+                style="@style/LoginScreen_EditText"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:hint="@string/hint_confirm_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"/>
+
+            <TextView
+                android:id="@+id/errorViewPasswordTv"
+                style="@style/LoginScreen_Error_Text"
+                android:text="@string/error_in_password_confirm"/>
+
+            <Button
+                android:id="@+id/savePasswordIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/btn_save_pass"
+                android:textColor="@drawable/selector_text_login_btn"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

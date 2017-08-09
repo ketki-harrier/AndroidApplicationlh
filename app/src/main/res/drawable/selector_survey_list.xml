@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:drawable="@drawable/arrow_next_24dp" android:state_empty="true" />-->
+    <!--<item android:drawable="@drawable/arrow_next_24dp" android:state_expanded="true" />-->
+    <!--<item android:drawable="@drawable/arrow_next_24dp" />-->
+
+
+        <item android:state_empty="true">
+            <layer-list>
+                <item
+                    android:left="0dp"
+                    android:right="10dp"
+                    android:top="10dp"
+                    android:bottom="10dp"
+                    android:drawable="@drawable/green_arrownext">
+                </item>
+            </layer-list>
+        </item>
+
+        <item android:state_expanded="true">
+            <layer-list>
+                <item
+                    android:left="5dp"
+                    android:right="5dp"
+                    android:top="10dp"
+                    android:bottom="10dp"
+                    android:drawable="@drawable/green_arrow_down">
+                </item>
+            </layer-list>
+        </item>
+
+    <item >
+        <layer-list>
+            <item
+                android:left="0dp"
+                android:right="10dp"
+                android:top="10dp"
+                android:bottom="10dp"
+                android:drawable="@drawable/green_arrownext">
+            </item>
+        </layer-list>
+    </item>
+</selector>
