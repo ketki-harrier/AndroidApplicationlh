@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_round_corner_all"
+    android:gravity="center"
+    android:minHeight="@dimen/minimum_height_dialog"
+    android:orientation="vertical">
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        app:font="@string/font_name_source_sans_pro"
+        android:id="@+id/messageTv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/margin_extra__extra_large"
+        android:text="@string/action_settings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        android:textColor="@color/black"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height_dialog"
+        android:background="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_small"
+        android:orientation="horizontal">
+
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            app:font="@string/font_name_source_sans_pro"
+            android:id="@+id/cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selctor_dialog_button"
+            android:text="@string/cancel_capital"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+            android:textColor="@android:color/holo_blue_dark"/>
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            app:font="@string/font_name_source_sans_pro"
+            android:id="@+id/yes_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selctor_dialog_button"
+            android:text="@string/yes_sure"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+            android:textColor="@android:color/holo_blue_dark"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    android:background="@drawable/bg_login"
+    tools:context="com.lifecyclehealth.lifecyclehealth.activities.ForgotUsernameHolderActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/bg_toolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        android:elevation="0dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@android:color/holo_green_light">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/forgot_username"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
+            android:textColor="@color/colorPrimary"
+            app:font="@string/font_name_source_sans_pro" />
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/text_size_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--INSTRUCTION-->
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/instructionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:text="@string/forgot_username_statement"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"
+                app:font="@string/font_name_source_sans_pro" />
+            <!--USER NAME-->
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                android:id="@+id/userNameEditText"
+                style="@style/LoginScreen_EditText"
+                android:layout_marginTop="@dimen/logo_margin_top"
+                android:focusableInTouchMode="true"
+                android:hint="@string/email"
+                android:imeOptions="actionDone"
+                app:font="@string/font_name_source_sans_pro" />
+            <!--ERROR VIEW-->
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/errorViewUserNameTv"
+                style="@style/LoginScreen_Error_Text"
+                android:text="@string/error_email"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <LinearLayout
+                android:id="@+id/linear_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top">
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/btnSendCode"
+                    style="@style/GreenButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/send_email"
+                    app:font="@string/font_name_source_sans_pro" />
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/btnCancel"
+                    style="@style/WhiteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel"
+                    app:font="@string/font_name_source_sans_pro" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear_signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/logo_margin_top">
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/btnSignIn"
+                    style="@style/GreenButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/sign_in"
+                    app:font="@string/font_name_source_sans_pro" />
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:visibility="invisible"
+                    style="@style/WhiteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_weight="1"
+                    android:text="@string/btn_cancel"
+                    app:font="@string/font_name_source_sans_pro" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <zemin.notification.NotificationView
+        android:id="@+id/nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+</RelativeLayout>

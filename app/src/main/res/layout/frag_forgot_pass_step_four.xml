@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:padding="@dimen/margin_extra__extra_large">
@@ -16,20 +16,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/instructionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
+                app:font="@string/font_name_source_sans_pro"
                 android:text="@string/step_four_instruction_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/instructionSuccessTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
+                app:font="@string/font_name_source_sans_pro"
                 android:drawableLeft="@drawable/ic_right_check"
                 android:drawableStart="@drawable/ic_right_check"
                 android:text="@string/step_four_instruction_success"
@@ -37,8 +39,9 @@
                 android:textColor="@color/colorPrimary"/>
 
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/instructionRedirectTv"
+                app:font="@string/font_name_source_sans_pro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
@@ -46,7 +49,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
 
-            <Button
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/logIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

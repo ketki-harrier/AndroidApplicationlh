@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:padding="@dimen/margin_extra__extra_large">
@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <!--INSTRUCTION-->
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/instructionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +26,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
             <!--USER NAME-->
-            <EditText
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/userNameEditText"
                 android:focusableInTouchMode="true"
                 style="@style/LoginScreen_EditText"
@@ -33,7 +35,8 @@
                 android:hint="@string/hint_username"
                 android:imeOptions="actionDone"/>
              <!--ERROR VIEW-->
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/errorViewUserNameTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_username"/>
@@ -44,7 +47,8 @@
                 android:layout_marginTop="@dimen/logo_margin_top"
                 >
 
-                <Button
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    app:font="@string/font_name_source_sans_pro"
                     android:id="@+id/btnCancel"
                     style="@style/WhiteButton"
                     android:layout_width="0dp"
@@ -53,7 +57,8 @@
                     android:layout_weight="1"
                     android:text="@string/btn_cancel"/>
 
-                <Button
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    app:font="@string/font_name_source_sans_pro"
                     android:id="@+id/btnSendCode"
                     style="@style/GreenButton"
                     android:layout_width="0dp"

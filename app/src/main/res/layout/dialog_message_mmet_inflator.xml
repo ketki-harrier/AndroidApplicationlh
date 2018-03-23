@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chatRelative"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_very_small">
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <FrameLayout
+            android:id="@+id/iv_cover_container"
+            android:layout_width="@dimen/image_size_1"
+            android:layout_height="@dimen/image_size_1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/conversationImage"
+                android:layout_width="@dimen/image_size_meet"
+                android:layout_height="@dimen/image_size_meet"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/meet_icon"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/conversationTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_toEndOf="@+id/iv_cover_container"
+            android:layout_toRightOf="@+id/iv_cover_container"
+            android:textColor="@color/text_color"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/conversationMessageTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/conversationTitleTv"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin_very_small"
+            android:layout_toEndOf="@+id/iv_cover_container"
+            android:layout_toRightOf="@+id/iv_cover_container"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_color_grey"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+        <RelativeLayout
+            android:id="@+id/relative_join"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/conversationMessageTv"
+            android:layout_toEndOf="@+id/iv_cover_container"
+            android:layout_toRightOf="@+id/iv_cover_container">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/conversationDateTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_toLeftOf="@+id/btnJoin"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/margin_extra_large"
+                android:text="date"
+                android:textColor="@color/text_color"
+                app:font="@string/font_name_source_sans_pro" />
+
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/btnJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginRight="@dimen/margin_large"
+                android:background="@drawable/selector_message_btn"
+                android:text="@string/Join"
+                android:textColor="@drawable/selector_text_login_btn"
+                app:font="@string/font_name_source_sans_pro" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relative_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/conversationMessageTv"
+            android:layout_toEndOf="@+id/iv_cover_container"
+            android:layout_toRightOf="@+id/iv_cover_container">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/conversationDateTv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/margin_extra_large"
+                android:textColor="@color/text_color"
+                app:font="@string/font_name_source_sans_pro"
+                android:layout_alignBaseline="@+id/btnAccept"
+                android:layout_alignBottom="@+id/btnAccept"
+                android:layout_toLeftOf="@+id/btnAccept"
+                android:layout_toStartOf="@+id/btnAccept" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/btnAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_toLeftOf="@+id/cancelMeet"
+                android:background="@drawable/selector_message_btn"
+                android:text="@string/Accept"
+                android:textColor="@drawable/selector_text_login_btn"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <ImageView
+                android:id="@+id/cancelMeet"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/margin"
+
+                android:scaleType="fitXY"
+                android:src="@drawable/chat_feed_file_cancel" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relative"
+        android:background="@color/light_gray" />
+
+</RelativeLayout>

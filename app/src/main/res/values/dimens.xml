@@ -6,6 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_small">3dp</dimen>
+    <dimen name="margin_very_small">1dp</dimen>
     <dimen name="margin">5dp</dimen>
     <dimen name="margin_large">7dp</dimen>
     <dimen name="margin_extra_large">10dp</dimen>
@@ -16,6 +17,9 @@
 
     <dimen name="corner_round">20dp</dimen>
     <dimen name="image_size">80dp</dimen>
+    <dimen name="image_size_m">75dp</dimen>
+    <dimen name="image_size_meet">60dp</dimen>
+    <dimen name="image_size_1">90dp</dimen>
     <!--DIALOG-->
     <dimen name="dialog_contain_btn_margin">25dp</dimen>
     <!--ANIMATIONS-->
@@ -23,7 +27,7 @@
     <integer name="anim_duration_long">600</integer>
 
     <!--LOGIN SCREEN-->
-    <dimen name="logo_margin_top">50dp</dimen>
+    <dimen name="logo_margin_top">40dp</dimen>
     <dimen name="minimum_height_dialog">150dp</dimen>
     <dimen name="line_height_dialog">0.8dp</dimen>
 
@@ -34,5 +38,22 @@
     <dimen name="margin_20">20dp</dimen>
 
    <dimen name="padding_survey_list_right">5dp</dimen>
+   <dimen name="size_15dp">15dp</dimen>
+   <dimen name="size_18p">18dp</dimen>
+   <dimen name="size_12dp">12dp</dimen>
+   <dimen name="size_9dp">9dp</dimen>
+
+    <dimen name="primaryButtonMinHeight">40dp</dimen>
+    <dimen name="secondaryButtonMinHeight">35dp</dimen>
+    <dimen name="primaryButtonText">16sp</dimen>
+
+    <dimen name="ic_delete">30dp</dimen>
+
+    <dimen name="text_14">14dp</dimen>
+    <dimen name="text_16">16dp</dimen>
+    <dimen name="text_18">18dp</dimen>
+    <dimen name="text_20">20dp</dimen>
+    <dimen name="text_22">22dp</dimen>
+    <dimen name="text_24">24dp</dimen>
 
 </resources>

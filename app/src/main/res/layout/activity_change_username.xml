@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lifecyclehealth.lifecyclehealth.activities.ChangeUsername">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_toolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backArrowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:rotation="180"
+                android:visibility="gone"
+                android:src="@drawable/green_arrownext" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/back"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_extra__extra_large"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/backArrowBtn"
+                android:text="@string/choose_id_title"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                app:font="@string/font_name_source_sans_pro" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/clickSameUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/margin_extra__extra_large"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                android:layout_toLeftOf="@+id/touchonid"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/touchonid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/touch_id_on"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorPrimaryGreen"
+                android:layout_alignParentRight="true"
+                app:font="@string/font_name_source_sans_pro" />
+
+        </RelativeLayout>
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/txt_use_different_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra__extra_large"
+            android:text="@string/use_different_id"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            app:font="@string/font_name_source_sans_pro" />
+
+    </LinearLayout>
+
+    <zemin.notification.NotificationView
+        android:id="@+id/nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+
+</RelativeLayout>

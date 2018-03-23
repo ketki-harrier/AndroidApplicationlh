@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_corner_all">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearBtn"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_round_corner_all"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/margin_extra_large"
+                android:layout_toLeftOf="@+id/cancel"
+                android:background="@color/white"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:textColor="@color/background"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/margin_large"
+                android:padding="@dimen/margin_extra_large"
+                android:text="@string/btn_cancel"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:textColor="@android:color/holo_blue_light"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <!--        <SearchView
+                        android:id="@+id/searchInviteParticipant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_extra_large"
+                        android:background="@color/white" />-->
+
+        </RelativeLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleViewInvities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_extra_large"
+                android:background="@color/white" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:id="@+id/btn_start_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/start_message"
+            android:textColor="@drawable/selector_text_login_btn"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/btn_cancel"
+            android:textColor="@drawable/selector_text_login_btn"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

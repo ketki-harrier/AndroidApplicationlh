@@ -1,0 +1,220 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lifecyclehealth.lifecyclehealth.fragments.PatientDiaryFragment">
+
+    <!-- Load the toolbar here -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:background="@drawable/coming_soon"></RelativeLayout>
+
+         <!--   <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_extra__extra_large"
+                android:paddingLeft="@dimen/margin_extra__extra_large"
+                android:paddingTop="@dimen/margin_padding_20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:text="@string/episode"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        app:font="@string/font_name_source_sans_pro" />
+
+                    <Spinner
+                        android:id="@+id/spinnerEpisode"
+                        style="@style/CustomSpinnerThemeDiary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_20"
+                    android:orientation="horizontal">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:text="@string/stage"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        app:font="@string/font_name_source_sans_pro" />
+
+                    <Spinner
+                        android:id="@+id/spinnerStage"
+                        style="@style/CustomSpinnerThemeDiary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/logHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_20"
+                    android:orientation="horizontal"
+                    android:paddingTop="7dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/patient_diary"
+                        android:tint="@color/colorPrimary" />
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:id="@+id/expandedListItemTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/margin_padding_10"
+                        android:text="@string/log_history"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:font="@string/font_name_source_sans_pro" />
+
+
+                    <ImageView
+                        android:id="@+id/expandedListItemArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:contentDescription="@string/app_name"
+                        android:paddingRight="8dp"
+                        android:src="@drawable/arrow_right_grey"
+                        android:tint="@color/colorPrimaryGreen" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra__extra_large"
+                    android:layout_marginRight="@dimen/margin_extra__extra_large"
+                    android:layout_marginTop="@dimen/margin_extra__extra_large"
+                    android:orientation="vertical">
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_extra__extra_large"
+                        android:layout_marginTop="@dimen/margin"
+                        android:gravity="center"
+                        android:text="@string/what_do_you_want_to_log"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:font="@string/font_name_source_sans_pro" />
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        android:id="@+id/btn_admission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_extra__extra_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:text="@string/admission"
+                        android:textColor="@drawable/selector_text_login_btn"
+                        app:font="@string/font_name_source_sans_pro" />
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        android:id="@+id/btn_discharge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_extra__extra_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:text="@string/discharge"
+                        android:textColor="@drawable/selector_text_login_btn"
+                        app:font="@string/font_name_source_sans_pro" />
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        android:id="@+id/btn_visit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_extra__extra_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:text="@string/visit"
+                        android:textColor="@drawable/selector_text_login_btn"
+                        app:font="@string/font_name_source_sans_pro" />
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        android:id="@+id/btn_hospital_re_Admission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_large"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_extra__extra_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_white_btn"
+                        android:text="@string/hospital_re_Admission"
+                        android:textColor="@color/black"
+                        app:font="@string/font_name_source_sans_pro" />
+
+                </LinearLayout>
+
+            </LinearLayout>-->
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main$Generated" generated="true"><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\src\main\res"/><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res"/><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\build\generated\res\rs\release"/><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\build\generated\res\resValues\release"/></dataSet><dataSet config="release$Generated" generated="true"><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\src\release\res"/></dataSet><dataSet config="main" generated-set="main$Generated"><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\src\main\res"/><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res"><file name="clear_button" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\drawable-mdpi\clear_button.png" qualifiers="mdpi-v4" type="drawable"/><file name="divider_horizontal_dark" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\drawable-mdpi\divider_horizontal_dark.9.png" qualifiers="mdpi-v4" type="drawable"/><file name="message_notification" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\drawable-mdpi\message_notification.png" qualifiers="mdpi-v4" type="drawable"/><file name="notification_board_footer" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_board_footer.xml" qualifiers="" type="layout"/><file name="notification_board_row" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_board_row.xml" qualifiers="" type="layout"/><file name="notification_full" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_full.xml" qualifiers="" type="layout"/><file name="notification_large_icon" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_large_icon.xml" qualifiers="" type="layout"/><file name="notification_simple" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_simple.xml" qualifiers="" type="layout"/><file name="notification_simple_2" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_simple_2.xml" qualifiers="" type="layout"/><file name="notification_text_only" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\layout\notification_text_only.xml" qualifiers="" type="layout"/><file name="fallbackring" path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\raw\fallbackring.ogg" qualifiers="" type="raw"/><file path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\res\values\styles.xml" qualifiers=""><style name="ZeminNotification.Title">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">#fff</item>
+    <item name="android:fadingEdge">horizontal</item>
+  </style><style name="ZeminNotification.Text.Small">
+    <item name="android:textSize">14sp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:ellipsize">marquee</item>
+    <item name="android:marqueeRepeatLimit">marquee_forever</item>
+    <item name="android:fadingEdge">horizontal</item>
+  </style><style name="ZeminNotification.When">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">#fff</item>
+  </style><style name="ZeminNotification"/><style name="ZeminNotification.When.Small">
+    <item name="android:textSize">10sp</item>
+  </style><style name="ZeminNotification.Text">
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">#fff</item>
+    <item name="android:ellipsize">none</item>
+    <item name="android:fadingEdge">horizontal</item>
+  </style><style name="ZeminNotification.Title.Small">
+    <item name="android:textSize">16sp</item>
+    <item name="android:maxWidth">100dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:ellipsize">marquee</item>
+    <item name="android:marqueeRepeatLimit">marquee_forever</item>
+    <item name="android:fadingEdge">horizontal</item>
+  </style></file></source><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\build\generated\res\rs\release"/><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\build\generated\res\resValues\release"/></dataSet><dataSet config="release" generated-set="release$Generated"><source path="D:\Vaibhavi Project\LifecycleHealth\notification_banner\src\release\res"/></dataSet><mergedItems/></merger>

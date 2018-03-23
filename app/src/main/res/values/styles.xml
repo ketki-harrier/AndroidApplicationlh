@@ -13,9 +13,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -51,8 +51,7 @@
         <item name="android:minWidth">@dimen/message_count_tv_min_size</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/message_count_tv_padding</item>
         <item name="android:background">@drawable/bg_shape_circle</item>
@@ -89,6 +88,13 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <style name="dialog_animation_1">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="dialog_animation_info">
         <item name="android:windowEnterAnimation">@anim/anim_zoom_in</item>
         <item name="android:windowExitAnimation">@anim/anim_zoom_out</item>
@@ -100,6 +106,18 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Password_EditText">
+        <item name="android:background">@drawable/bg_edittext_bottom_line_black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
         <item name="android:padding">@dimen/margin</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:singleLine">true</item>
@@ -147,12 +165,104 @@
         <item name="android:inputType">number</item>
         <item name="android:digits">0123456789</item>
     </style>
+
     <style name="Line">
         <item name="android:background">@color/light_gray</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
+    <style name="VerticalLine">
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">62dp</item>
+    </style>
+
+    <style name="HorizontalLine">
+        <item name="android:background">@color/seek_line_gray</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">2dp</item>
+    </style>
+
     <style name="Line.Black">
         <item name="android:background">@color/black</item>
     </style>
+
+    <style name="ButtonDialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:minHeight">@dimen/primaryButtonMinHeight</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/primaryButtonText</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ButtonDialog_Full">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">@dimen/primaryButtonMinHeight</item>
+        <item name="android:textSize">@dimen/primaryButtonText</item>
+    </style>
+
+
+    <!--  <style name="MoxtraTheme" parent="AppBaseTheme">
+          <item name="android:windowNoTitle">true</item>
+          <item name="android:windowAnimationStyle">@style/MoxActivityAnimation</item>
+          <item name="android:TextViewStyle">@style/MoxTextViewBase</item>
+          <item name="android:listViewStyle">@style/MoxListViewBase</item>
+      </style>
+  -->
+
+    <style name="Universal.Widget.ProgressBar" parent="@android:style/Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/uvv_progress_rotate</item>
+        <item name="android:indeterminateDuration">1000</item>
+    </style>
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <!--<item name="colorControlActivated">#42b039</item>-->
+        <item name="colorControlActivated">#42b039</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#ffffff</item>
+
+
+        <item name="thumbTint">#ffffff</item>
+        <item name="trackTint">#ffffff</item>
+        <!--<item name="android:colorForeground">#42221f1f</item>-->
+    </style>
+
+
+    <style name="SwitchNotification" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <!--<item name="colorControlActivated">#42b039</item>-->
+        <item name="colorControlActivated">#42b039</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/uvv_gray</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/uvv_gray</item>
+
+
+        <item name="thumbTint">@color/black</item>
+        <item name="trackTint">@color/uvv_titlebar_bg</item>
+        <!--<item name="android:colorForeground">#42221f1f</item>-->
+    </style>
+
+    <style name="CustomSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_spinner_icon</item>
+    </style>
+
+    <style name="CustomSpinnerThemeDiary" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_spinner_icon1</item>
+    </style>
+
 </resources>

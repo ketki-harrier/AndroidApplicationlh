@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_margin="@dimen/margin_padding_10"
+    android:orientation="vertical">
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        android:layout_marginTop="@dimen/margin_padding_10"
+        android:layout_marginLeft="@dimen/margin_padding_10"
+        android:layout_marginRight="@dimen/margin_padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fingerprint_configuration_contain"
+        android:textColor="@color/text"
+        app:font="@string/font_name_source_sans_pro"/>
+    <android.support.v7.widget.AppCompatCheckBox
+        android:layout_marginTop="@dimen/margin_padding_5"
+        android:id="@+id/dontAskCheckbox"
+        android:layout_width="wrap_content"
+        android:textColor="@color/text"
+        android:layout_gravity="start"
+        android:text="@string/fingerprint_configuration_dont_ask"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:text="@string/fingerprint_configuration_yes"
+            android:layout_gravity="end"
+            android:layout_toLeftOf="@+id/noButton"
+            android:id="@+id/yesButton"
+            style="@style/ButtonDialog"
+            app:font="@string/font_name_source_sans_pro"/>
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:layout_alignParentRight="true"
+            android:text="@string/fingerprint_configuration_no"
+            android:layout_gravity="end"
+            android:id="@+id/noButton"
+            android:layout_marginRight="@dimen/margin_padding_5"
+            style="@style/ButtonDialog"
+            app:font="@string/font_name_source_sans_pro"/>
+        <!--<Button-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="@dimen/margin_padding_5"-->
+        <!--android:text="@string/fingerprint_configuration_dont_ask"-->
+        <!--android:id="@+id/dontAskButton"-->
+        <!--android:layout_marginRight="@dimen/margin_20"-->
+        <!--style="@style/ButtonDialog_Full"/>-->
+    </RelativeLayout>
+
+
+</LinearLayout>

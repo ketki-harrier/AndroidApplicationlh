@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/rootLayout"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="@dimen/margin_large"
-              android:background="@drawable/bg_survey_list"
-              android:orientation="horizontal"
-              android:layout_gravity="center_vertical"
-              android:paddingEnd="0dp"
-              android:paddingBottom="@dimen/margin_extra_large"
-              android:paddingLeft="@dimen/margin_large"
-              android:paddingRight="0dp"
-              android:paddingStart="@dimen/margin_large">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="@dimen/margin_large"
+    android:background="@drawable/bg_survey_list"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_extra_large"
+    android:paddingEnd="0dp"
 
-    <TextView
+    android:paddingLeft="@dimen/margin_extra__extra_large"
+    android:paddingRight="0dp"
+    android:paddingStart="@dimen/margin_large">
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
         android:id="@+id/expandedListItemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_extra__extra_large"
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingTop="10dp"
-        android:text="@string/action_settings"/>
+        android:textColor="@color/action_bar"
+        app:font="@string/font_name_source_sans_pro" />
 
-    <TextView
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
         android:id="@+id/expandedListItemDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.7"
         android:maxLines="1"
         android:paddingEnd="@dimen/padding_survey_list_right"
+        android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/padding_survey_list_right"
         android:paddingTop="10dp"
-        android:text="@string/action_settings"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/action_bar"
+        app:font="@string/font_name_source_sans_pro" />
 
     <ImageView
         android:id="@+id/expandedListItemArrow"
@@ -42,6 +48,6 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.3"
         android:contentDescription="@string/app_name"
-        android:rotation="180"
-        android:src="@drawable/green_arrow_prev"/>
+        android:src="@drawable/arrow_right_grey" />
+    <!--android:rotation="180"-->
 </LinearLayout>

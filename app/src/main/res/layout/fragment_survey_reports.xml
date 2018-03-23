@@ -1,0 +1,268 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lifecyclehealth.lifecyclehealth.fragments.SurveyReports">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_toolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backArrowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:rotation="180"
+                android:src="@drawable/green_arrownext" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/back"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_toEndOf="@+id/backArrowBtn"
+                android:layout_toRightOf="@+id/backArrowBtn"
+                android:text="@string/back"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/message_count_tv_min_size"
+                android:layout_toEndOf="@+id/back"
+                android:layout_toLeftOf="@+id/notificationIcon"
+                android:layout_toRightOf="@+id/back"
+                android:layout_toStartOf="@+id/notificationIcon"
+                android:paddingLeft="@dimen/message_count_tv_min_size"
+                android:text="@string/survey_report"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:font="@string/font_name_source_sans_pro" />
+
+            <ImageView
+                android:id="@+id/notificationIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginRight="@dimen/margin_small"
+                android:src="@drawable/ic_reminder" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/surveyRelative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_extra_large">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/survey_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_14"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/survey_name"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/survey_title"
+            android:paddingTop="@dimen/margin"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/patient_name1"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/survey_name"
+            android:paddingTop="@dimen/margin"
+            android:text="@string/survey_related_to_patient"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/patient_name"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/survey_name"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_toRightOf="@+id/patient_name1"
+            android:paddingTop="@dimen/margin"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/submitted_by1"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patient_name1"
+            android:paddingTop="@dimen/margin"
+            android:text="@string/submitted_by"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/submitted_by"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patient_name1"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_toRightOf="@+id/submitted_by1"
+            android:paddingTop="@dimen/margin_large"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/submitted_on1"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submitted_by1"
+            android:paddingTop="@dimen/margin"
+            android:text="@string/submitted_on"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/submitted_on"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submitted_by1"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_toRightOf="@+id/submitted_on1"
+            android:paddingTop="@dimen/margin_large"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/score_survey1"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submitted_on1"
+            android:paddingTop="@dimen/margin"
+            android:text="@string/score_survey"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/score_survey"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submitted_on1"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_toEndOf="@+id/score_survey1"
+            android:layout_toRightOf="@+id/score_survey1"
+            android:paddingTop="@dimen/margin"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:font="@string/font_name_source_sans_pro" />
+
+
+    </RelativeLayout>
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        android:id="@+id/comment"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/surveyRelative"
+        android:background="@color/off_white"
+        android:paddingBottom="@dimen/margin_extra_large"
+        android:paddingLeft="@dimen/margin_large"
+        android:paddingTop="@dimen/margin_extra_large"
+        android:text="COMMENT"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold"
+        app:font="@string/font_name_source_sans_pro" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/surveyRelative"
+            android:layout_alignRight="@+id/surveyRelative"
+            android:layout_marginTop="15dp"
+            android:nestedScrollingEnabled="false">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

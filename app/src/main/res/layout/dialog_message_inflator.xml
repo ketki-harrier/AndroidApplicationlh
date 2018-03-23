@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chatRelative"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/circle_count"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/badge_circle_bg_gray"
+            android:gravity="center" />
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/conversationTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:textColor="@color/text_color"
+            app:font="@string/font_name_source_sans_pro" />
+
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_below="@+id/linear"
+        android:paddingLeft="@dimen/margin_extra__extra_large">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/conversationMessageTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_badge"
+            android:layout_marginTop="@dimen/margin_very_small"
+            android:ellipsize="end"
+            android:padding="@dimen/margin"
+            android:singleLine="true"
+            android:textColor="@color/text_color_grey"
+            app:font="@string/font_name_source_sans_pro" />
+
+        <TextView
+            android:id="@+id/tv_badge"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top|end"
+            android:background="@drawable/badge_circle_bg1"
+            android:gravity="center"
+            android:text="@string/default_badge_number"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        android:id="@+id/conversationDateTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_very_small"
+        android:layout_below="@+id/relative"
+        android:paddingLeft="@dimen/margin_extra__extra_large"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/margin_extra__extra_large"
+        android:paddingRight="@dimen/margin_extra_large"
+        android:textColor="@color/text_color"
+        app:font="@string/font_name_source_sans_pro" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/conversationDateTv"
+        android:layout_marginTop="@dimen/margin_very_small"
+        android:background="@color/light_gray" />
+</RelativeLayout>

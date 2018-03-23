@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        android:id="@+id/contain_TextView"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/fingerprint_max_limit_contain"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:font="@string/font_name_source_sans_pro"/>
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+        android:id="@+id/buttonDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/margin_padding_10"
+        android:layout_marginBottom="@dimen/margin_padding_5"
+        android:layout_marginRight="@dimen/margin_padding_10"
+        android:background="@android:color/transparent"
+        android:text="@string/fingerprint_max_limit_ok"
+        android:textColor="@color/colorAccent"
+        app:font="@string/font_name_source_sans_pro"/>
+
+    <RelativeLayout
+        android:id="@+id/two_btn_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:text="@string/cancel"
+            android:layout_marginRight="@dimen/margin_padding_10"
+            android:layout_marginBottom="@dimen/margin_padding_10"
+            android:layout_toLeftOf="@+id/OkButton"
+            android:id="@+id/cancelButton"
+            style="@style/ButtonDialog"
+            app:font="@string/font_name_source_sans_pro"/>
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="@dimen/margin_padding_10"
+            android:text="@string/fingerprint_goto_settings"
+            android:id="@+id/OkButton"
+            style="@style/ButtonDialog"
+            app:font="@string/font_name_source_sans_pro"/>
+    </RelativeLayout>
+</LinearLayout>

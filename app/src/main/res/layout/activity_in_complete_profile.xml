@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lifecyclehealth.lifecyclehealth.activities.InCompleteProfileActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="551dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/margin_extra_large"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_extra_large"
+            android:src="@drawable/logout_icon"/>
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            app:font="@string/font_name_source_sans_pro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra__extra_large"
+            android:text="@string/incomplete_profile"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="@dimen/size_18p"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+
+
+
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                app:font="@string/font_name_source_sans_pro"
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/brandable_button_height"
+                android:layout_marginRight="@dimen/margin_extra_large"
+                android:layout_marginLeft="@dimen/margin_extra_large"
+                android:paddingTop="@dimen/margin_extra_large"
+                android:paddingBottom="@dimen/margin_extra_large"
+                android:paddingLeft="@dimen/margin_padding_60"
+                android:paddingRight="@dimen/margin_padding_60"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_orange_btn"
+                android:text="@string/ok"
+                android:textColor="@color/white" />
+
+
+
+    </LinearLayout>
+
+
+    <zemin.notification.NotificationView
+        android:id="@+id/nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+
+
+</RelativeLayout>

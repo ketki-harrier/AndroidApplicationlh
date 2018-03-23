@@ -8,14 +8,15 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingEnd="5dp"
         android:paddingRight="5dp"
         android:paddingTop="10dp"
-        app:srcCompat="@drawable/message_selected"/>
+        app:srcCompat="@drawable/message"/>
 
-    <TextView
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        app:font="@string/font_name_source_sans_pro"
         android:id="@+id/notificationCountTextView"
         style="@style/MessageCount"
         android:layout_alignEnd="@+id/imageView"

@@ -3,231 +3,386 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/profileImageLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp">
+        android:background="@drawable/bg_toolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/imageView2"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#EEEEEE"
-            app:civ_border_width="4dp"
-            app:civ_shadow="true"
-            app:civ_shadow_color="#8BC34A"
-            app:civ_shadow_radius="10" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/imageView2"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/imageView2"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
+            <ImageView
+                android:id="@+id/backArrowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:rotation="180"
+                android:src="@drawable/green_arrownext" />
 
-    </RelativeLayout>
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
+                android:id="@+id/back"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_toEndOf="@+id/backArrowBtn"
+                android:layout_toRightOf="@+id/backArrowBtn"
+                android:text="@string/My_Account"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
 
-    <ScrollView
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/profileImageLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:scrollbars="none">
+        android:layout_below="@+id/toolbar">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutInput"
+        <RelativeLayout
+
+            android:id="@+id/profileImageLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="7dp"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            android:layout_centerHorizontal="true"
+            android:background="@color/life_cycle_color">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imageView2"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/user_profile"
+                app:civ_border_width="0dp"
+                app:civ_shadow="true"
+                app:civ_shadow_color="#8BC34A"
+                app:civ_shadow_radius="10" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_weight="0.4">
-
-                    <EditText
-                        android:id="@+id/editTextTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@drawable/sign_up_edittext_selector"
-                        android:hint="Title"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50"
-                        android:paddingTop="0dp"
-                        android:textColor="@android:color/black" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="0.3">
-
-                    <EditText
-                        android:id="@+id/editTextPreferredName"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@drawable/sign_up_edittext_selector"
-                        android:hint="Preferred Name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50"
-                        android:paddingTop="0dp"
-                        android:textColor="@android:color/black" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="0.35">
-
-                    <EditText
-                        android:id="@+id/editTextSuffix"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@drawable/sign_up_edittext_selector"
-                        android:hint="Suffix"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50"
-                        android:paddingTop="0dp"
-                        android:textColor="@android:color/black" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <!--FIRST NAME -->
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/editTextFirstName"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@drawable/sign_up_edittext_selector"
-                        android:hint="First Name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50"
-                        android:paddingTop="0dp"
-
-                        android:textColor="@android:color/black" />
-                </android.support.design.widget.TextInputLayout>
-
-                <!--LAST NAME -->
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/editTextLastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@drawable/sign_up_edittext_selector"
-                        android:hint="Last Name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50"
-                        android:paddingTop="0dp"
-                        android:textColor="@android:color/black" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/editTextEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/sign_up_edittext_selector"
-                    android:hint="Email"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName|textCapWords"
-                    android:maxLength="50"
-                    android:paddingTop="0dp"
-                    android:textColor="@android:color/black" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/editTextMobileNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/sign_up_edittext_selector"
-                    android:hint="Mobile Number"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName|textCapWords"
-                    android:maxLength="50"
-                    android:paddingTop="0dp"
-                    android:textColor="@android:color/black" />
-            </android.support.design.widget.TextInputLayout>
-
-            <Switch
-                android:id="@+id/switch1"
+            <ImageView
+                android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp"
-                android:textSize="16sp"
-                android:text="Touch ID Sign In" />
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignEnd="@+id/imageView2"
+                android:layout_alignRight="@+id/imageView2"
+                android:layout_marginRight="@dimen/size_15dp"
+                android:paddingBottom="@dimen/margin_padding_10"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profileImageLayout"
+            android:layout_centerHorizontal="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutInput"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/profileImageLayout"
                 android:layout_marginBottom="10dp"
-                android:text="Change Password" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-        </LinearLayout>
 
-    </ScrollView>
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                    app:font="@string/font_name_source_sans_pro"
+                    android:id="@+id/categiverHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:background="#FD8F00"
+                    android:textAlignment="gravity"
+                    android:visibility="gone"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="#F7E8D4" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_weight="0.4"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            app:font="@string/font_name_source_sans_pro"
+                            android:id="@+id/editTextTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Title"
+                            android:focusable="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLength="50"
+                            android:cursorVisible="false"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="0.3"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            app:font="@string/font_name_source_sans_pro"
+                            android:id="@+id/editTextPreferredName"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Preferred Name"
+                            android:focusable="false"
+                            android:imeOptions="actionNext"
+                            android:cursorVisible="false"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLength="50"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="0.35"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            app:font="@string/font_name_source_sans_pro"
+                            android:id="@+id/editTextSuffix"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Suffix"
+                            android:cursorVisible="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLength="50"
+                            android:focusable="false"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!--FIRST NAME -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_weight="1"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            app:font="@string/font_name_source_sans_pro"
+                            android:focusable="false"
+                            android:id="@+id/editTextFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:cursorVisible="false"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="First Name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLength="50"
+                            android:paddingTop="0dp"
+
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <!--LAST NAME -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            app:font="@string/font_name_source_sans_pro"
+                            android:id="@+id/editTextLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Last Name"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLength="50"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="@android:color/black">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                        app:font="@string/font_name_source_sans_pro"
+                        android:id="@+id/editTextEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/sign_up_edittext_selector_gray"
+                        android:hint="Username"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName|textCapWords"
+                        android:maxLength="50"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:paddingTop="0dp"
+                        android:textColor="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="@android:color/black">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                        app:font="@string/font_name_source_sans_pro"
+                        android:id="@+id/editTextMobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/sign_up_edittext_selector_gray"
+                        android:hint="Mobile Number"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName|textCapWords"
+                        android:maxLength="50"
+                        android:focusable="false"
+                        android:paddingTop="0dp"
+                        android:cursorVisible="false"
+                        android:textColor="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/linear"
+                    android:layout_marginTop="@dimen/margin_padding_5"
+                    android:background="@android:color/darker_gray" />
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="@dimen/margin_padding_10"
+                    android:text="Touch ID Sign In"
+                    android:textSize="16sp"
+                    android:editable="false"
+                    android:checked="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:theme="@style/SwitchNotification" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        app:font="@string/font_name_source_sans_pro"
+                        android:id="@+id/changePassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:layout_marginRight="@dimen/margin_padding_5"
+                        android:text="Change Password"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        app:font="@string/font_name_source_sans_pro"
+                        android:id="@+id/btnCaregiverFor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:layout_marginRight="@dimen/margin_padding_5"
+                        android:text="Caregiver For"
+                        android:textColor="@color/white" />
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        app:font="@string/font_name_source_sans_pro"
+                        android:id="@+id/btnCaregiver"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_login_btn"
+                        android:layout_marginLeft="@dimen/margin_padding_5"
+                        android:text="Caregivers"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

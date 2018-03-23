@@ -29,7 +29,7 @@
                 android:rotation="180"
                 android:src="@drawable/green_arrownext"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -41,7 +41,8 @@
                 android:layout_toRightOf="@+id/backArrowBtn"
                 android:text="@string/app_name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                app:font="@string/font_name_source_sans_pro"/>
 
             <ImageView
                 android:id="@+id/notificationIcon"
@@ -66,12 +67,28 @@
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/white"
+        android:layout_gravity="center_horizontal"
         app:tabTextColor="@color/off_white"/>
 
-    <android.support.v4.view.ViewPager
+
+    <LinearLayout
+        android:layout_below="@+id/tabsLayout"
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+    <!--<android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tabsLayout"/>
+        android:layout_below="@+id/tabsLayout"/>-->
+
+  <!--  <com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabsLayout"/>-->
+
 
 </RelativeLayout>

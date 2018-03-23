@@ -1,5 +1,4 @@
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
@@ -29,24 +28,27 @@
 
             <ImageView
                 android:id="@+id/imageViewMessage"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingEnd="5dp"
+                android:paddingLeft="25dp"
                 android:paddingRight="5dp"
                 android:paddingTop="10dp"
-                app:srcCompat="@drawable/message_selected"/>
+                app:srcCompat="@drawable/message" />
 
-            <TextView
-                android:id="@+id/notificationCountTextViewMessage"
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/countTextViewMessage"
                 style="@style/MessageCount"
                 android:layout_alignEnd="@+id/imageViewMessage"
                 android:layout_alignParentTop="true"
                 android:layout_alignRight="@+id/imageViewMessage"
-                android:text="2"/>
+                android:visibility="visible"
+                android:singleLine="true"
+                app:font="@string/font_name_source_sans_pro" />
 
         </RelativeLayout>
 
-        <TextView
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/toolbar_title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
@@ -54,7 +56,8 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="Toolbar Title"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            app:font="@string/font_name_source_sans_pro" />
 
         <RelativeLayout
             android:id="@+id/notificationHolder"
@@ -68,21 +71,27 @@
             android:paddingStart="0dp">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:paddingRight="5dp"
+                android:id="@+id/imageViewNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="25dp"
                 android:paddingTop="10dp"
-                app:srcCompat="@drawable/ic_reminder"/>
+                android:tint="@color/uvv_gray"
+                app:srcCompat="@drawable/bell_alert" />
 
-            <TextView
-                android:id="@+id/notificationCountTextView"
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/countTextViewNotificatione"
                 style="@style/MessageCount"
-                android:layout_alignEnd="@+id/imageView"
+                android:layout_alignEnd="@+id/imageViewNotification"
                 android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/imageView"
+                android:layout_alignRight="@+id/imageViewNotification"
                 android:background="@drawable/bg_shape_circle"
-                android:text="2"/>
+                android:layout_marginRight="18dp"
+                android:singleLine="true"
+                app:font="@string/font_name_source_sans_pro" />
+
+
 
         </RelativeLayout>
 

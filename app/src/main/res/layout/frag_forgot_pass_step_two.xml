@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:padding="@dimen/margin_extra__extra_large">
@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/instructionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +26,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/userNameTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +36,8 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                app:font="@string/font_name_source_sans_pro"
                 android:id="@+id/instructionCheckEmailTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,41 +51,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra__extra_large">
 
-                <EditText
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                    app:font="@string/font_name_source_sans_pro"
                     android:id="@+id/editTextFirstNumber"
                     style="@style/VerifyMobileEditText_square_WHITE"/>
 
-                <EditText
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                    app:font="@string/font_name_source_sans_pro"
                     android:id="@+id/editTextSecondNumber"
+                    android:maxLength="1"
                     style="@style/VerifyMobileEditText_square_WHITE"/>
 
-                <EditText
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
                     android:id="@+id/editTextThirdNumber"
-                    style="@style/VerifyMobileEditText_square_WHITE"/>
+                    style="@style/VerifyMobileEditText_square_WHITE"
+                    app:font="@string/font_name_source_sans_pro"/>
 
-                <EditText
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
                     android:id="@+id/editTextFourthNumber"
                     style="@style/VerifyMobileEditText_square_WHITE"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionDone"
+                    app:font="@string/font_name_source_sans_pro"/>
             </LinearLayout>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/instructionExpiryTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/step_two_instruction_expiry"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                app:font="@string/font_name_source_sans_pro"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/resendCodeTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/step_two_request_authorization_code"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                app:font="@string/font_name_source_sans_pro"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,23 +100,25 @@
                 android:layout_marginTop="@dimen/margin_extra__extra_large"
                 >
 
-                <Button
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                     android:id="@+id/btnCancel"
                     style="@style/WhiteButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
-                    android:text="@string/btn_cancel"/>
+                    android:text="@string/btn_cancel"
+                    app:font="@string/font_name_source_sans_pro"/>
 
-                <Button
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                     android:id="@+id/btnContinue"
                     style="@style/GreenButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
-                    android:text="@string/btn_verify_code"/>
+                    android:text="@string/btn_continue"
+                    app:font="@string/font_name_source_sans_pro"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

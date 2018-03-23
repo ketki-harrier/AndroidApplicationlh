@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Try Me"
-        android:id="@+id/textView2"
+        android:id="@+id/TextView2"
         android:layout_marginBottom="16dp"
         android:layout_above="@+id/three_btn"
         android:layout_centerHorizontal="true" />
