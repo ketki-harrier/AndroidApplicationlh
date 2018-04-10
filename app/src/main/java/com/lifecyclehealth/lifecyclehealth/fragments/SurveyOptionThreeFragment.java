@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.print.PrintHelper;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -65,6 +66,7 @@ import com.lifecyclehealth.lifecyclehealth.universal_video.UniversalVideoView;
 import com.lifecyclehealth.lifecyclehealth.upload_download.DownloadService;
 import com.lifecyclehealth.lifecyclehealth.upload_download.UploadService;
 import com.lifecyclehealth.lifecyclehealth.utils.InputStreamVolleyRequest;
+import com.lifecyclehealth.lifecyclehealth.utils.TouchImageView;
 
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -305,7 +307,7 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
             params.put("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
             params.put("OptionId", "0");
             params.put("Score", "0");
-            params.put("Type_Of_Section", surveyDetailsModel.getQuestionModel().getTypeOfAnswer()+"");
+            params.put("Type_Of_Section", surveyDetailsModel.getQuestionModel().getTypeOfAnswer() + "");
             params.put("Descriptive_Answer", "");
             params.put("Attachment_Name", editchangeName.getText().toString());
 
@@ -659,7 +661,8 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     Matrix matrix = new Matrix();
     Float scale = 1f;
     ScaleGestureDetector SGD;
-    ImageView imageViewLoad;
+    TouchImageView imageViewLoad;
+    Bitmap imageBitmap = null;
 
     private void showImage() {
         Dialog dialog = new Dialog(getContext());
@@ -667,7 +670,7 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
         dialog.setCancelable(true);
         LayoutInflater li = LayoutInflater.from(getContext());
         final View myView = li.inflate(R.layout.survey_three_show_image, null);
-
+        imageBitmap = null;
         //dialog.setContentView(R.layout.survey_three_show_image);
         dialog.setContentView(myView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -680,7 +683,10 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
         dialog.getWindow().setAttributes(lp);
         //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
-        imageViewLoad = (ImageView) dialog.findViewById(R.id.image);
+        imageViewLoad = (TouchImageView) dialog.findViewById(R.id.image);
+        final ImageView printPdf = (ImageView) dialog.findViewById(R.id.printImage);
+        printPdf.setVisibility(View.GONE);
+
         com.android.volley.toolbox.ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
 
         imageLoader.get(surveyDetailsModel.getQuestionModel().getAttachment_Url(), new com.android.volley.toolbox.ImageLoader.ImageListener() {
@@ -693,8 +699,23 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
             public void onResponse(com.android.volley.toolbox.ImageLoader.ImageContainer response, boolean arg1) {
                 if (response.getBitmap() != null) {
                     // load image into imageview
+                    imageBitmap = response.getBitmap();
                     imageViewLoad.setImageBitmap(response.getBitmap());
+                    printPdf.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        printPdf.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+               /* PrintManager printManager = (PrintManager) getActivity().getSystemService(Context.PRINT_SERVICE);
+                PrintDocumentAdapter adapter = webview.createPrintDocumentAdapter();
+                printManager.print(getString(R.string.app_name), adapter, null);*/
+
+               if (imageBitmap!=null) {
+                   printDocumentImage(imageBitmap, surveyDetailsModel.getQuestionModel().getAttachment_Name());
+               }
             }
         });
 
@@ -800,11 +821,23 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
             printJobs.add(printJob);
         } else {
             Toast.makeText(getContext(), "Not supported", Toast.LENGTH_SHORT).show();
-            //showToast(mContext.getString(R.string.mytools_printing_not_supported), 1);
         }
     }
 
 
+    public void printDocumentImage(Bitmap webView, String title) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            String documentName = getActivity().getString(R.string.app_name) + " - " + title;
+            PrintHelper printHelper = new PrintHelper(getContext());
+            printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+            printHelper.printBitmap(documentName, webView);
+
+        } else {
+            Toast.makeText(getContext(), "Not supported", Toast.LENGTH_SHORT).show();
+            //showToast(mContext.getString(R.string.mytools_printing_not_supported), 1);
+        }
+    }
 /*    private void createWebPrintJob(WebView webView) {
         String jobName = getString(R.string.app_name) + " Document";
         PrintAttributes attributes = new PrintAttributes.Builder()

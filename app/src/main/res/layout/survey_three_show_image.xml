@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
+        android:layout_marginTop="@dimen/margin_padding_10"
+        android:layout_marginLeft="@dimen/margin_padding_10"
+        android:layout_marginRight="@dimen/margin_padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white">
+
+        <ImageView
+            android:id="@+id/printImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/margin"
+            android:src="@drawable/print" />
+    </RelativeLayout>
+
+    <com.lifecyclehealth.lifecyclehealth.utils.TouchImageView
         android:id="@+id/image"
-        android:scaleType="fitXY"
+        android:layout_marginLeft="@dimen/margin_padding_10"
+        android:layout_marginRight="@dimen/margin_padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
         android:adjustViewBounds="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_marginBottom="@dimen/margin_20"
+        android:scaleType="fitXY" />
+
 
 </LinearLayout>
