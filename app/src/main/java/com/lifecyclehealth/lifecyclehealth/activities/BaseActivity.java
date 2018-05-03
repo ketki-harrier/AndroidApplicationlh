@@ -83,6 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             changeView = false;
             mDelegater.send(builder.getNotification());
 
+            MainActivity.getInstance().callMessageCountService();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

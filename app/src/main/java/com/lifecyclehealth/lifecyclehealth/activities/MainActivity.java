@@ -164,6 +164,67 @@ public class MainActivity extends BaseActivity {
         return mInstance;
     }
 
+    public void callMessageCountService() {
+        getMessageCountForMessage();
+    }
+
+
+    private void getMessageCountForMessage() {
+
+        MyApplication.getInstance().addToSharedPreference(messageCount, "0");
+
+        if (isConnectedToNetwork(this)) {
+            try {
+                networkRequestUtil.getDataSecure(BASE_URL + URL_MESSAGE_GET_CONVERSATION, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        printLog("Response Of Message list:" + response);
+                        if (response != null) {
+                            MessageDialogResponse messageEpisodeListResponse = new Gson().fromJson(response.toString(), MessageDialogResponse.class);
+
+                            if (messageEpisodeListResponse != null) {
+                                if (messageEpisodeListResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                    //messageCount = messageEpisodeListResponse.getUnread_feeds();
+                                    MyApplication.getInstance().addToSharedPreference(messageCount, messageEpisodeListResponse.getUnread_feeds());
+
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    if (fragmentManager != null && fragmentManager.getFragments() != null) {
+                                        for (Fragment fragment : fragmentManager.getFragments()) {
+                                            if (fragment != null && fragment.isVisible() && fragment instanceof SurveyFragment) {
+                                                ((SurveyFragment) fragment).changeMessageIcon();
+                                            } if (fragment != null && fragment.isVisible() && fragment instanceof MeetFragment) {
+                                                ((MeetFragment) fragment).changeMessageIcon();
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                            } else {
+                                //messageCount = "0";
+                                MyApplication.getInstance().addToSharedPreference(messageCount, "0");
+
+                                //showDialogWithOkButton(messageEpisodeListResponse.getMessage());
+                            }
+                        }
+                        //showDialogWithOkButton(getString(R.string.error_someting_went_wrong));
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+            } catch (Exception e) {
+                setupBottomBar();
+            }
+        } else {
+
+            //showNoNetworkMessage();
+        }
+        getNotificationCount();
+
+    }
 
     @Override
     protected void onStart() {

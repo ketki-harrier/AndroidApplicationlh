@@ -78,6 +78,7 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
     public static String selectedDate = null;
     Button btnScheduleMeet;
     String messageCount, notificationCount;
+    private ImageView imageViewMessage,imageViewNotification;
     TextView countTextViewMessage, notificationCountTextViewMessage;
     private boolean isPatient;
     static View view1;
@@ -142,11 +143,35 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         RelativeLayout messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
         countTextViewMessage = (TextView) view.findViewById(R.id.countTextViewMessage);
         notificationCountTextViewMessage = (TextView) view.findViewById(R.id.countTextViewNotificatione);
-        ImageView imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
-        ImageView imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
+         imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
+         imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
         //get Notification count
         getNotificationCount(notificationCountTextViewMessage, mainActivity);
+        changeMessageIcon();
 
+
+
+        notificationHolderLayout.setOnClickListener(this);
+        messageHolderLayout.setOnClickListener(this);
+
+        dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
+        emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
+        recyclerView.hasFixedSize();
+        btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
+        btnScheduleMeet.setOnClickListener(this);
+        if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
+            btnScheduleMeet.setVisibility(View.GONE);
+        } else {
+            btnScheduleMeet.setVisibility(View.VISIBLE);
+        }
+        view1 = view;
+        setupCalendar(view);
+
+    }
+
+
+    public void changeMessageIcon(){
         if (!messageCount.equals("0")) {
             countTextViewMessage.setText(messageCount);
         } else {
@@ -170,25 +195,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         } else {
             imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
         }
-
-
-        notificationHolderLayout.setOnClickListener(this);
-        messageHolderLayout.setOnClickListener(this);
-
-        dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
-        emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
-        recyclerView.hasFixedSize();
-        btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
-        btnScheduleMeet.setOnClickListener(this);
-        if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
-            btnScheduleMeet.setVisibility(View.GONE);
-        } else {
-            btnScheduleMeet.setVisibility(View.VISIBLE);
-        }
-        view1 = view;
-        setupCalendar(view);
-
     }
 
     /*Refresh meet*/
