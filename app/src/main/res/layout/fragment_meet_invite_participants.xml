@@ -31,7 +31,7 @@
                 android:background="@color/white"
                 android:drawableLeft="@android:drawable/ic_menu_search"
                 android:textColor="@color/background"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/cancel"
@@ -43,7 +43,7 @@
                 android:text="@string/btn_cancel"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
                 android:textColor="@android:color/holo_blue_light"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <!--        <SearchView
                         android:id="@+id/searchInviteParticipant"
@@ -80,7 +80,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/btn_invite"
             android:textColor="@drawable/selector_text_login_btn"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
             android:id="@+id/btnCancel"
@@ -90,7 +90,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/btn_cancel"
             android:textColor="@drawable/selector_text_login_btn"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
     </LinearLayout>

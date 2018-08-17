@@ -33,7 +33,7 @@
                 android:src="@drawable/green_arrownext" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/back"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
 
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:text="@string/meeting_title"
                 android:textColor="@color/uvv_titlebar_bg"
                 android:textStyle="bold"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
                 android:id="@+id/meetingTitle"
@@ -107,7 +107,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/black"
                 android:textColorHint="@color/hint_color"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -119,7 +119,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -138,7 +138,7 @@
                     android:paddingLeft="@dimen/margin"
                     android:text="@string/provider_to_provider"
                     android:textColor="@color/hint_color"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/patient_related_episode"
@@ -148,7 +148,7 @@
                     android:paddingLeft="@dimen/margin"
                     android:text="@string/patient_related_episode"
                     android:textColor="@color/hint_color"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <LinearLayout
                     android:id="@+id/linear_patient_related_episode"
@@ -166,9 +166,9 @@
                         android:text="@string/patient_name"
                         android:textColor="@color/hint_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
-                    <Spinner
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinnerPatientName"
                         style="@style/CustomSpinnerTheme"
                         android:layout_width="fill_parent"
@@ -189,9 +189,9 @@
                         android:text="@string/episode_name"
                         android:textColor="@color/hint_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
-                    <Spinner
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinner_episode_name"
                         style="@style/CustomSpinnerTheme"
                         android:layout_width="fill_parent"
@@ -212,7 +212,7 @@
                     android:paddingLeft="@dimen/margin"
                     android:text="@string/provider_patient_with_no_episode"
                     android:textColor="@color/hint_color"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
                 <LinearLayout
@@ -231,10 +231,10 @@
                         android:text="@string/patient_name"
                         android:textColor="@color/hint_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
 
-                    <Spinner
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinner_no_episode_PatientName"
                         style="@style/CustomSpinnerTheme"
                         android:layout_width="fill_parent"
@@ -255,7 +255,7 @@
                     android:paddingLeft="@dimen/margin"
                     android:text="@string/provider_with_multiple_patient"
                     android:textColor="@color/hint_color"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </RadioGroup>
 
@@ -274,7 +274,7 @@
                     android:text="@string/start_d"
                     android:textColor="@color/hint_color"
                     android:textStyle="bold"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -288,7 +288,7 @@
                     android:textColor="@color/black"
                     android:textAlignment="viewStart"
                     android:paddingLeft="@dimen/margin_extra_large"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>
 
 
@@ -312,7 +312,7 @@
                         android:text="@string/start_time"
                         android:textColor="@color/hint_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
 
                     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -326,7 +326,7 @@
                         android:textColor="@color/black"
                         android:textAlignment="viewStart"
                         android:paddingLeft="@dimen/margin_extra_large"
-                        app:font="@string/font_name_source_sans_pro"/>
+                        fontPath="fonts/Roboto-Regular.ttf"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -344,7 +344,7 @@
                         android:text="@string/duration"
                         android:textColor="@color/hint_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
 
                     <Spinner
@@ -379,7 +379,7 @@
                     android:background="@drawable/selector_login_btn"
                     android:text="@string/invitees"
                     android:textColor="@drawable/selector_text_login_btn"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
             </LinearLayout>
@@ -403,7 +403,7 @@
                     android:background="@drawable/selector_login_btn"
                     android:text="Schedule"
                     android:textColor="@drawable/selector_text_login_btn"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                     android:id="@+id/btnCancel"
@@ -416,7 +416,7 @@
                     android:background="@drawable/selector_white_btn"
                     android:text="@string/btn_cancel"
                     android:textColor="@color/black"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>
 
         </LinearLayout>

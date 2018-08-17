@@ -32,7 +32,7 @@ public class CustomFontEditText extends EditText {
     }
 
     private void init(AttributeSet attrs) {
-        if (attrs != null) {
+        /*if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CustomFontTextView);
             String fontName = a.getString(R.styleable.CustomFontTextView_font);
             if (fontName != null) {
@@ -43,7 +43,7 @@ public class CustomFontEditText extends EditText {
                 setTypeface(myTypeface);
             }
             a.recycle();
-        }
+        }*/
     }
 
    /* public void applyCustomFont(AttributeSet attrs) {

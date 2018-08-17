@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.moxtra:tencent-map-1.0.6">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/3298d1acd9dac99e235a728867c99243818b2599/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3298d1acd9dac99e235a728867c99243818b2599/output/jars/libs/TencentLocationSDK_v4.7.5_r226647_160509_1639.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/3298d1acd9dac99e235a728867c99243818b2599/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3298d1acd9dac99e235a728867c99243818b2599/output/jars/libs/TencentMapSDK_Raster_v1.1.2.16281.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3298d1acd9dac99e235a728867c99243818b2599/output/jars/libs/TencentSearch1.1.2.16095.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

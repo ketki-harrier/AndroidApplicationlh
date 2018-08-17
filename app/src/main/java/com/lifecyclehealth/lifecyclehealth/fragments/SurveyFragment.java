@@ -23,8 +23,6 @@ import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.SurveyPlanDto;
 import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 
@@ -125,6 +123,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
 
         if (!messageCount.equals("0")) {
             countTextViewMessage.setText(messageCount);
+            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
         } else {
             countTextViewMessage.setVisibility(View.GONE);
         }

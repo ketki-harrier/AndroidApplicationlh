@@ -40,7 +40,7 @@
                     android:layout_toLeftOf="@+id/imageChangeUsername"
                     android:hint="@string/hint_username"
                     android:textCursorDrawable="@drawable/white_color_cursor"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <ImageView
                     android:id="@+id/imageChangeUsername"
@@ -58,7 +58,7 @@
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_username"
                 android:textCursorDrawable="@drawable/white_color_cursor"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
             <!--PASSWORD -->
@@ -74,7 +74,7 @@
                     android:hint="@string/hint_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <Switch
                     android:id="@+id/simpleSwitch"
@@ -95,7 +95,7 @@
                     android:text="Set Up \nTouchId "
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </RelativeLayout>
 
@@ -103,7 +103,7 @@
                 android:id="@+id/errorViewPasswordTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_password"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <!--TERM AND CONDITION-->
 
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/term_condi_part_1"
                     android:textColor="@color/white"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                     android:id="@+id/termAndCondiTextView"
@@ -137,7 +137,7 @@
                     android:paddingStart="@dimen/margin"
                     android:text="@string/term_condi_part_2"
                     android:textColor="@drawable/selector_text_blue_to_white"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
@@ -150,7 +150,7 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@drawable/selector_text_login_btn"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/IAcceptTermsAndConditions"
@@ -159,7 +159,7 @@
                 android:layout_marginTop="@dimen/margin_padding_10"
                 android:text="@string/term_condi_part_3"
                 android:textColor="@color/white"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
         </LinearLayout>
     </ScrollView>
 
@@ -179,7 +179,7 @@
             android:text="@string/forgot_username"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
             android:textColor="@drawable/selector_text_green_to_white"
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_weight="1"
             android:paddingRight="@dimen/margin"/>
 
@@ -191,7 +191,7 @@
             android:text="@string/forgot_password"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
             android:textColor="@drawable/selector_text_green_to_white"
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_weight="1"/>
 
     </LinearLayout>

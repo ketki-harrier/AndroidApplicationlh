@@ -44,7 +44,7 @@
                 android:text="@string/back"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/toolbar_title"
@@ -62,7 +62,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <ImageView
                 android:id="@+id/notificationIcon"
@@ -94,7 +94,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_14"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -108,7 +108,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/patient_name1"
@@ -121,7 +121,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/patient_name"
@@ -136,7 +136,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -150,7 +150,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/submitted_by"
@@ -165,7 +165,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -179,7 +179,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/submitted_on"
@@ -194,7 +194,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -208,7 +208,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/score_survey"
@@ -224,7 +224,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
     </RelativeLayout>
@@ -244,7 +244,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/text_16"
         android:textStyle="bold"
-        app:font="@string/font_name_source_sans_pro" />
+        fontPath="fonts/Roboto-Regular.ttf" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nested"

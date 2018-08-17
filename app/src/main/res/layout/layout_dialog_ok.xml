@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/messageTv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,7 +27,7 @@
         android:background="@color/black"/>
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/ok_btn"
         android:layout_width="match_parent"
         android:layout_height="0dp"

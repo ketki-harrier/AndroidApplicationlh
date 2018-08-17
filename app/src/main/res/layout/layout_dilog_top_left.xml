@@ -78,7 +78,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:layout_marginBottom="@dimen/margin_large"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
 
         <View
             android:id="@+id/view"
@@ -142,7 +142,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bg_round_corner_bottom"
                 android:textAllCaps="false"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
             <ScrollView
@@ -178,6 +178,6 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/bg_round_corner_bottom"
                 android:text="@string/view_all"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
         </RelativeLayout>
     </RelativeLayout>-->

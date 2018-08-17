@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Lifecycle Health</string>
 
-    <string name="font_name_fontawesome">fontawesome</string>
-    <string name="font_name_source_sans_pro">Roboto-Regular.ttf</string>
+    <!--<string name="font_name_fontawesome">fontawesome</string>
+    <string name="font_name_source_sans_pro">Roboto-Regular.ttf</string>-->
 
     <string name="large_text">Material is the metaphor</string>
     <string name="action_settings">Settings</string>

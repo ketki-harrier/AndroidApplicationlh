@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin"
             android:textColor="@color/text_color"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
     </LinearLayout>
 
@@ -53,7 +53,7 @@
             android:padding="@dimen/margin"
             android:singleLine="true"
             android:textColor="@color/text_color_grey"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <TextView
             android:id="@+id/tv_badge"
@@ -82,7 +82,7 @@
         android:layout_marginLeft="@dimen/margin_extra__extra_large"
         android:paddingRight="@dimen/margin_extra_large"
         android:textColor="@color/text_color"
-        app:font="@string/font_name_source_sans_pro" />
+        fontPath="fonts/Roboto-Regular.ttf" />
 
     <View
         android:layout_width="match_parent"

@@ -32,7 +32,7 @@
             android:text="@string/forgot_username"
             android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
             android:textColor="@color/colorPrimary"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
     </android.support.v7.widget.Toolbar>
 
 
@@ -55,7 +55,7 @@
                 android:text="@string/forgot_username_statement"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
             <!--USER NAME-->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
                 android:id="@+id/userNameEditText"
@@ -64,13 +64,13 @@
                 android:focusableInTouchMode="true"
                 android:hint="@string/email"
                 android:imeOptions="actionDone"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
             <!--ERROR VIEW-->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/errorViewUserNameTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_email"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <LinearLayout
                 android:id="@+id/linear_username"
@@ -86,7 +86,7 @@
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
                     android:text="@string/send_email"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                     android:id="@+id/btnCancel"
@@ -96,7 +96,7 @@
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
                     android:text="@string/btn_cancel"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>
 
 
@@ -114,7 +114,7 @@
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
                     android:text="@string/sign_in"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                     android:visibility="invisible"
@@ -124,7 +124,7 @@
                     android:layout_margin="@dimen/margin"
                     android:layout_weight="1"
                     android:text="@string/btn_cancel"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>
 
 

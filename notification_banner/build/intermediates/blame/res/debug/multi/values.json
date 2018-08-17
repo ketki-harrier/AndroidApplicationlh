@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "outputFile": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -10644,7 +10644,7 @@
                     "endOffset": 128355
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 2,
@@ -10664,7 +10664,7 @@
                     "endOffset": 128602
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 30,
                         "startColumn": 2,
@@ -10685,7 +10685,7 @@
                     "endOffset": 128926
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 51,
                         "startColumn": 2,
@@ -10706,7 +10706,7 @@
                     "endOffset": 129174
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 2,
@@ -10727,7 +10727,7 @@
                     "endOffset": 129546
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 42,
                         "startColumn": 2,
@@ -10748,7 +10748,7 @@
                     "endOffset": 129692
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 37,
                         "startColumn": 2,
@@ -10769,7 +10769,7 @@
                     "endOffset": 129797
                 },
                 "from": {
-                    "file": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\values\\styles.xml",
+                    "file": "D:\\Lifecycle Health\\AndroidApplication\\notification_banner\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 59,
                         "startColumn": 2,

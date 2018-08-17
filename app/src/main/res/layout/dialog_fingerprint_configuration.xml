@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/fingerprint_configuration_contain"
         android:textColor="@color/text"
-        app:font="@string/font_name_source_sans_pro"/>
+        fontPath="fonts/Roboto-Regular.ttf"/>
     <android.support.v7.widget.AppCompatCheckBox
         android:layout_marginTop="@dimen/margin_padding_5"
         android:id="@+id/dontAskCheckbox"
@@ -38,7 +38,7 @@
             android:layout_toLeftOf="@+id/noButton"
             android:id="@+id/yesButton"
             style="@style/ButtonDialog"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
             android:layout_alignParentRight="true"
@@ -47,7 +47,7 @@
             android:id="@+id/noButton"
             android:layout_marginRight="@dimen/margin_padding_5"
             style="@style/ButtonDialog"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
         <!--<Button-->
         <!--android:layout_alignParentRight="true"-->
         <!--android:layout_marginBottom="@dimen/margin_padding_5"-->

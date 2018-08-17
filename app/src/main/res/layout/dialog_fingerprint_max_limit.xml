@@ -16,7 +16,7 @@
         android:text="@string/fingerprint_max_limit_contain"
         android:textColor="@color/text"
         android:textSize="14sp"
-        app:font="@string/font_name_source_sans_pro"/>
+        fontPath="fonts/Roboto-Regular.ttf"/>
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
         android:id="@+id/buttonDone"
@@ -29,7 +29,7 @@
         android:background="@android:color/transparent"
         android:text="@string/fingerprint_max_limit_ok"
         android:textColor="@color/colorAccent"
-        app:font="@string/font_name_source_sans_pro"/>
+        fontPath="fonts/Roboto-Regular.ttf"/>
 
     <RelativeLayout
         android:id="@+id/two_btn_layout"
@@ -43,7 +43,7 @@
             android:layout_toLeftOf="@+id/OkButton"
             android:id="@+id/cancelButton"
             style="@style/ButtonDialog"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
@@ -51,6 +51,6 @@
             android:text="@string/fingerprint_goto_settings"
             android:id="@+id/OkButton"
             style="@style/ButtonDialog"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
     </RelativeLayout>
 </LinearLayout>

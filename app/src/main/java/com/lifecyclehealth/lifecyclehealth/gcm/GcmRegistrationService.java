@@ -36,7 +36,6 @@ public class GcmRegistrationService extends IntentService {
             if (token != null)
                 MyApplication.getInstance().addToSharedPreference(GCM_token, token);
             Log.d(TAG, "GCM Registration token:" + token);
-//            PreferenceUtil.setGcmRegId(this, token);
             enableNotification(token);
         } catch (Exception e) {
             Log.e(TAG, "Get Token error", e);

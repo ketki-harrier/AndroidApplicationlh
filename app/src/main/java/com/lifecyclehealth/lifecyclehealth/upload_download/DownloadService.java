@@ -83,6 +83,7 @@ public class DownloadService extends IntentService implements Response.Listener<
     @Override
     public void onResponse(byte[] response) {
         HashMap<String, Object> map = new HashMap<String, Object>();
+        FileOutputStream foStream;
         try {
             if (response != null) {
                 try {

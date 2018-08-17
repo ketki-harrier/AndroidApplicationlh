@@ -62,7 +62,7 @@ public class MyApplication extends Application {
             MXAccountManager.createInstance(this, "iAQQ9UaAdrQ", "v7cn6OgKXVs", true);
 
             /******for production*********/
-           // MXAccountManager.createInstance(this, "qfiugFWfGqg", "ous0w9vF1U0", true);
+            MXAccountManager.createInstance(this, "qfiugFWfGqg", "ous0w9vF1U0", true);
 
             Analytics analytics = new Analytics.Builder(this, "mMJN5zbvWjhUo4KiXFkT91HdlMkWzm4p").build();
             Analytics.setSingletonInstance(analytics);

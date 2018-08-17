@@ -33,7 +33,7 @@ public class CustomRadioButton extends android.support.v7.widget.AppCompatRadioB
     }
 
     private void init(AttributeSet attrs) {
-        if (attrs != null) {
+        /*if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CustomFontTextView);
             String fontName = a.getString(R.styleable.CustomFontTextView_font);
             if (fontName != null) {
@@ -44,7 +44,7 @@ public class CustomRadioButton extends android.support.v7.widget.AppCompatRadioB
                 setTypeface(myTypeface);
             }
             a.recycle();
-        }
+        }*/
     }
 
 

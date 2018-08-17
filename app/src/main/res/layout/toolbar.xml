@@ -44,7 +44,7 @@
                 android:layout_alignRight="@+id/imageViewMessage"
                 android:visibility="visible"
                 android:singleLine="true"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
         </RelativeLayout>
 
@@ -57,7 +57,7 @@
             android:layout_gravity="center"
             android:text="Toolbar Title"
             android:textColor="@color/colorPrimary"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <RelativeLayout
             android:id="@+id/notificationHolder"
@@ -89,7 +89,7 @@
                 android:background="@drawable/bg_shape_circle"
                 android:layout_marginRight="18dp"
                 android:singleLine="true"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
 

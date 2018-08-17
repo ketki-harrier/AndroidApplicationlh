@@ -49,9 +49,8 @@
                     android:layout_toRightOf="@+id/backArrowBtn"
                     android:paddingRight="@dimen/margin_extra__extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-
                     android:textColor="@color/colorPrimary"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <ImageView
                     android:id="@+id/search"

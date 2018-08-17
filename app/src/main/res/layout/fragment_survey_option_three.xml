@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyForName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:text="@string/app_name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/questionTv"
@@ -49,7 +49,7 @@
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/appbar_scrolling_view_behavior"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
             <LinearLayout
@@ -80,7 +80,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
                     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
                         android:id="@+id/btnSelectFile"
@@ -91,7 +91,7 @@
                         android:text="@string/select_file"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
                 </LinearLayout>
 
@@ -118,7 +118,7 @@
                             android:layout_toLeftOf="@+id/imageView"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            app:font="@string/font_name_source_sans_pro"
+                            fontPath="fonts/Roboto-Regular.ttf"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
@@ -159,7 +159,7 @@
                             android:text="@string/Change"
                             android:textAllCaps="false"
                             android:textColor="@color/black"
-                            app:font="@string/font_name_source_sans_pro" />
+                            fontPath="fonts/Roboto-Regular.ttf" />
 
 
                         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
@@ -171,7 +171,7 @@
                             android:text="@string/Upload"
                             android:textAllCaps="false"
                             android:textColor="@drawable/selector_text_login_btn"
-                            app:font="@string/font_name_source_sans_pro" />
+                            fontPath="fonts/Roboto-Regular.ttf" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -201,7 +201,7 @@
                             android:maxLines="1"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            app:font="@string/font_name_source_sans_pro" />
+                            fontPath="fonts/Roboto-Regular.ttf" />
 
                         <ImageView
                             android:id="@+id/imageViewRemove"
@@ -231,7 +231,7 @@
                             android:text="@string/Remove"
                             android:textAllCaps="false"
                             android:textColor="@color/black"
-                            app:font="@string/font_name_source_sans_pro" />
+                            fontPath="fonts/Roboto-Regular.ttf" />
 
 
                         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
@@ -239,7 +239,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAllCaps="false"
-                            app:font="@string/font_name_source_sans_pro" />
+                            fontPath="fonts/Roboto-Regular.ttf" />
 
                     </LinearLayout>
                 </LinearLayout>

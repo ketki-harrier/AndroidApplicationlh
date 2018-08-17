@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/listTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

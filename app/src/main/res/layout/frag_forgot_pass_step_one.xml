@@ -17,7 +17,7 @@
             android:orientation="vertical">
             <!--INSTRUCTION-->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/instructionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:textColor="@color/white"/>
             <!--USER NAME-->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/userNameEditText"
                 android:focusableInTouchMode="true"
                 style="@style/LoginScreen_EditText"
@@ -36,7 +36,7 @@
                 android:imeOptions="actionDone"/>
              <!--ERROR VIEW-->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/errorViewUserNameTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_username"/>
@@ -48,7 +48,7 @@
                 >
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-                    app:font="@string/font_name_source_sans_pro"
+                    fontPath="fonts/Roboto-Regular.ttf"
                     android:id="@+id/btnCancel"
                     style="@style/WhiteButton"
                     android:layout_width="0dp"
@@ -58,7 +58,7 @@
                     android:text="@string/btn_cancel"/>
 
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-                    app:font="@string/font_name_source_sans_pro"
+                    fontPath="fonts/Roboto-Regular.ttf"
                     android:id="@+id/btnSendCode"
                     style="@style/GreenButton"
                     android:layout_width="0dp"

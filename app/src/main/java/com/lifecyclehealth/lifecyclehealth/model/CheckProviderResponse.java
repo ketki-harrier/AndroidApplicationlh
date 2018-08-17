@@ -47,6 +47,8 @@ public class CheckProviderResponse {
         private String Designate_UserID;
         @SerializedName("Provider_UserID")
         private String Provider_UserID;
+        @SerializedName("Designate_Preference")
+        private String Designate_Preference;
 
         public String getDesignate_UserID() {
             return Designate_UserID;
@@ -62,6 +64,10 @@ public class CheckProviderResponse {
 
         public void setProvider_UserID(String provider_UserID) {
             Provider_UserID = provider_UserID;
+        }
+
+        public String getDesignate_Preference() {
+            return Designate_Preference;
         }
     }
 

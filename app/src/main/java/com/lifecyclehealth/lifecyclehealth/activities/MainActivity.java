@@ -543,9 +543,9 @@ public class MainActivity extends BaseActivity {
             case R.id.tab_survey:
                 fragment = new SurveyFragment();
                 break;
-            case R.id.tab_patientDiary:
+            /*case R.id.tab_patientDiary:
                 fragment = new PatientDiaryFragment();
-                break;
+                break;*/
             case R.id.tab_message:
                 fragment = new MessageFragment();
                 break;
@@ -555,9 +555,9 @@ public class MainActivity extends BaseActivity {
             case R.id.tab_more:
                 fragment = new MoreOptionsFragment();
                 break;
-            case R.id.tab_episode_list:
+         /*   case R.id.tab_episode_list:
                 fragment = new TreatmentFragment();
-                break;
+                break;*/
         }
         if (fragment != null)
 
@@ -638,7 +638,12 @@ public class MainActivity extends BaseActivity {
                                 } else {
                                     MyApplication.getInstance().addToSharedPreference(notificationCount, "0");
                                 }
+                                SurveyFragment surveyFragment = new SurveyFragment();
+                                surveyFragment.changeMessageIcon();
 
+                            }else {
+                                SurveyFragment surveyFragment = new SurveyFragment();
+                                surveyFragment.changeMessageIcon();
                             }
                         }
                     }

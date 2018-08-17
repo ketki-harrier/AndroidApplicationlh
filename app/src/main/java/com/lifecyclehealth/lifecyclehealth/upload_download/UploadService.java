@@ -45,14 +45,14 @@ public class UploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-       // mainActivity = (MainActivity) getApplicationContext();
+        // mainActivity = (MainActivity) getApplicationContext();
         multipartRequest = new MultipartRequest(getApplicationContext());
         printLog("OnHandler:" + intent);
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Upload")
-                .setProgress(0,0,true)
+                .setProgress(0, 0, true)
                 .setContentText("Uploading File")
                 .setDefaults(android.app.Notification.DEFAULT_SOUND)
                 .setVibrate(new long[]{1000, 1000})
@@ -87,6 +87,8 @@ public class UploadService extends IntentService {
 
             Map<String, VolleyMultipartRequest.DataPart> paramDataPart = new HashMap<>();
 
+            printLog("fileType" + fileType);
+
             paramDataPart.put("upload", new VolleyMultipartRequest.DataPart(fileName, SurveyOptionThreeFragment.byteData, fileType));
 
             multipartRequest.postDataMultipartSecure(BASE_URL + URL_SURVEY_SUBMIT_ANSWER_FILE, params, paramDataPart, new VolleyCallback() {
@@ -106,11 +108,12 @@ public class UploadService extends IntentService {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void uploadComplete() {
-       // SurveyOptionThreeFragment.isUploading=false;
+        // SurveyOptionThreeFragment.isUploading=false;
         notificationManager.cancel(0);
         notificationBuilder.setProgress(0, 0, false);
         notificationBuilder.setContentText("File Uploaded");

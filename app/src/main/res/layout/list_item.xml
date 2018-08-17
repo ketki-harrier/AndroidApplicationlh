@@ -25,7 +25,7 @@
         android:maxLines="2"
         android:paddingTop="10dp"
         android:textColor="@color/action_bar"
-        app:font="@string/font_name_source_sans_pro" />
+        fontPath="fonts/Roboto-Regular.ttf" />
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
         android:id="@+id/expandedListItemDate"
@@ -39,7 +39,7 @@
         android:paddingTop="10dp"
         android:textStyle="bold"
         android:textColor="@color/action_bar"
-        app:font="@string/font_name_source_sans_pro" />
+        fontPath="fonts/Roboto-Regular.ttf" />
 
     <ImageView
         android:id="@+id/expandedListItemArrow"

@@ -8,6 +8,109 @@ if (project.hasProperty("moxtra.signing")
 }
 
 android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.lifecyclehealth.lifecyclehealth"
+        minSdkVersion 16
+        targetSdkVersion 25
+        multiDexEnabled true
+        versionCode 70
+        versionName "1.4.8"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+    dexOptions {
+        /*incremental true*/
+        javaMaxHeapSize "4g"
+        preDexLibraries true
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled true
+            renderscriptDebuggable false
+        }
+    }
+    aaptOptions {
+        cruncherEnabled = false
+    }
+    packagingOptions {
+        exclude 'META-INF/maven/com.belerweb/pinyin4j/pom.properties'
+        exclude 'META-INF/maven/com.belerweb/pinyin4j/pom.xml'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/dependencies.txt'
+    }
+
+
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //    compile 'devs.mulham.horizontalcalendar:horizontalcalendar:1.1.0'
+    compile project(':horizontalcalendar')
+    compile project(':notification_banner')
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:customtabs:26.1.0'
+    compile 'com.android.support:mediarouter-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.roughike:bottom-bar:2.3.1'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile 'com.nhaarman.supertooltips:library:3.0.+'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.mikhaellopez:circularprogressbar:1.0.0'
+    compile 'com.moxtra:chat-sdk:4.3.3'
+    compile 'com.segment.analytics.android:analytics:4.+'
+    compile 'com.google.android.gms:play-services-gcm:10.2.6'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    /*testCompile 'junit:junit:4.12'*/
+
+    compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+}
+apply plugin: 'com.google.gms.google-services'
+
+
+
+/*
+apply plugin: 'com.android.application'
+
+if (project.hasProperty("moxtra.signing")
+        && new File(project.property("moxtra.signing") + ".gradle").exists()) {
+    apply from: project.property("moxtra.signing") + ".gradle";
+} else {
+    println("No signing config found. You may not able to build the release apk.")
+}
+
+android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
@@ -15,8 +118,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         multiDexEnabled true
-        versionCode 65
-        versionName "1.4.5"
+        versionCode 67
+        versionName "1.4.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
@@ -46,9 +149,15 @@ dependencies {
     })
     //    compile 'devs.mulham.horizontalcalendar:horizontalcalendar:1.1.0'
     compile project(':horizontalcalendar')
-    /*  compile 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:0.7.2'*/
-    /*  compile 'com.roughike:bottom-bar:2.0.2'*/
-    /* compile 'com.moxtra:chat-sdk:4.0.0'*/
+    */
+/*  compile 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:0.7.2'*//*
+
+    */
+/*  compile 'com.roughike:bottom-bar:2.0.2'*//*
+
+    */
+/* compile 'com.moxtra:chat-sdk:4.0.0'*//*
+
     compile project(':notification_banner')
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -68,6 +177,9 @@ dependencies {
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     testCompile 'junit:junit:4.12'
 }
+*/
+
+
 
 /*apply plugin: 'com.android.application'
 

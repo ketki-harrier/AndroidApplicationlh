@@ -72,7 +72,7 @@
                     android:layout_marginLeft="@dimen/margin"
                     android:textColor="@color/text_color"
                     android:textStyle="bold"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                 android:padding="@dimen/margin"
                 android:paddingLeft="@dimen/margin_large"
                 android:textColor="@color/text_color"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
         </RelativeLayout>
 
@@ -169,7 +169,7 @@
                         android:layout_marginLeft="@dimen/margin"
                         android:textColor="@color/text_color"
                         android:textStyle="bold"
-                        app:font="@string/font_name_source_sans_pro" />
+                        fontPath="fonts/Roboto-Regular.ttf" />
 
                 </LinearLayout>
 
@@ -185,7 +185,7 @@
                     android:padding="@dimen/margin"
                     android:paddingLeft="@dimen/margin_large"
                     android:textColor="@color/text_color"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
                &lt;!&ndash; <View

@@ -89,7 +89,7 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         setupToolbarTitle(toolbar, getString(R.string.more));
-        if (isPatient) {
+      /*  if (isPatient) {
             patientSurveyLayout.setVisibility(View.VISIBLE);
             patientDiaryLayout.setVisibility(View.GONE);
             patientToDoLayout.setVisibility(View.GONE);
@@ -99,7 +99,12 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
             patientDiaryLayout.setVisibility(View.VISIBLE);
             patientToDoLayout.setVisibility(View.VISIBLE);
             addPatientExpressLayout.setVisibility(View.VISIBLE);
-        }
+        }*/
+
+        patientSurveyLayout.setVisibility(View.GONE);
+        patientDiaryLayout.setVisibility(View.GONE);
+        patientToDoLayout.setVisibility(View.GONE);
+        addPatientExpressLayout.setVisibility(View.GONE);
 
         RelativeLayout notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
         RelativeLayout messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);

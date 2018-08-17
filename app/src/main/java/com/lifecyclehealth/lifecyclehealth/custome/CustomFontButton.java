@@ -31,7 +31,7 @@ public class CustomFontButton extends Button {
     }
 
     private void init(AttributeSet attrs) {
-        if (attrs != null) {
+       /* if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CustomFontTextView);
             String fontName = a.getString(R.styleable.CustomFontTextView_font);
             if (fontName != null) {
@@ -42,7 +42,7 @@ public class CustomFontButton extends Button {
                 setTypeface(myTypeface);
             }
             a.recycle();
-        }
+        }*/
     }
 
    /* public void applyCustomFont(AttributeSet attrs) {

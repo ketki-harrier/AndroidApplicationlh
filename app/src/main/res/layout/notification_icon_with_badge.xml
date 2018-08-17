@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/ic_reminder"/>
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/notificationCountTextView"
         style="@style/MessageCount"
         android:layout_alignEnd="@+id/imageView"

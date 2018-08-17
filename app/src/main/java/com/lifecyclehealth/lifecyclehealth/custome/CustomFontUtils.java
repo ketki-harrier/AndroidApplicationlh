@@ -13,7 +13,7 @@ import com.lifecyclehealth.lifecyclehealth.R;
  */
 public class CustomFontUtils {
 
-    public static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";
+  /*  public static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";
 
     public static void applyCustomFont(TextView customFontTextView, Context context, AttributeSet attrs) {
         TypedArray attributeArray = context.obtainStyledAttributes(
@@ -39,10 +39,10 @@ public class CustomFontUtils {
         if (fontName.contentEquals(context.getString(R.string.font_name_fontawesome))) {
             return FontCache.getTypeface("HelveticaNeue-Regular.ttf", context);
         } else if (fontName.contentEquals(context.getString(R.string.font_name_source_sans_pro))) {
-            /*
+            *//*
             information about the TextView textStyle:
             http://developer.android.com/reference/android/R.styleable.html#TextView_textStyle
-            */
+            *//*
             switch (textStyle) {
                 case Typeface.BOLD: // bold
                     return FontCache.getTypeface("HelveticaNeue-Bold.ttf", context);
@@ -57,5 +57,5 @@ public class CustomFontUtils {
             // return null so Android just uses the standard font (Roboto)
             return null;
         }
-    }
+    }*/
 }

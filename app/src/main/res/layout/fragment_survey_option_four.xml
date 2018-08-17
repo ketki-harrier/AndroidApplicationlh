@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyForName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/questionTv"
@@ -50,7 +50,7 @@
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/appbar_scrolling_view_behavior"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
 
             <View

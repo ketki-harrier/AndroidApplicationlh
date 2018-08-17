@@ -60,7 +60,7 @@
             android:padding="@dimen/margin_extra__extra_large"
             android:text="SCHEDULE MEET"
             android:textColor="@drawable/selector_text_login_btn"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/selectedDateTv"
@@ -73,7 +73,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <devs.mulham.horizontalcalendar.HorizontalCalendarView
             android:id="@+id/calendarView"
@@ -84,7 +84,7 @@
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/emptyViewTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -17,7 +17,7 @@
             android:orientation="vertical">
             <!--NEW PASSWORD -->
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:focusableInTouchMode="true"
                 android:id="@+id/newPasswordEditText"
                 android:inputType="textPassword"
@@ -26,7 +26,7 @@
                 android:imeOptions="actionNext"/>
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/errorViewUserNameTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_in_password_new"/>
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:focusableInTouchMode="true"
                 android:id="@+id/confirmPasswordEditText"
                 style="@style/LoginScreen_EditText"
@@ -58,13 +58,13 @@
             </RelativeLayout>
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/errorViewPasswordTv"
                 style="@style/LoginScreen_Error_Text"
                 android:text="@string/error_in_password_confirm"/>
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/savePasswordIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\build\\intermediates\\res\\merged\\release\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "C:\\Users\\vaibhavi\\.android\\build-cache\\eeda8e2a52a3b86a88d3bf0eabcd8e0e09f94d90\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
-    },
-    {
         "merged": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\build\\intermediates\\res\\merged\\release\\layout\\notification_board_row.xml",
         "source": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\res\\layout\\notification_board_row.xml"
+    },
+    {
+        "merged": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\build\\intermediates\\res\\merged\\release\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "C:\\Users\\vaibhavi\\.android\\build-cache\\eeda8e2a52a3b86a88d3bf0eabcd8e0e09f94d90\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "D:\\Vaibhavi Project\\LifecycleHealth\\notification_banner\\build\\intermediates\\res\\merged\\release\\layout\\abc_search_view.xml",

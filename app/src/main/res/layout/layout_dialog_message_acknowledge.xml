@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/messageTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
     <!--android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"-->
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_large"
             android:text="@string/message_ack1"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
     </RadioGroup>
 
@@ -73,7 +73,7 @@
             android:background="@drawable/selector_login_btn"
             android:textColor="@drawable/selector_text_login_btn"
             android:text="@string/ok"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
             android:id="@+id/btnCancel"
@@ -86,7 +86,7 @@
             android:background="@drawable/selector_white_btn"
             android:textColor="@color/black"
             android:text="@string/btn_cancel"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
     </LinearLayout>
 
 

@@ -144,6 +144,7 @@ public class AppConstants {
 
     /*Designate Meet*/
     public static final String URL_MEET_CHECK_IS_DESIGNATE_SELECT = "secure/check/designate";
+    public static final String URL_MEET_CHECK_IS_DESIGNATE_SELECT_GLOBAL = "secure/get/designate/globalAndProvider/";
     public static final String URL_MEET_CHECK_IS_DESIGNATE_UN_SELECT = "secure/check/provider";
 
     /* Verify Mobile Screen*/

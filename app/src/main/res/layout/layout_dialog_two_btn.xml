@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/dialogTitleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:textStyle="bold"/>
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/dialogContainTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_marginTop="@dimen/dialog_contain_btn_margin">
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/btnCancel"
             android:text="@string/btn_cancel"
             android:textColor="@drawable/selector_text_blue_to_white"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/btnSignOut"
             android:textColor="@drawable/selector_text_blue_to_white"
             android:text="@string/dialog_btn_yes"

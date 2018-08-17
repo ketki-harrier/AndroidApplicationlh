@@ -28,7 +28,7 @@
             android:src="@drawable/logout_icon"/>
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra__extra_large"
@@ -43,7 +43,7 @@
 
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/btnOk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

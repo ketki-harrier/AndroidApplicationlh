@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/meet_subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/meet_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-        app:font="@string/font_name_source_sans_pro"
+        fontPath="fonts/Roboto-Regular.ttf"
         android:id="@+id/btn_meet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -41,7 +41,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin"
                 android:textColor="@color/black"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/provider"
@@ -50,7 +50,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_large"
                 android:textColor="@color/text_color_grey"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_large"
                     android:textColor="@color/text_color_grey"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </RelativeLayout>
 

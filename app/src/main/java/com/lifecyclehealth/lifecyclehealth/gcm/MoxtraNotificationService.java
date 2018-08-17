@@ -10,7 +10,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lifecyclehealth.lifecyclehealth.R;
-import com.lifecyclehealth.lifecyclehealth.activities.BaseActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.LoginActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.moxtra.sdk.ChatClient;

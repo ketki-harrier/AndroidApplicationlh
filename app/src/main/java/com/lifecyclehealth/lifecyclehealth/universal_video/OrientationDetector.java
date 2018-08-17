@@ -19,9 +19,11 @@ package com.lifecyclehealth.lifecyclehealth.universal_video;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.SensorManager;
-import android.support.compat.BuildConfig;
+
 import android.util.Log;
 import android.view.OrientationEventListener;
+
+import com.lifecyclehealth.lifecyclehealth.BuildConfig;
 
 
 public class OrientationDetector {

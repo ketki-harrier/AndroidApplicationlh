@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:text="@string/step_four_instruction_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"/>
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:drawableLeft="@drawable/ic_right_check"
                 android:drawableStart="@drawable/ic_right_check"
                 android:text="@string/step_four_instruction_success"
@@ -41,7 +41,7 @@
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/instructionRedirectTv"
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/logo_margin_top"
@@ -50,7 +50,7 @@
                 android:textColor="@color/white"/>
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-                app:font="@string/font_name_source_sans_pro"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/logIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

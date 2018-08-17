@@ -31,7 +31,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_14"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
 
             <RelativeLayout
                 android:id="@+id/horizontal_bar"
@@ -50,7 +50,7 @@
                     android:padding="@dimen/margin"
                     android:paddingLeft="@dimen/margin_extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
                 <View
@@ -87,7 +87,7 @@
                     android:padding="@dimen/margin"
                     android:paddingLeft="@dimen/margin_extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
             </RelativeLayout>
@@ -110,7 +110,7 @@
                     android:padding="@dimen/margin"
                     android:paddingLeft="@dimen/margin_extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
                 <View
                     android:id="@+id/topVertical"
@@ -147,7 +147,7 @@
                     android:padding="@dimen/margin"
                     android:paddingLeft="@dimen/margin_extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
 
             </RelativeLayout>

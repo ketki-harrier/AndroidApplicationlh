@@ -45,7 +45,7 @@
             android:layout_toEndOf="@+id/iv_cover_container"
             android:layout_toRightOf="@+id/iv_cover_container"
             android:textColor="@color/text_color"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/conversationMessageTv"
@@ -60,7 +60,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/text_color_grey"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
         <RelativeLayout
@@ -90,7 +90,7 @@
                 android:gravity="end"
                 android:textAlignment="textEnd"
                 android:textColor="@color/text_color"
-                app:font="@string/font_name_source_sans_pro" />
+                fontPath="fonts/Roboto-Regular.ttf" />
         </RelativeLayout>
     </RelativeLayout>
 

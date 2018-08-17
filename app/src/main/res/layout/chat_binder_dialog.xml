@@ -16,7 +16,7 @@
             android:background="@drawable/selector_login_btn"
             android:text="@string/binder_setting"
             android:textColor="@drawable/selector_text_login_btn"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
             android:id="@+id/meet_now"
@@ -26,7 +26,7 @@
             android:background="@drawable/selector_login_btn"
             android:text="@string/meet_now"
             android:textColor="@color/white"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
 
 

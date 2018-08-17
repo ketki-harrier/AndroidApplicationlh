@@ -44,7 +44,7 @@
                     android:layout_toRightOf="@+id/backArrowBtn"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimary"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </RelativeLayout>
 
@@ -79,7 +79,7 @@
                     android:layout_marginRight="18dp"
                     android:singleLine="true"
                     android:background="@drawable/bg_shape_circle"
-                    app:font="@string/font_name_source_sans_pro" />
+                    fontPath="fonts/Roboto-Regular.ttf" />
 
             </RelativeLayout>
 
@@ -112,7 +112,7 @@
             android:paddingLeft="@dimen/margin_padding_5"
             android:text="@string/episode_level_notification"
             android:textColor="@color/black"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
     </LinearLayout>
 
@@ -142,7 +142,7 @@
             android:paddingLeft="@dimen/margin_padding_5"
             android:text="@string/include_archived_notifications"
             android:textColor="@color/black"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
     </LinearLayout>
 

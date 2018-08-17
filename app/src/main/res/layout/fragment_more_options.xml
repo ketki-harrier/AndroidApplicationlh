@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/logout" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -74,7 +74,7 @@
             android:layout_toEndOf="@+id/profileImageView"
             android:layout_toRightOf="@+id/profileImageView"
             android:text="@string/My_Account"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <ImageView
 
@@ -97,6 +97,7 @@
         android:id="@+id/healthLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_margin="5dp">
 
         <ImageView
@@ -110,7 +111,7 @@
             app:srcCompat="@drawable/health_more" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,6 +131,7 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@android:color/darker_gray" />
@@ -151,7 +153,7 @@
             app:srcCompat="@drawable/notification_more" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            app:font="@string/font_name_source_sans_pro"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -176,6 +178,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/treatmentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -198,7 +201,7 @@
             android:layout_toEndOf="@+id/treatmentImageView"
             android:layout_toRightOf="@+id/treatmentImageView"
             android:text="@string/treatment"
-            app:font="@string/font_name_source_sans_pro"/>
+            fontPath="fonts/Roboto-Regular.ttf"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -211,6 +214,7 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@android:color/darker_gray" />
@@ -239,7 +243,7 @@
             android:layout_toEndOf="@+id/patientSurveyImageView"
             android:layout_toRightOf="@+id/patientSurveyImageView"
             android:text="@string/patient_summary"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -280,7 +284,7 @@
             android:layout_toEndOf="@+id/patientDiaryImageView"
             android:layout_toRightOf="@+id/patientDiaryImageView"
             android:text="@string/patient_diary"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -296,6 +300,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:visibility="gone"
         android:background="@android:color/darker_gray" />
 
     <RelativeLayout
@@ -321,7 +326,7 @@
             android:layout_toEndOf="@+id/patientToDoImageView"
             android:layout_toRightOf="@+id/patientToDoImageView"
             android:text="@string/todo"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -337,6 +342,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:visibility="gone"
         android:background="@android:color/darker_gray" />
 
     <RelativeLayout
@@ -362,7 +368,7 @@
             android:layout_toEndOf="@+id/addPatientExpressImageView"
             android:layout_toRightOf="@+id/addPatientExpressImageView"
             android:text="@string/add_patient_express"
-            app:font="@string/font_name_source_sans_pro" />
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -378,6 +384,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:visibility="gone"
         android:background="@android:color/darker_gray" />
 
 

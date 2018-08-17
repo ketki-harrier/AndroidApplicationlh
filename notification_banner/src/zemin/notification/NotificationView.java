@@ -45,16 +45,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-/**
- * Notification view.
- *
- * Callback {@link NotificationViewCallback} must be set before this view is displayed,
- * otherwise exception {@link CallbackNotFoundException} will be thrown.
- *
- * @see NotificationView#setCallback.
- *
- * SDK Ver. >= {@link android.os.Build.VERSION_CODES.HONEYCOMB}.
- */
+
 public class NotificationView extends FrameLayout
         implements GestureDetector.OnGestureListener,
                    GestureDetector.OnDoubleTapListener {
@@ -278,13 +269,7 @@ public class NotificationView extends FrameLayout
         return mTransitionEnabled;
     }
 
-    /**
-     * Add state listener.
-     *
-     * @see NotificationView#StateListener
-     *
-     * @param l
-     */
+
     public void addStateListener(StateListener l) {
         if (mListeners == null) {
             mListeners = new ArrayList<StateListener>();
@@ -294,13 +279,7 @@ public class NotificationView extends FrameLayout
         }
     }
 
-    /**
-     * Remove state listener.
-     *
-     * @see NotificationView#StateListener
-     *
-     * @param l
-     */
+
     public void removeStateListener(StateListener l) {
         if (mListeners != null && mListeners.contains(l)) {
             mListeners.remove(l);
