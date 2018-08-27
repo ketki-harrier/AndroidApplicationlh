@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -665,7 +666,12 @@ public class MessageFragment extends BaseFragmentWithOptions {
                             selectedEpisode = EpisodeNameListId.get(position);
                         }
                         Title = nameOfConversation.getText().toString();
-                        getInviteesWithEpisode();
+                        if (isPatient) {
+                            getInviteesWithEpisodeGlobal();
+                        } else {
+                            getInviteesWithEpisode();
+                        }
+
                         break;
                     }
                     case 2: {
@@ -682,7 +688,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         Title = nameOfConversation.getText().toString();
                         if (isPatient) {
                             getInviteesWithOutEpisodeGlobal(PatientID);
-                        }else {
+                        } else {
                             getInviteesWithOutEpisode(PatientID);
                         }
                         break;
@@ -885,6 +891,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         }
         if (isConnectedToNetwork(mainActivity)) {
             try {
+                printLog("url" + url);
                 mainActivity.networkRequestUtil.getDataSecure(url, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
@@ -957,6 +964,116 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                             }
                                         }
                                         showDialogInviteesWithEpisode(getActivity());
+                                    }
+                                } else {
+                                    //showDialogWithOkButton(meetInviteParticipantsModelMeetNow.getMessage());
+                                }
+                            } else
+                                showDialogWithOkButton(getString(R.string.error_someting_went_wrong));
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        showProgressDialog(false);
+                    }
+                });
+            } catch (Exception e) {
+                showProgressDialog(false);
+            }
+        } else {
+            showProgressDialog(false);
+            showNoNetworkMessage();
+        }
+    }
+
+    private void getInviteesWithEpisodeGlobal() {
+        showProgressDialog(true);
+        String url = null;
+        if (!selectedEpisode.equals("")) {
+            url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_EPISODE + "/" + selectedEpisode;
+        } else {
+            try {
+                url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_NO_EPISODE + "/" + AESHelper.decrypt(seedValue, MyApplication.getInstance().getFromSharedPreference(LOGIN_ID));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (isConnectedToNetwork(mainActivity)) {
+            try {
+                printLog("url" + url);
+                mainActivity.networkRequestUtil.getDataSecure(url, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        showProgressDialog(false);
+                        printLog("Response Of Invitees:" + response);
+                        if (response != null) {
+                            meetInviteParticipantsModelMeetNow = new Gson().fromJson(response.toString(), MeetInviteParticipantsModel.class);
+                            if (meetInviteParticipantsModelMeetNow != null) {
+                                if (meetInviteParticipantsModelMeetNow.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size() > 0) {
+
+                                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isDesignate_Exist()) {
+                                                    NetworkAdapter networkAdapter = new NetworkAdapter();
+                                                    final int finalI = i;
+                                                    networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID(), new DesignateCallBack() {
+                                                        @Override
+                                                        public void onSuccess(final CheckProviderResponse response) {
+                                                            for (int k = 0; k < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); k++) {
+                                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).setChecked(true);
+                                                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).setDesignate_Id(response.getDesignateList().get(0).getDesignate_UserID());
+                                                                    //UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).getUserID());
+                                                                }
+
+                                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).getUserID().equals(response.getDesignateList().get(0).getDesignate_UserID())) {
+                                                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).setChecked(true);
+                                                                    //UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).getUserID());
+                                                                }
+                                                            }
+                                                            UserIDs = new ArrayList<String>();
+                                                            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant = new ArrayList<String>();
+
+                                                            for (int h = 0; h < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); h++) {
+                                                                String role = TextUtils.join(",", meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getRoleName());
+                                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).isLoggedInUser()) {
+                                                                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                } else if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).isChecked()) {
+                                                                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                } else if (role.contains("Patient")) {
+                                                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).isPatientSelected()) {
+                                                                    } else {
+                                                                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            adapterGlobal = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs, new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
+                                                                @Override
+                                                                public void onItemClick(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
+
+                                                                    setAdapterWithEpisodeMeetGlobal(meetList, Type, pos);
+
+                                                                }
+                                                            });
+                                                            recyclerViewDialog.setAdapter(adapterGlobal);
+                                                        }
+
+                                                        @Override
+                                                        public void onError(int error) {
+
+                                                        }
+                                                    });
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        showDialogInviteesWithEpisodeGlobal(getActivity());
                                     }
                                 } else {
                                     //showDialogWithOkButton(meetInviteParticipantsModelMeetNow.getMessage());
@@ -1322,8 +1439,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
     RecyclerView recyclerViewDialog;
     MeetInviteParticipantsWithEpisodeAdapter adapter;
+    MeetInviteParticipantsWithEpisodeAdapter adapterGlobal;
     MeetInviteParticipantsWithoutEpisodeAdapter adapterWithoutEpisode;
     MeetInviteParticipantsWithoutEpisodeAdapter adapterWithoutEpisodeGlobal;
+    MeetInviteParticipantsWithoutEpisodeModel.UserList userList = null;
+    MeetInviteParticipantsModel.EpisodeParticipantList EpisodeList = null;
 
     Dialog dialog;
 
@@ -1412,7 +1532,10 @@ public class MessageFragment extends BaseFragmentWithOptions {
                     //submitInviteList();
                     //UserIDs = TextUtils.join(",", MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant);
                     UserIDs = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant;
-                    initialMessageDialog(getActivity());
+                    if (UserIDs.size() > 1)
+                        initialMessageDialog(getActivity());
+                    else
+                        Toast.makeText(getContext(), "At least one invitee is required", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1428,7 +1551,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
         dialog.show();
 
     }
-
 
     private void setAdapterWithEpisodeMeet(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
 
@@ -1499,7 +1621,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 @Override
                 public void onSuccess(final CheckProviderResponse response) {
 
-                    if (response.getStatus().equals("1")) {
+                    if (response.getStatus().equals("0")) {
+                        // if (response.getStatus().equals("1") || response.getStatus().equals("0")) {
 
                         MeetInviteParticipantsModel.EpisodeParticipantList episodeParticipantForDesignate = null;
                         for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
@@ -1739,7 +1862,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
     }
 
-
     private void setAdapterWithEpisodeMeet() {
         recyclerViewDialog.setAdapter(null);
         if (meetInviteParticipantsModelMeetNow != null) {
@@ -1771,6 +1893,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
         }
         if (meetInviteParticipantsModelMeetNowSearch.size() > 0)
             notifyDataSetChangedInviteesWithEpisode();
+        else
+            recyclerViewDialog.setAdapter(null);
     }
 
     private void notifyDataSetChangedInviteesWithEpisode() {
@@ -1784,6 +1908,641 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
         recyclerViewDialog.setAdapter(adapter);
     }
+
+
+    //Global
+
+    private void showDialogInviteesWithEpisodeGlobal(Context view) {
+
+        alertDialogCreateConversation.dismiss();
+        dialog = new Dialog(view);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.fragment_message_invite_participants);
+
+        recyclerViewDialog = (RecyclerView) dialog.findViewById(R.id.recycleViewInvities);
+        recyclerViewDialog.hasFixedSize();
+        recyclerViewDialog.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        final EditText search = (EditText) dialog.findViewById(R.id.search);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                printLog("tonTextChanged");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                printLog("afterTextChanged");
+                if (meetInviteParticipantsModelMeetNow != null) {
+                    String searchString = search.getText().toString();
+                    filterInviteesWithEpisode(searchString);
+                }
+
+            }
+        });
+
+        adapter = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs,
+                new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
+
+                        setAdapterWithEpisodeMeetGlobal(meetList, Type, pos);
+
+                    }
+                });
+        recyclerViewDialog.setAdapter(adapter);
+
+
+        TextView cancel = (TextView) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search.setText("");
+                if (meetInviteParticipantsModelMeetNow != null) {
+                    MeetInviteParticipantsWithEpisodeAdapter adapter = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs, new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+                            setAdapterWithEpisodeMeetGlobal(item, Type, pos);
+
+                        }
+                    });
+
+                    recyclerViewDialog.setAdapter(adapter);
+                }
+            }
+        });
+
+        Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+
+        Button btn_start_message = (Button) dialog.findViewById(R.id.btn_start_message);
+        btn_start_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.size() > 0) {
+                    //submitInviteList();
+                    //UserIDs = TextUtils.join(",", MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant);
+                    UserIDs = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant;
+                    if (UserIDs.size() > 1)
+                        initialMessageDialog(getActivity());
+                    else
+                        Toast.makeText(getContext(), "At least one invitee is required", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+
+    }
+
+    private void setAdapterWithEpisodeMeetGlobal(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
+
+
+        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant = new ArrayList();
+
+        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+            String role = TextUtils.join(",", meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getRoleName());
+            if (UserIDs != null) {
+                if (UserIDs.size() > 0) {
+                    if (UserIDs.contains(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID())) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    }
+                } else {
+                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    } else if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isChecked()) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    } else if (role.contains("Patient")) {
+                        if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isPatientSelected()) {
+                        } else {
+                            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                            UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        }
+                    }
+                }
+            } else {
+                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                } else if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isChecked()) {
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                } else if (role.contains("Patient")) {
+                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isPatientSelected()) {
+                    } else {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    }
+                }
+            }
+
+        }
+
+        HashSet hs = new HashSet();
+        hs.addAll(UserIDs);
+        UserIDs.clear();
+        UserIDs.addAll(hs);
+
+        boolean contains = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(meetList.getUserID());
+        if (contains) {
+
+            if (meetList.isLoggedInUser()) {
+                return;
+            }
+            printLog("remove");
+
+            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                String role = TextUtils.join(",", meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getRoleName());
+                if (role.contains("Patient")) {
+                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setPatientSelected(true);
+                }
+            }
+
+            NetworkAdapter networkAdapter = new NetworkAdapter();
+            networkAdapter.removeProviderList(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new DesignateCallBack() {
+                @Override
+                public void onSuccess(final CheckProviderResponse response) {
+
+                    //if (response.getStatus().equals("1") || response.getStatus().equals("0")) {
+                    if ((response.getStatus().equals("1") || response.getStatus().equals("0"))) {
+
+                        MeetInviteParticipantsModel.EpisodeParticipantList episodeParticipantForDesignate = null;
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getDesignate_Id() != null) {
+                                if (meetList.getUserID().equals(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID())) {
+                                    episodeParticipantForDesignate = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i);
+                                }
+                            }
+                        }
+
+                        if (episodeParticipantForDesignate == null) {
+                            String name = null;
+
+                            if (response.getDesignateList() != null && response.getDesignateList().size() > 0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+
+                                for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                        name = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getFullName();
+                                    }
+                                }
+
+                                if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                                    String text = meetList.getFullName() + " is designate for " + name;
+                                    showDialogWithOkButton(text);
+                                }
+
+                            } else {
+                                for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
+                                    }
+                                }
+
+                                int i = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(meetList.getUserID());
+                                if (i >= 0)
+                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(i);
+                                int user = UserIDs.indexOf(meetList.getUserID());
+                                if (user >= 0) {
+                                    UserIDs.remove(user);
+                                }
+                                setAdapterWithEpisodeMeetGlobal();
+                            }
+                        } else {
+                            String name = null;
+                            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(episodeParticipantForDesignate.getDesignate_Id())) {
+                                    name = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getFullName();
+                                }
+                            }
+
+                            if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(episodeParticipantForDesignate.getUserID())) {
+                                String text = name + " is designate for " + meetList.getFullName();
+                                //showDialogWithOkButton1(text);
+
+                                final MeetInviteParticipantsModel.EpisodeParticipantList finalEpisodeParticipantForDesignate = episodeParticipantForDesignate;
+                                showDialogWithOkCancelButton("Designate will also be removed", new OnOkClick() {
+                                    @Override
+                                    public void OnOkClicked() {
+                                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(finalEpisodeParticipantForDesignate.getUserID())) {
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
+                                                // MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(finalEpisodeParticipantForDesignate.getUserID());
+                                                printLog("checked provider");
+                                                int r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(finalEpisodeParticipantForDesignate.getDesignate_Id());
+                                                if (r >= 0)
+                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(r);
+                                                int user = UserIDs.indexOf(meetList.getUserID());
+                                                if (user >= 0) {
+                                                    UserIDs.remove(user);
+                                                }
+                                                String designate_id = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getDesignate_Id();
+
+                                                r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(designate_id);
+                                                if (r >= 0)
+                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(r);
+                                                user = UserIDs.indexOf(designate_id);
+                                                if (user >= 0) {
+                                                    UserIDs.remove(user);
+                                                }
+                                            }
+
+                                        }
+                                        setAdapterWithEpisodeMeetGlobal();
+                                    }
+                                });
+
+
+                            } else {
+                                for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
+                                    }
+                                }
+
+                                int i = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(meetList.getUserID());
+                                if (i >= 0)
+                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(i);
+                                int user = UserIDs.indexOf(meetList.getUserID());
+                                if (user >= 0) {
+                                    UserIDs.remove(user);
+                                }
+
+                                setAdapterWithEpisodeMeetGlobal();
+                            }
+                        }
+                    } else if (response.getDesignateList() != null && response.getDesignateList().size() > 0) {
+
+                        if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+
+                            String name = null;
+                            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                    name = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getFullName();
+                                }
+                            }
+
+                            if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                                String text = meetList.getFullName() + " is designate for " + name;
+                                showDialogWithOkButton(text);
+                            }
+
+                        } else {
+                            int r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(meetList.getUserID());
+                            if (r >= 0)
+                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(r);
+                            int user = UserIDs.indexOf(meetList.getUserID());
+                            if (user >= 0) {
+                                UserIDs.remove(user);
+                            }
+
+                            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
+                                }
+                            }
+
+                            setAdapterWithEpisodeMeetGlobal();
+                        }
+                    } else {
+                        int r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(meetList.getUserID());
+                        if (r >= 0)
+                            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(r);
+                        int user = UserIDs.indexOf(meetList.getUserID());
+                        if (user >= 0) {
+                            UserIDs.remove(user);
+                        }
+
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
+                            }
+                        }
+
+                        setAdapterWithEpisodeMeetGlobal();
+                    }
+                }
+
+                @Override
+                public void onError(int error) {
+
+                }
+            });
+        }
+
+
+        /*For checked*/
+        else {
+            printLog("add");
+
+            // if (meetList.isDesignate_Exist()) {
+
+            NetworkAdapter networkAdapter = new NetworkAdapter();
+            networkAdapter.checkProviderListGlobal(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new GlobalDesignateCallBack() {
+                @Override
+                public void onSuccess(final GlobalCheckProviderResponse response) {
+                    printLog("response:" + response);
+                    if (response.getDesignateList().getOrganisation_DesignateID() != null) {
+                        switch (response.getDesignateList().getOrganisation_Designate_Preference()) {
+                            case "designate_and_user": {
+                                showDialogWithOkCancelButton(response.getDesignateList().getOrganisation_Preference_Message(), new OnOkClick() {
+                                    @Override
+                                    public void OnOkClicked() {
+                                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                            //if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID() + "")) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                //meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getOrganisation_DesignateID() + "");
+                                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+                                                UserIDs.add(meetList.getUserID());
+                                                UserIDs.add(meetList.getUserID());
+                                                EpisodeList = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i);
+                                            }
+
+                                            if (response.getDesignateList().getOrganisation_DesignateID() != null)
+                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().getOrganisation_DesignateID() + "")) {
+                                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                    UserIDs.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                }
+                                        }
+                                        if (EpisodeList != null) {
+                                            setAdapterWithEpisodeMeetGlobal();
+                                            setAdapterWithEpisodeGlobalIndividual(EpisodeList);
+                                        } else
+                                            setAdapterWithEpisodeMeetGlobal();
+                                    }
+                                });
+
+                                //setAdapterWithOutEpisode(item, Type, pos);
+                                break;
+                            }
+                            case "designate_or_user": {
+                                showDialogWithOkCancelButton(response.getDesignateList().getOrganisation_Preference_Message(), new OnOkClick() {
+                                    @Override
+                                    public void OnOkClicked() {
+                                        if (response.getDesignateList().getOrganisation_DesignateID() != null) {
+                                            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().getOrganisation_DesignateID())) {
+                                                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                    UserIDs.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                }
+                                            }
+                                            setAdapterWithEpisodeMeetGlobal();
+                                        } else {
+                                            setAdapterWithEpisodeMeetGlobal();
+                                            setAdapterWithEpisodeGlobalIndividual(meetList);
+                                        }
+                                    }
+                                });
+                                break;
+                            }
+                            case "no_designate": {
+                                /*for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    //if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID())) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                        /// meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
+                                        // MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().getProvider_UserID());
+                                        UserIDs.add(meetList.getUserID());
+                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+                                        userList = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i);
+
+                                    }
+                                }*/
+
+                                setAdapterWithEpisodeMeetGlobal();
+                                setAdapterWithEpisodeGlobalIndividual(meetList);
+
+                                break;
+                            }
+
+                            default: {
+                                for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                        UserIDs.add(meetList.getUserID());
+                                    }
+                                }
+                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+                                setAdapterWithEpisodeGlobalIndividual(meetList);
+                                setAdapterWithEpisodeMeetGlobal();
+                            }
+                        }
+                    } else {
+
+                        if (response.getDesignateList().isIs_Provider_Designate()) {
+                            showDialogWithOkCancelButton(response.getDesignateList().getProvider_Preference_Message(), new OnOkClick() {
+                                @Override
+                                public void OnOkClicked() {
+                                    setAdapterWithEpisodeGlobalIndividual(meetList);
+                                }
+                            });
+
+                        } else {
+                            setAdapterWithEpisodeGlobalIndividual(meetList);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(int error) {
+
+                }
+            });
+
+        }
+
+
+    }
+
+    private void setAdapterWithEpisodeGlobalIndividual(final MeetInviteParticipantsModel.EpisodeParticipantList meetList) {
+
+        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant = new ArrayList();
+
+        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+            String role = TextUtils.join(",", meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getRoleName());
+            if (UserIDs != null) {
+                if (UserIDs.size() > 0) {
+                    if (UserIDs.contains(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID())) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    }
+                } else {
+                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    } else if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isChecked()) {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    } else if (role.contains("Patient")) {
+                        if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isPatientSelected()) {
+                        } else {
+                            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                            UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        }
+                    }
+                }
+            } else {
+                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                } else if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isChecked()) {
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                } else if (role.contains("Patient")) {
+                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isPatientSelected()) {
+                    } else {
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
+                    }
+                }
+            }
+
+        }
+
+        HashSet hs = new HashSet();
+        hs.addAll(UserIDs);
+        UserIDs.clear();
+        UserIDs.addAll(hs);
+
+        boolean contains = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(meetList.getUserID());
+        /*For checked*/
+        printLog("add");
+
+        if (meetList.isDesignate_Exist()) {
+
+            NetworkAdapter networkAdapter = new NetworkAdapter();
+            networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new DesignateCallBack() {
+                @Override
+                public void onSuccess(final CheckProviderResponse response) {
+                    printLog("response:" + response);
+
+                    if (response.getDesignateList().get(0).getDesignate_Preference() != null) {
+                        switch (response.getDesignateList().get(0).getDesignate_Preference()) {
+                            case "designate_and_user": {
+                                showDialogWithOkCancelButton(response.getMessage(), new OnOkClick() {
+                                    @Override
+                                    public void OnOkClicked() {
+                                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID() + "")) {
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().get(0).getDesignate_UserID() + "");
+                                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().get(0).getProvider_UserID());
+                                                UserIDs.add(response.getDesignateList().get(0).getProvider_UserID());
+                                            }
+
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getDesignate_UserID() + "")) {
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().get(0).getDesignate_UserID());
+                                                UserIDs.add(response.getDesignateList().get(0).getDesignate_UserID());
+                                            }
+                                        }
+                                        setAdapterWithEpisodeMeetGlobal();
+                                    }
+                                });
+
+                                //setAdapterWithOutEpisode(item, Type, pos);
+                                break;
+                            }
+                            case "designate_or_user": {
+                                showDialogWithOkCancelButton(response.getMessage(), new OnOkClick() {
+                                    @Override
+                                    public void OnOkClicked() {
+                                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getDesignate_UserID())) {
+                                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().get(0).getDesignate_UserID());
+                                                UserIDs.add(response.getDesignateList().get(0).getDesignate_UserID());
+                                            }
+                                        }
+                                        setAdapterWithEpisodeMeetGlobal();
+                                    }
+                                });
+                                break;
+                            }
+                            case "no_designate": {
+                                for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                        /// meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
+                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().get(0).getProvider_UserID());
+                                        UserIDs.add(response.getDesignateList().get(0).getProvider_UserID());
+                                    }
+                                }
+
+                                setAdapterWithEpisodeMeetGlobal();
+                                break;
+                            }
+                        }
+                    } else {
+
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                /// meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
+                                MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().get(0).getProvider_UserID());
+                                UserIDs.add(response.getDesignateList().get(0).getProvider_UserID());
+                            }
+                        }
+
+                        setAdapterWithEpisodeMeetGlobal();
+                    }
+                }
+
+                @Override
+                public void onError(int error) {
+
+                }
+            });
+        } else {
+            for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                    meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                    UserIDs.add(meetList.getUserID());
+                }
+            }
+            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+            setAdapterWithEpisodeMeetGlobal();
+        }
+    }
+
+    private void setAdapterWithEpisodeMeetGlobal() {
+        recyclerViewDialog.setAdapter(null);
+        if (meetInviteParticipantsModelMeetNow != null) {
+            MeetInviteParticipantsWithEpisodeAdapter adapter = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs, new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+
+                    setAdapterWithEpisodeMeetGlobal(item, Type, pos);
+                }
+            });
+            recyclerViewDialog.setAdapter(adapter);
+        }
+    }
+
 
 
     /*Without Episode*/
@@ -1885,7 +2644,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
     }
 
-
     private void setAdapterWithOutEpisode(final MeetInviteParticipantsWithoutEpisodeModel.UserList meetList, String Type, String pos) {
 
         MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout = new ArrayList();
@@ -1951,7 +2709,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 @Override
                 public void onSuccess(final CheckProviderResponse response) {
 
-                    if (response.getStatus().equals("1")) {
+                    if (response.getStatus().equals("1") || response.getStatus().equals("0")) {
 
                         MeetInviteParticipantsWithoutEpisodeModel.UserList episodeParticipantForDesignate = null;
                         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -2206,6 +2964,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
         }
         if (meetInviteParticipantsWithoutEpisodeModelSearch.size() > 0)
             notifyDataSetChangedInviteesWithOutEpisode();
+        else
+            recyclerViewDialog.setAdapter(null);
     }
 
     private void notifyDataSetChangedInviteesWithOutEpisode() {
@@ -2213,7 +2973,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         MeetInviteParticipantsWithoutEpisodeAdapter adapterWithoutEpisode = new MeetInviteParticipantsWithoutEpisodeAdapter(meetInviteParticipantsWithoutEpisodeModelSearch, getContext(), UserIDs, new MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MeetInviteParticipantsWithoutEpisodeModel.UserList item, String Type, String pos) {
-
+                setAdapterWithOutEpisode(item, Type, pos);
             }
         });
 
@@ -2320,8 +3080,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
     }
 
-    MeetInviteParticipantsWithoutEpisodeModel.UserList userList = null;
-
     private void setAdapterWithOutEpisodeGlobal(final MeetInviteParticipantsWithoutEpisodeModel.UserList meetList, final String Type, final String pos) {
 
 
@@ -2375,7 +3133,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         boolean contains = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(meetList.getUserID());
         if (contains) {
 
-            if (meetList.isLoggedInUser()){
+            if (meetList.isLoggedInUser()) {
                 return;
             }
             printLog("remove");
@@ -2392,7 +3150,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 @Override
                 public void onSuccess(final CheckProviderResponse response) {
 
-                    if (response.getStatus().equals("1")) {
+                    //if (response.getStatus().equals("1") || response.getStatus().equals("0")) {
+                    if ((response.getStatus().equals("1") || response.getStatus().equals("0"))) {
 
                         MeetInviteParticipantsWithoutEpisodeModel.UserList episodeParticipantForDesignate = null;
                         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -2404,20 +3163,37 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         }
 
                         if (episodeParticipantForDesignate == null) {
-                            for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                                if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
-                                    meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(false);
-                                }
-                            }
+                            String name = null;
 
-                            int i = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.indexOf(meetList.getUserID());
-                            if (i >= 0)
-                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.remove(i);
-                            int user = UserIDs.indexOf(meetList.getUserID());
-                            if (user >= 0) {
-                                UserIDs.remove(user);
+                            if (response.getDesignateList() != null && response.getDesignateList().size() > 0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+
+                                for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                        name = meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getFullName();
+                                    }
+                                }
+
+                                if (MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                                    String text = meetList.getFullName() + " is designate for " + name;
+                                    showDialogWithOkButton(text);
+                                }
+
+                            } else {
+                                for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(false);
+                                    }
+                                }
+
+                                int i = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.indexOf(meetList.getUserID());
+                                if (i >= 0)
+                                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.remove(i);
+                                int user = UserIDs.indexOf(meetList.getUserID());
+                                if (user >= 0) {
+                                    UserIDs.remove(user);
+                                }
+                                setAdapterWithOutEpisodeGlobal();
                             }
-                            setAdapterWithOutEpisodeGlobal();
                         } else {
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -2481,10 +3257,9 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                 setAdapterWithOutEpisodeGlobal();
                             }
                         }
-                    } else {
+                    } else if (response.getDesignateList() != null && response.getDesignateList().size() > 0) {
 
                         if (MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
-
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -2515,6 +3290,22 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                             setAdapterWithOutEpisodeGlobal();
                         }
+                    } else {
+                        int r = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.indexOf(meetList.getUserID());
+                        if (r >= 0)
+                            MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.remove(r);
+                        int user = UserIDs.indexOf(meetList.getUserID());
+                        if (user >= 0) {
+                            UserIDs.remove(user);
+                        }
+
+                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(false);
+                            }
+                        }
+
+                        setAdapterWithOutEpisodeGlobal();
                     }
                 }
 
@@ -2530,37 +3321,41 @@ public class MessageFragment extends BaseFragmentWithOptions {
         else {
             printLog("add");
 
-            if (meetList.isDesignate_Exist()) {
+            // if (meetList.isDesignate_Exist()) {
 
-                NetworkAdapter networkAdapter = new NetworkAdapter();
-                networkAdapter.checkProviderListGlobal(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new GlobalDesignateCallBack() {
-                    @Override
-                    public void onSuccess(final GlobalCheckProviderResponse response) {
-                        printLog("response:" + response);
-
+            NetworkAdapter networkAdapter = new NetworkAdapter();
+            networkAdapter.checkProviderListGlobal(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new GlobalDesignateCallBack() {
+                @Override
+                public void onSuccess(final GlobalCheckProviderResponse response) {
+                    printLog("response:" + response);
+                    if (response.getDesignateList().getOrganisation_DesignateID() != null) {
                         switch (response.getDesignateList().getOrganisation_Designate_Preference()) {
                             case "designate_and_user": {
                                 showDialogWithOkCancelButton(response.getDesignateList().getOrganisation_Preference_Message(), new OnOkClick() {
                                     @Override
                                     public void OnOkClicked() {
                                         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID() + "")) {
-                                              /*  meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
-                                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setDesignate_Id(response.getDesignateList().getOrganisation_DesignateID() + "");
-                                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getProvider_UserID());
-                                                UserIDs.add(meetList.getUserID());*/
+                                            //if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID() + "")) {
+                                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                                //meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setDesignate_Id(response.getDesignateList().getOrganisation_DesignateID() + "");
+                                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                                                UserIDs.add(meetList.getUserID());
+                                                UserIDs.add(meetList.getUserID());
                                                 userList = meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i);
                                             }
 
-                                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getOrganisation_DesignateID() + "")) {
-                                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
-                                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getOrganisation_DesignateID());
-                                                UserIDs.add(response.getDesignateList().getOrganisation_DesignateID());
-                                            }
+                                            if (response.getDesignateList().getOrganisation_DesignateID() != null)
+                                                if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getOrganisation_DesignateID() + "")) {
+                                                    meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                    UserIDs.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                }
                                         }
-                                        if (userList != null)
+                                        if (userList != null) {
+                                            setAdapterWithOutEpisodeGlobal();
                                             setAdapterWithOutEpisodeGlobalIndividual(userList);
-                                        else
+                                        } else
                                             setAdapterWithOutEpisodeGlobal();
                                     }
                                 });
@@ -2572,43 +3367,85 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                 showDialogWithOkCancelButton(response.getDesignateList().getOrganisation_Preference_Message(), new OnOkClick() {
                                     @Override
                                     public void OnOkClicked() {
-                                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getDesignate_UserID())) {
-                                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
-                                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getDesignate_UserID());
-                                                UserIDs.add(response.getDesignateList().getDesignate_UserID());
+                                        if (response.getDesignateList().getOrganisation_DesignateID() != null) {
+                                            for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                                                if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getOrganisation_DesignateID())) {
+                                                    meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                    UserIDs.add(response.getDesignateList().getOrganisation_DesignateID());
+                                                }
                                             }
+                                            setAdapterWithOutEpisodeGlobal();
+                                        } else {
+                                            userList = meetList;
+                                            setAdapterWithOutEpisodeGlobal();
+                                            setAdapterWithOutEpisodeGlobalIndividual(userList);
                                         }
-                                        setAdapterWithOutEpisodeGlobal();
                                     }
                                 });
                                 break;
                             }
                             case "no_designate": {
-                                for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID())) {
+                                /*for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                                    //if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID())) {
+                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
                                         meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
                                         /// meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
-                                       // MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getProvider_UserID());
+                                        // MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().getProvider_UserID());
+                                        UserIDs.add(meetList.getUserID());
+                                        MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
                                         userList = meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i);
 
                                     }
-                                }
-                                if (userList != null)
-                                    setAdapterWithOutEpisodeGlobalIndividual(userList);
-                                else
-                                    setAdapterWithOutEpisodeGlobal();
+                                }*/
+
+                                setAdapterWithOutEpisodeGlobal();
+                                setAdapterWithOutEpisodeGlobalIndividual(meetList);
+
                                 break;
                             }
+
+                            default: {
+                                for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                        meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                        UserIDs.add(meetList.getUserID());
+                                    }
+                                }
+                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                                setAdapterWithOutEpisodeGlobalIndividual(userList);
+                                setAdapterWithOutEpisodeGlobal();
+                            }
+                        }
+                    } else {
+                        /*for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }*/
+                      /*  MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                        setAdapterWithOutEpisodeGlobal();*/
+                        if (response.getDesignateList().isIs_Provider_Designate()) {
+                            showDialogWithOkCancelButton(response.getDesignateList().getProvider_Preference_Message(), new OnOkClick() {
+                                @Override
+                                public void OnOkClicked() {
+                                    setAdapterWithOutEpisodeGlobalIndividual(meetList);
+                                }
+                            });
+
+                        } else {
+                            setAdapterWithOutEpisodeGlobalIndividual(meetList);
                         }
                     }
+                }
 
-                    @Override
-                    public void onError(int error) {
+                @Override
+                public void onError(int error) {
 
-                    }
-                });
-            } else {
+                }
+            });
+           /* } else {
                 for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
                     if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
                         meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
@@ -2617,7 +3454,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 }
                 MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
                 setAdapterWithOutEpisodeGlobal();
-            }
+            }*/
         }
 
 
@@ -2674,16 +3511,17 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
         boolean contains = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(meetList.getUserID());
         /*For checked*/
-            printLog("add");
+        printLog("add");
 
-            if (meetList.isDesignate_Exist()) {
+        if (meetList.isDesignate_Exist()) {
 
-                NetworkAdapter networkAdapter = new NetworkAdapter();
-                networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new DesignateCallBack() {
-                    @Override
-                    public void onSuccess(final CheckProviderResponse response) {
-                        printLog("response:" + response);
+            NetworkAdapter networkAdapter = new NetworkAdapter();
+            networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new DesignateCallBack() {
+                @Override
+                public void onSuccess(final CheckProviderResponse response) {
+                    printLog("response:" + response);
 
+                    if (response.getDesignateList().get(0).getDesignate_Preference() != null) {
                         switch (response.getDesignateList().get(0).getDesignate_Preference()) {
                             case "designate_and_user": {
                                 showDialogWithOkCancelButton(response.getMessage(), new OnOkClick() {
@@ -2740,23 +3578,36 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                 break;
                             }
                         }
-                    }
+                    } else {
 
-                    @Override
-                    public void onError(int error) {
+                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                /// meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
+                                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(response.getDesignateList().get(0).getProvider_UserID());
+                                UserIDs.add(response.getDesignateList().get(0).getProvider_UserID());
+                            }
+                        }
 
-                    }
-                });
-            } else {
-                for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
-                        meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
-                        UserIDs.add(meetList.getUserID());
+                        setAdapterWithOutEpisodeGlobal();
                     }
                 }
-                MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
-                setAdapterWithOutEpisodeGlobal();
+
+                @Override
+                public void onError(int error) {
+
+                }
+            });
+        } else {
+            for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                    meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                    UserIDs.add(meetList.getUserID());
+                }
             }
+            MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+            setAdapterWithOutEpisodeGlobal();
+        }
     }
 
     private void setAdapterWithOutEpisodeGlobal() {
@@ -2772,6 +3623,9 @@ public class MessageFragment extends BaseFragmentWithOptions {
             recyclerViewDialog.setAdapter(adapter);
         }
     }
+
+
+    /*End*/
 
     private void callPatientEpisodeList(String isUser) {
         EpisodeNameList = new ArrayList<>();
@@ -2864,6 +3718,9 @@ public class MessageFragment extends BaseFragmentWithOptions {
         }
         if (meetInviteParticipantsWithoutEpisodeModelSearch.size() > 0)
             notifyDataSetChangedInviteesWithOutEpisodeGlobal();
+        else
+            recyclerViewDialog.setAdapter(null);
+
     }
 
     private void notifyDataSetChangedInviteesWithOutEpisodeGlobal() {
@@ -2871,7 +3728,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         MeetInviteParticipantsWithoutEpisodeAdapter adapterWithoutEpisode = new MeetInviteParticipantsWithoutEpisodeAdapter(meetInviteParticipantsWithoutEpisodeModelSearch, getContext(), UserIDs, new MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MeetInviteParticipantsWithoutEpisodeModel.UserList item, String Type, String pos) {
-
+                setAdapterWithOutEpisodeGlobal(item, Type, pos);
             }
         });
 

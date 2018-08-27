@@ -1,5 +1,6 @@
 package com.lifecyclehealth.lifecyclehealth.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -154,6 +155,7 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
 
     RadioGroup ll;
 
+    @SuppressLint("RestrictedApi")
     private void setNameList() {
 
         final int number = careGiverUsersList.getPatientList().size();

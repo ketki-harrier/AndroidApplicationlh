@@ -55,10 +55,11 @@ public class NetworkAdapter {
                         if (response != null) {
                             CheckProviderResponse checkProviderResponse = new Gson().fromJson(response.toString(), CheckProviderResponse.class);
                             if (checkProviderResponse != null) {
-                                if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                //if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                if (checkProviderResponse.getDesignateList()!=null)
                                     designateCallBack.onSuccess(checkProviderResponse);
 
-                                }
+                                //}
                             }
                         }
                     }

@@ -82,7 +82,7 @@ public class MeetInviteParticipantsAdapter extends RecyclerView.Adapter<MeetInvi
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipant.add(meetList.getUserID());
                 }
-                if (meetList.isDesignate_Exist()) {
+                if (meetList.isDesignate_Exist() && meetList.getDesignate_FullName() != null) {
                     holder.designate_image.setVisibility(View.VISIBLE);
                     holder.designate.setVisibility(View.VISIBLE);
                     holder.designate.setText(meetList.getDesignate_FullName() + " is Designate");
@@ -110,7 +110,7 @@ public class MeetInviteParticipantsAdapter extends RecyclerView.Adapter<MeetInvi
             }
         }
 
-        if (meetList.isDesignate_Exist()) {
+        if (meetList.isDesignate_Exist() && meetList.getDesignate_FullName() != null) {
             holder.designate_image.setVisibility(View.VISIBLE);
             holder.designate.setVisibility(View.VISIBLE);
             holder.designate.setText(meetList.getDesignate_FullName() + " is Designate");

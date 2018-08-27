@@ -1083,6 +1083,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         }
         if (meetInviteParticipantsModelMeetNowSearch.size() > 0)
             notifyDataSetChangedInviteesWithEpisode1();
+        else
+            recyclerViewDialog.setAdapter(null);
     }
 
 
@@ -1982,6 +1984,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         }
         if (meetInviteParticipantsWithoutEpisodeModelSearch.size() > 0)
             notifyDataSetChangedInviteesWithOutEpisode();
+        else
+            recyclerViewDialog.setAdapter(null);
     }
 
     private void notifyDataSetChangedInviteesWithOutEpisode() {

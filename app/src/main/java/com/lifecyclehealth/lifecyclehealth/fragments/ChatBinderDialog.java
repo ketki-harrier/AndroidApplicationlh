@@ -54,6 +54,7 @@ public class ChatBinderDialog extends RecyclerView.Adapter<ChatBinderDialog.MyVi
         holder.provider.setText(invitees.getRole().get(0));
 
 
+
         holder.addParticipant.setVisibility(View.GONE);
 
 
@@ -115,7 +116,7 @@ public class ChatBinderDialog extends RecyclerView.Adapter<ChatBinderDialog.MyVi
 
         this.context = context;
         this.listener = listener;
-        meetResponseList=responseList;
+        meetResponseList = responseList;
     }
 
 }

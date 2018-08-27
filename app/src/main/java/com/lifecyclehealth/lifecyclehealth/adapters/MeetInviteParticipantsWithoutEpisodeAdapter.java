@@ -111,10 +111,13 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
             }
         }
 
-        if (meetList.isDesignate_Exist()) {
+        if (meetList.isDesignate_Exist() && meetList.getDesignate_FullName() != null) {
             holder.designate_image.setVisibility(View.VISIBLE);
             holder.designate.setVisibility(View.VISIBLE);
             holder.designate.setText(meetList.getDesignate_FullName() + " is Designate");
+        } else {
+            holder.designate_image.setVisibility(View.GONE);
+            holder.designate.setVisibility(View.GONE);
         }
 
         holder.itemView.setTag(meetList);
