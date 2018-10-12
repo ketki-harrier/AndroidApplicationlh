@@ -109,6 +109,7 @@ public class AppConstants {
     public static final String TOUCH_EMAIL_ID = "touchEmailId";
     public static final String IS_TIMEOUT = "IS_TIMEOUT";
     public static final String IS_LOGOUT = "IS_LOGOUT";
+    public static final String IS_IN_MEET = "IS_IN_MEET";
     public static final String IS_USERNAME_EDITABLE = "IS_USERNAME_EDITABLE";
     public static final String IS_MAINACTIVITY_ALIVE = "IS_MAINACTIVITY_ALIVE";
     public static final String IS_LOGINACTIVITY_ALIVE = "IS_LOGINACTIVITY_ALIVE";
@@ -139,6 +140,7 @@ public class AppConstants {
     public static final String URL_MESSAGE_STARTMEET = "secure/meet/now";
     public static final String URL_SCHEDULE_MEET = "secure/schedule/meet";
     public static final String URL_MESSAGE_ACKNOWLEDGE = "secure/check/message/acknowledge";
+    public static final String URL_BUSINESS_HOURS = "secure/businessHours/global";
     public static final String URL_SET_MESSAGE_ACKNOWLEDGE = "secure/message/acknowledge";
     public static final String URL_GET_PATIENTDIARY_EPISODELIST = "secure/patient/episode/list";
 

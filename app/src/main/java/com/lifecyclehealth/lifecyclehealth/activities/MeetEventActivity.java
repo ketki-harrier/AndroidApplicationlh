@@ -41,7 +41,6 @@ import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkAdapter;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkRequestUtil;
 import com.moxtra.sdk.ChatClient;
-import com.moxtra.sdk.MXChatCustomizer;
 import com.moxtra.sdk.chat.model.Chat;
 import com.moxtra.sdk.client.ChatClientDelegate;
 import com.moxtra.sdk.common.ActionListener;
@@ -187,7 +186,7 @@ public class MeetEventActivity extends BaseActivity {
                 mMeetSession = meetSession;
                 mMeetSessionController = mChatClientDelegate.createMeetSessionController(mMeetSession);
                 //MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().hideMeetID = false;
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
+                //MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
                 showMeetFragment();
 
             }
@@ -214,7 +213,10 @@ public class MeetEventActivity extends BaseActivity {
         // mMeetRepo.startMeetWithTopic(topic, new ApiCallback<MeetSession>() {
         sessionKey = MyApplication.getInstance().getFromSharedPreference(AppConstants.SESSION_KEY);
         printLog("sessionKey" + sessionKey);
-        MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
+        // MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
+
+        final MeetSessionConfig meetSessionConfig = new MeetSessionConfig();
+        meetSessionConfig.setAutoJoinVoIPEnabled(true);
 
         mMeetRepo.startMeetWithMeetID(sessionKey, new ApiCallback<MeetSession>() {
             @Override
@@ -222,9 +224,15 @@ public class MeetEventActivity extends BaseActivity {
                 Log.i(TAG, "Start meet successfully.");
                 mMeetSession = meetSession;
 
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
+               /* MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
                 MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().hideMeetID = false;
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
+                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;*/
+
+                meetSessionConfig.setAutoJoinVoIPEnabled(true);
+                meetSessionConfig.setMeetIDEnabled(false);
+                meetSessionConfig.setMeetLinkEnabled(false);
+
+
                 mMeetSession.inviteParticipants(userList, new ApiCallback<Void>() {
                     @Override
                     public void onCompleted(Void result) {
@@ -237,6 +245,7 @@ public class MeetEventActivity extends BaseActivity {
                     }
                 });
                 mMeetSessionController = mChatClientDelegate.createMeetSessionController(mMeetSession);
+                mMeetSessionController.setMeetSessionConfig(meetSessionConfig);
                 showMeetFragment();
             }
 
@@ -273,6 +282,7 @@ public class MeetEventActivity extends BaseActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+                MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET, true);
                 MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
                 if (myHandler != null) {
                     stop();
@@ -609,7 +619,7 @@ public class MeetEventActivity extends BaseActivity {
 
                     } else {
 
-                        if (MeetInviteParticipantsAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsModel.getEpisodeParticipantList().size(); i++) {
@@ -676,6 +686,11 @@ public class MeetEventActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onFailure() {
+
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -683,7 +698,7 @@ public class MeetEventActivity extends BaseActivity {
         }
 
 
-      /*  For checked*/
+        /*  For checked*/
         else {
             if (meetList.isDesignate_Exist()) {
 
@@ -735,6 +750,11 @@ public class MeetEventActivity extends BaseActivity {
                             });
 
                         }
+
+                    }
+
+                    @Override
+                    public void onFailure() {
 
                     }
 
@@ -854,6 +874,11 @@ public class MeetEventActivity extends BaseActivity {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -907,6 +932,7 @@ public class MeetEventActivity extends BaseActivity {
                             // showProgressDialog(false);
                             printLog("Response Of meet end:" + response);
                             finish();
+                            MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET, false);
                         }
 
                         @Override

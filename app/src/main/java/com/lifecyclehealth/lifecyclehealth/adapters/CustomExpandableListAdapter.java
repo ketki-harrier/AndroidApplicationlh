@@ -49,7 +49,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         // final String expandedListText = (String) getChild(listPosition, expandedListPosition);
-        final PatientSurveyItem patientSurveyItem = (PatientSurveyItem) getChild(listPosition, expandedListPosition);
+        PatientSurveyItem patientSurveyItem = null;
+        patientSurveyItem = (PatientSurveyItem) getChild(listPosition, expandedListPosition);
 
 
         if (convertView == null) {
@@ -69,8 +70,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             if (!patientSurveyItem.getScheduleDate().equals("")) {
                 expandedListTextViewDate.setText("[" + patientSurveyItem.getScheduleDate() + "]");
                 imageView.setVisibility(View.VISIBLE);
+                expandedListTextViewDate.setVisibility(View.VISIBLE);
             } else {
                 imageView.setVisibility(View.GONE);
+                expandedListTextViewDate.setVisibility(View.GONE);
             }
         } else {
             TextView expandedListTextView = (TextView) convertView
@@ -124,7 +127,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView listTitleTextView = (TextView) convertView
                 .findViewById(R.id.listTitle);
 //        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
+        if (listTitle.length() > 0)
+            listTitleTextView.setText(listTitle);
+        else
+            listTitleTextView.setText("");
         return convertView;
     }
 

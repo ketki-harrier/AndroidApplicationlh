@@ -206,12 +206,16 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     private void required() {
         final boolean isRequiredEditText = surveyDetailsModel.getQuestionModel().isRequired();
         if (isRequiredEditText) {
-            if (surveyDetailsModel.getQuestionModel().getAttachment_Url() != null)
+            if (surveyDetailsModel.getQuestionModel().getAttachment_Url() != null) {
                 if (!surveyDetailsModel.getQuestionModel().getAttachment_Url().trim().equals("")) {
                     SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                 } else {
                     SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
                 }
+            } else {
+                //SurveyDetailsItemFragment.disableScrollViewPager();
+                SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
+            }
         }
 
 
@@ -713,9 +717,9 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
                 PrintDocumentAdapter adapter = webview.createPrintDocumentAdapter();
                 printManager.print(getString(R.string.app_name), adapter, null);*/
 
-               if (imageBitmap!=null) {
-                   printDocumentImage(imageBitmap, surveyDetailsModel.getQuestionModel().getAttachment_Name());
-               }
+                if (imageBitmap != null) {
+                    printDocumentImage(imageBitmap, surveyDetailsModel.getQuestionModel().getAttachment_Name());
+                }
             }
         });
 

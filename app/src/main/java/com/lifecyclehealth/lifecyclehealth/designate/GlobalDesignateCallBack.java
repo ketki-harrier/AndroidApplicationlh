@@ -6,5 +6,6 @@ public interface GlobalDesignateCallBack {
 
     void onSuccess(GlobalCheckProviderResponse response);
 
+    void onFailure();
     void onError(int error);
 }

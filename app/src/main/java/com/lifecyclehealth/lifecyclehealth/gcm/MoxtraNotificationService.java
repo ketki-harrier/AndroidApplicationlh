@@ -14,6 +14,7 @@ import com.lifecyclehealth.lifecyclehealth.activities.LoginActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.moxtra.sdk.ChatClient;
 import com.moxtra.sdk.notification.BasePushIntentService;
+import com.moxtra.sdk.notification.NotificationHelper;
 import com.moxtra.sdk.notification.NotificationManager;
 
 import zemin.notification.NotificationDelegater;
@@ -29,11 +30,24 @@ public class MoxtraNotificationService extends BasePushIntentService {
         Bundle extras = intent.getExtras();
         Log.e("MoxtraNotification", "Service");
         if (extras != null && !extras.isEmpty()) {
-            NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
+           /* NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
             if (notificationManager.isValidRemoteNotification(intent)) {
                 int type = notificationManager.getValidNotificationType(intent);
                 String title = notificationManager.getNotificationMessageText(this, intent);
                 Log.i(TAG, "Here comes a notification: type=" + type + ", title=" + title);
+                sendNotification(title, null, intent);
+            } else {
+                Log.w(TAG, "Ignore invalid remote notification.");
+            }*/
+
+
+            NotificationHelper notificationHelper = new NotificationHelper();
+
+            if (notificationHelper.isValidRemoteNotification(intent)) {
+                int type = notificationHelper.getValidNotificationType(intent);
+                String title = notificationHelper.getNotificationMessageText(this, intent);
+                Log.i(TAG, "Here comes a notification: type=" + type + ", title=" + title);
+
                 sendNotification(title, null, intent);
             } else {
                 Log.w(TAG, "Ignore invalid remote notification.");

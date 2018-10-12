@@ -56,8 +56,11 @@ public class NetworkAdapter {
                             CheckProviderResponse checkProviderResponse = new Gson().fromJson(response.toString(), CheckProviderResponse.class);
                             if (checkProviderResponse != null) {
                                 //if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
-                                if (checkProviderResponse.getDesignateList()!=null)
+                                if (checkProviderResponse.getDesignateList() != null) {
                                     designateCallBack.onSuccess(checkProviderResponse);
+                                } else {
+                                    designateCallBack.onFailure();
+                                }
 
                                 //}
                             }
@@ -88,7 +91,7 @@ public class NetworkAdapter {
         if (connectedToNetwork) {
             try {
                 JSONObject requestJson = new JSONObject(new Gson().toJson(params));
-                networkRequestUtil.getDataSecure(BASE_URL + URL_MEET_CHECK_IS_DESIGNATE_SELECT_GLOBAL+id, new VolleyCallback() {
+                networkRequestUtil.getDataSecure(BASE_URL + URL_MEET_CHECK_IS_DESIGNATE_SELECT_GLOBAL + id, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
 
@@ -98,7 +101,8 @@ public class NetworkAdapter {
                             if (checkProviderResponse != null) {
                                 if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     designateCallBack.onSuccess(checkProviderResponse);
-
+                                } else {
+                                    designateCallBack.onFailure();
                                 }
                             }
                         }
@@ -120,7 +124,6 @@ public class NetworkAdapter {
 
     public void removeProviderList(Context context, NetworkRequestUtil networkRequestUtil, String id, final DesignateCallBack designateCallBack) {
 
-
         final HashMap<String, String> params = new HashMap<>();
         params.put("Designate_UserID", id);
 
@@ -136,10 +139,8 @@ public class NetworkAdapter {
                         Log.e("response uncheck", response + "");
                         if (response != null) {
                             CheckProviderResponse checkProviderResponse = new Gson().fromJson(response.toString(), CheckProviderResponse.class);
-
-                               /* if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {}*/
-                                designateCallBack.onSuccess(checkProviderResponse);
-
+                            /* if (checkProviderResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {}*/
+                            designateCallBack.onSuccess(checkProviderResponse);
                         }
                     }
 

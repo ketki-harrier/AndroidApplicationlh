@@ -9,6 +9,7 @@ import com.lifecyclehealth.lifecyclehealth.model.CheckProviderResponse;
 
 public interface DesignateCallBack {
     void onSuccess(CheckProviderResponse response);
+    void onFailure();
 
     void onError(int error);
 }

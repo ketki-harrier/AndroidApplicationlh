@@ -242,4 +242,10 @@
     <string name="hospital_re_Admission">HOSPITAL RE-ADMISSION</string>
     <string name="log_history">Log History</string>
 
+
+    <string name="My_Account">My Account</string>
+    <string name="Upload">Upload</string>
+
+
+
 </resources>

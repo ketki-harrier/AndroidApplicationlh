@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -214,6 +215,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
@@ -419,6 +421,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     };
 
 
+    @SuppressLint("RestrictedApi")
     private void setSpinnerAdapter() {
 
 
@@ -924,6 +927,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -1259,7 +1267,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                     } else {
 
-                        if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size()>0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
@@ -1304,6 +1312,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             setAdapterWithEpisodeMeet();
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+
                 }
 
                 @Override
@@ -1374,6 +1387,17 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
                     }
 
                     @Override
@@ -1514,6 +1538,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                                 }
                                                             });
                                                             recyclerViewDialog.setAdapter(adapterWithoutEpisode);
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure() {
+
                                                         }
 
                                                         @Override
@@ -1827,7 +1856,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         }
                     } else {
 
-                        if (MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size()>0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
 
                             String name = null;
@@ -1860,6 +1889,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             setAdapterWithOutEpisode();
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+
                 }
 
                 @Override
@@ -1930,6 +1964,18 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                        setAdapterWithOutEpisode();
                     }
 
                     @Override

@@ -124,61 +124,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onUserInteraction() {
         // TODO Auto-generated method stub
         super.onUserInteraction();
-
-        //printLog("touch onUserInteraction");
-        /*myHandler = new Handler();
-        stop();
-        restart();*/
-
-
     }
 
-  /*  CountDownTimer waitTimer;
-
-    private void timer() {
-
-        waitTimer = new CountDownTimer(120000, 300) {
-            //120000
-            public void onTick(long millisUntilFinished) {
-                //called every 300 milliseconds, which could be used to
-                //send messages or some other action
-            }
-
-            public void onFinish() {
-                //After 60000 milliseconds (60 sec) finish current
-                //if you would like to execute something when time finishes
-                Intent i = new Intent(BaseActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
-        };
-        waitTimer.start();
-    }*/
-
-  /*  Runnable myRunnable = new Runnable() {
-        @Override
-        public void run() {
-            // your code here
-            Intent i = new Intent(BaseActivity.this, LoginActivity.class);
-            startActivity(i);
-        }
-    };
-
-    public Handler myHandler ;
-    private static final int TIME_TO_WAIT = 2 * 60 * 1000;
-
-    public void start() {
-        myHandler = new Handler();
-        myHandler.postDelayed(myRunnable, TIME_TO_WAIT);
-    }
-
-    public void stop() {
-        myHandler.removeCallbacks(myRunnable);
-    }
-
-    public void restart() {
-        myHandler.removeCallbacks(myRunnable);
-        myHandler.postDelayed(myRunnable, TIME_TO_WAIT);
-    }*/
 
     @Override
     protected void onResume() {
@@ -212,7 +159,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
- /* *********************************************** Validation************************************** */
+    /* *********************************************** Validation************************************** */
 
     public boolean isValid(String value) {
         return (value != null) && !value.isEmpty();

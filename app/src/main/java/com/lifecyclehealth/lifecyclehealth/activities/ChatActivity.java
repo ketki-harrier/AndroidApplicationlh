@@ -632,6 +632,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -1026,6 +1031,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 }
 
                 @Override
+                public void onFailure() {
+
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -1056,7 +1066,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                                 meetInviteParticipantsModel.getEpisodeParticipantList().get(i).setChecked(true);
                                                 //meetInviteParticipantsModel.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getOrganisation_DesignateID() + "");
                                                 MeetInviteParticipantsAdapter.selectedParticipant.add(meetList.getUserID());
-                                                UserIDs.add(meetList.getUserID());
                                                 UserIDs.add(meetList.getUserID());
                                                 EpisodeList = meetInviteParticipantsModel.getEpisodeParticipantList().get(i);
                                             }
@@ -1133,6 +1142,19 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                             setAdapterWithEpisodeGlobalIndividual(meetList);
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsModel.getEpisodeParticipantList().size(); i++) {
+                        if (meetInviteParticipantsModel.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsModel.getEpisodeParticipantList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsAdapter.selectedParticipant.add(meetList.getUserID());
+                    setAdapterWithEpisodeGlobalIndividual(meetList);
+                    setAdapterWithEpisode();
                 }
 
                 @Override
@@ -1277,6 +1299,18 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                         setAdapterWithEpisode();
                     }
+                }
+
+                @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsModel.getEpisodeParticipantList().size(); i++) {
+                        if (meetInviteParticipantsModel.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsModel.getEpisodeParticipantList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsAdapter.selectedParticipant.add(meetList.getUserID());
+                    setAdapterWithEpisode();
                 }
 
                 @Override
@@ -1959,6 +1993,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -2343,6 +2382,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 }
 
                 @Override
+                public void onFailure() {
+
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -2410,6 +2454,17 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
                     }
 
                     @Override
@@ -2550,6 +2605,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                                                 }
                                                             });
                                                             recyclerViewDialog.setAdapter(adapterWithoutEpisode);
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure() {
+
                                                         }
 
                                                         @Override
@@ -2903,6 +2963,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 }
 
                 @Override
+                public void onFailure() {
+
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -2970,6 +3035,18 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                        setAdapterWithOutEpisode();
                     }
 
                     @Override

@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\Lifecycle Health\AndroidApplication\notification_banner\src\main\assets"/><source path="D:\Lifecycle Health\AndroidApplication\notification_banner\assets"/><source path="D:\Lifecycle Health\AndroidApplication\notification_banner\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\Lifecycle Health\AndroidApplication\notification_banner\src\release\assets"/></dataSet></merger>

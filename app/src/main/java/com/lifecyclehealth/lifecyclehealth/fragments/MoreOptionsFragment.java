@@ -223,7 +223,7 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    mainActivity.finish();
+                    //mainActivity.finish();
                     return true;
                 }
                 return false;

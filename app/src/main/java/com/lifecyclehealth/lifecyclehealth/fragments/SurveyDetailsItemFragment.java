@@ -196,7 +196,11 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
-                        } else if (SurveyDetailsListFragment.isToDo) {
+                        }  /*if (SurveyDetailsListFragment.isSchedule) {
+                            if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                //showScore(getListFormattedForViewCreation(surveySection).get(0));
+                            }
+                        } */else if (SurveyDetailsListFragment.isToDo) {
                             int currentPage = viewPager.getCurrentItem();
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
@@ -330,13 +334,19 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     int id = questionDto.getSurveyQuestion().getSurveyDetails().getSurveyId();
                                     List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
 
-                                    if (questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus().equals("Completed")) {
+                                    printLog("Type: " + questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus());
+
+                                    /*if (questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus().equals("Completed")) {
                                         SurveyDetailsListFragment.isToDo = false;
                                         SurveyDetailsListFragment.isCompleted = true;
-                                    } else {
+                                    } else if (questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus().equals("To Do")) {
                                         SurveyDetailsListFragment.isToDo = true;
                                         SurveyDetailsListFragment.isCompleted = false;
-                                    }
+                                    } else {
+                                        SurveyDetailsListFragment.isToDo = false;
+                                        SurveyDetailsListFragment.isCompleted = false;
+                                        SurveyDetailsListFragment.isSchedule = true;
+                                    }*/
 
                                     int questionSize = 0;
                                     for (int i = 0; i < questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().size(); i++) {

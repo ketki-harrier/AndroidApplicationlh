@@ -1,1 +1,1 @@
-include ':app', ':bottomnavigation', ':effectivenavigation', ':expandablelistview', ':fingerprintauth', ':horizontalcalendar', ':notification_banner'
+include ':app', ':bottomnavigation', ':effectivenavigation', ':horizontalcalendar', ':notification_banner'

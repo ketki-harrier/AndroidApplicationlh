@@ -57,6 +57,7 @@ import com.lifecyclehealth.lifecyclehealth.model.GlobalCheckProviderResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsWithoutEpisodeModel;
 import com.lifecyclehealth.lifecyclehealth.model.MessageAcknowledgementResponse;
+import com.lifecyclehealth.lifecyclehealth.model.MessageBusinessHoursResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MessageCreateConversationResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MessageDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MessageEpisodeListResponse;
@@ -92,6 +93,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.LOGIN_NAME;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.SESSION_KEY;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.STATUS_SUCCESS;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_BUSINESS_HOURS;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MESSAGE_ACKNOWLEDGE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MESSAGE_CREATE_CONVERSATION;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MESSAGE_EPISODE_LIST_FOR_PATIENT;
@@ -172,11 +174,64 @@ public class MessageFragment extends BaseFragmentWithOptions {
     private View.OnClickListener createConversationLayoutListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-            checkMessageAcknowledge();
-            //showDialogCreateConversation(getActivity());
+            //checkMessageAcknowledge();
+            checkBusinessHours();
         }
     };
+
+
+    private void checkBusinessHours() {
+        showProgressDialog(true);
+        if (isConnectedToNetwork(mainActivity)) {
+            try {
+                mainActivity.networkRequestUtil.getDataSecure(BASE_URL + URL_BUSINESS_HOURS, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        showProgressDialog(false);
+                        printLog("Response Of get message business hours:" + response);
+
+                        if (response != null) {
+                            MessageBusinessHoursResponse messageAcknowledgementResponse = new Gson().fromJson(response.toString(), MessageBusinessHoursResponse.class);
+                            if (messageAcknowledgementResponse != null) {
+                                if (messageAcknowledgementResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+
+                                    if (messageAcknowledgementResponse.isShowPopup == true && messageAcknowledgementResponse.message.trim().length() == 0) {
+                                        checkMessageAcknowledge();
+                                    } else {
+                                        if (messageAcknowledgementResponse.isShowPopup == true && messageAcknowledgementResponse.isShowCancelButton() == true) {
+                                            showDialogWithOkCancelButton(messageAcknowledgementResponse.getMessage(), new OnOkClick() {
+                                                @Override
+                                                public void OnOkClicked() {
+                                                    checkMessageAcknowledge();
+                                                }
+                                            });
+                                        } else if (messageAcknowledgementResponse.isShowPopup == true && messageAcknowledgementResponse.isShowCancelButton() == false) {
+                                            showDialogWithOkButton(messageAcknowledgementResponse.getMessage());
+                                        } else if (messageAcknowledgementResponse.isShowPopup == false && messageAcknowledgementResponse.isShowCancelButton() == false) {
+                                            showDialogWithOkButton(messageAcknowledgementResponse.getMessage());
+                                        }
+                                    }
+
+                                } else {
+
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        showProgressDialog(false);
+                    }
+                });
+            } catch (Exception e) {
+                showProgressDialog(false);
+            }
+        } else {
+            showProgressDialog(false);
+            showNoNetworkMessage();
+        }
+    }
 
     private void checkMessageAcknowledge() {
         showProgressDialog(true);
@@ -379,7 +434,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    mainActivity.finish();
+                    //mainActivity.finish();
                     return true;
                 }
                 return false;
@@ -955,6 +1010,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -1062,6 +1122,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                                                 }
                                                             });
                                                             recyclerViewDialog.setAdapter(adapterGlobal);
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure() {
+
                                                         }
 
                                                         @Override
@@ -1176,6 +1241,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                                         }
 
                                                         @Override
+                                                        public void onFailure() {
+
+                                                        }
+
+                                                        @Override
                                                         public void onError(int error) {
 
                                                         }
@@ -1273,6 +1343,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                                                 }
                                                             });
                                                             recyclerViewDialog.setAdapter(adapterWithoutEpisodeGlobal);
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure() {
+
                                                         }
 
                                                         @Override
@@ -1725,7 +1800,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                     } else {
 
-                        if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
@@ -1770,6 +1845,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                             setAdapterWithEpisodeMeet();
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+
                 }
 
                 @Override
@@ -1840,6 +1920,17 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
                     }
 
                     @Override
@@ -2195,7 +2286,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         }
                     } else if (response.getDesignateList() != null && response.getDesignateList().size() > 0) {
 
-                        if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
@@ -2243,6 +2334,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                         setAdapterWithEpisodeMeetGlobal();
                     }
+                }
+
+                @Override
+                public void onFailure() {
+
                 }
 
                 @Override
@@ -2321,19 +2417,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                 break;
                             }
                             case "no_designate": {
-                                /*for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
-                                    //if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID())) {
-                                    if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
-                                        meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
-                                        /// meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setDesignate_Id(response.getDesignateList().getDesignate_UserID() + "");
-                                        // MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(response.getDesignateList().getProvider_UserID());
-                                        UserIDs.add(meetList.getUserID());
-                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
-                                        userList = meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i);
-
-                                    }
-                                }*/
-
                                 setAdapterWithEpisodeMeetGlobal();
                                 setAdapterWithEpisodeGlobalIndividual(meetList);
 
@@ -2366,6 +2449,18 @@ public class MessageFragment extends BaseFragmentWithOptions {
                             setAdapterWithEpisodeGlobalIndividual(meetList);
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                        if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+                    setAdapterWithOutEpisodeGlobal();
                 }
 
                 @Override
@@ -2513,6 +2608,18 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 }
 
                 @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+                        if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetList.getUserID());
+                    setAdapterWithEpisodeMeetGlobal();
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -2542,7 +2649,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
             recyclerViewDialog.setAdapter(adapter);
         }
     }
-
 
 
     /*Without Episode*/
@@ -2812,7 +2918,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         }
                     } else {
 
-                        if (MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
 
                             String name = null;
@@ -2845,6 +2951,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                             setAdapterWithOutEpisode();
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+
                 }
 
                 @Override
@@ -2911,6 +3022,18 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                         }
 
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                            if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                                meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                                UserIDs.add(meetList.getUserID());
+                            }
+                        }
+                        MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                        setAdapterWithOutEpisode();
                     }
 
                     @Override
@@ -3259,7 +3382,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         }
                     } else if (response.getDesignateList() != null && response.getDesignateList().size() > 0) {
 
-                        if (MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -3310,6 +3433,11 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 }
 
                 @Override
+                public void onFailure() {
+
+                }
+
+                @Override
                 public void onError(int error) {
 
                 }
@@ -3335,7 +3463,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                     @Override
                                     public void OnOkClicked() {
                                         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
-                                            //if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(response.getDesignateList().getProvider_UserID() + "")) {
                                             if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
                                                 meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
                                                 //meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setDesignate_Id(response.getDesignateList().getOrganisation_DesignateID() + "");
@@ -3360,7 +3487,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                     }
                                 });
 
-                                //setAdapterWithOutEpisode(item, Type, pos);
                                 break;
                             }
                             case "designate_or_user": {
@@ -3438,6 +3564,18 @@ public class MessageFragment extends BaseFragmentWithOptions {
                             setAdapterWithOutEpisodeGlobalIndividual(meetList);
                         }
                     }
+                }
+
+                @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                        if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                    setAdapterWithOutEpisodeGlobal();
                 }
 
                 @Override
@@ -3591,6 +3729,18 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
                         setAdapterWithOutEpisodeGlobal();
                     }
+                }
+
+                @Override
+                public void onFailure() {
+                    for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
+                        if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID().equals(meetList.getUserID())) {
+                            meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).setChecked(true);
+                            UserIDs.add(meetList.getUserID());
+                        }
+                    }
+                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetList.getUserID());
+                    setAdapterWithOutEpisodeGlobal();
                 }
 
                 @Override

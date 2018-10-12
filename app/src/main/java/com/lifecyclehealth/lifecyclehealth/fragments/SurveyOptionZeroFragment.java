@@ -1,5 +1,6 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
@@ -44,7 +45,6 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     MainActivity mainActivity;
     static int status = 0;
     private static int pagePosition;
-    private boolean isToDo = false, isCompleted = false;
     ImageView imageView;
 
     public static SurveyOptionZeroFragment newInstance(String data, int position) {
@@ -81,8 +81,6 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        isToDo = SurveyDetailsListFragment.isToDo;
-        isCompleted = SurveyDetailsListFragment.isCompleted;
         surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_ZERO_TYPE), SurveyDetailsModel.class);
         setupView(view);
     }
@@ -142,6 +140,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
         });
     }
 
+    @SuppressLint("RestrictedApi")
     private void addRadioButtons() {
         final int number = surveyDetailsModel.getQuestionModel().getQuestionOptions().size();
 

@@ -37,7 +37,6 @@ import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkRequestUtil;
 import com.moxtra.sdk.ChatClient;
-import com.moxtra.sdk.MXChatCustomizer;
 import com.moxtra.sdk.client.ChatClientDelegate;
 import com.moxtra.sdk.common.ActionListener;
 import com.moxtra.sdk.common.ApiCallback;
@@ -73,6 +72,7 @@ public class MeetEvent extends BaseFragmentWithOptions {
     private static final String KEY_TOPIC = "topic";
     private static final String KEY_USER_LIST = "userList";
     private String sessionKey;
+    private MeetSessionConfig meetSessionConfig ;
 
     private final Handler mHandler = new Handler();
 
@@ -206,7 +206,9 @@ public class MeetEvent extends BaseFragmentWithOptions {
                 mMeetSession = meetSession;
                 mMeetSessionController = mChatClientDelegate.createMeetSessionController(mMeetSession);
                 //MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().hideMeetID = false;
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
+                //MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
+                meetSessionConfig = new MeetSessionConfig();
+                meetSessionConfig.setMeetLinkEnabled(false);
                 showMeetFragment();
 
             }
@@ -226,7 +228,7 @@ public class MeetEvent extends BaseFragmentWithOptions {
         // mMeetRepo.startMeetWithTopic(topic, new ApiCallback<MeetSession>() {
         sessionKey = MyApplication.getInstance().getFromSharedPreference(AppConstants.SESSION_KEY);
         printLog("sessionKey" + sessionKey);
-        MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
+       // MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
 
         mMeetRepo.startMeetWithMeetID(sessionKey, new ApiCallback<MeetSession>() {
             @Override
@@ -234,9 +236,9 @@ public class MeetEvent extends BaseFragmentWithOptions {
                 Log.i(TAG, "Start meet successfully.");
                 mMeetSession = meetSession;
 
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().hideMeetID = false;
-                MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
+               // MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().autoJoinVOIP = true;
+               // MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().hideMeetID = false;
+                //MXChatCustomizer.getCustomizeUIConfig().getMeetFlags().meetLinkEnabled = false;
                 mMeetSession.inviteParticipants(userList, new ApiCallback<Void>() {
                     @Override
                     public void onCompleted(Void result) {

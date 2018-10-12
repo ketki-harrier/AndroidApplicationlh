@@ -40,6 +40,10 @@ import com.lifecyclehealth.lifecyclehealth.activities.MeetEventActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.fragments.MeetFragment;
 import com.moxtra.sdk.ChatClient;
+import com.moxtra.sdk.chat.model.Chat;
+import com.moxtra.sdk.common.ApiCallback;
+import com.moxtra.sdk.meet.model.Meet;
+import com.moxtra.sdk.notification.NotificationHelper;
 import com.moxtra.sdk.notification.NotificationManager;
 
 import java.util.List;
@@ -74,10 +78,49 @@ public class GcmNotificationService extends GcmListenerService {
         intent.putExtras(bundle);
         try {
             if (bundle != null && !bundle.isEmpty()) {
-                NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
+            /*    NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
                 if (notificationManager.isValidRemoteNotification(intent)) {
                     int type = notificationManager.getValidNotificationType(intent);
-                    String title = notificationManager.getNotificationMessageText(this, intent);
+                    String title = notificationManager.getNotificationMessageText(this, intent);*/
+
+                NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
+                NotificationHelper notificationHelper = new NotificationHelper();
+
+                if (notificationHelper.isValidRemoteNotification(intent)) {
+                    int type = notificationHelper.getValidNotificationType(intent);
+                    final String title = notificationHelper.getNotificationMessageText(this, intent);
+                    Log.i(TAG, "Here comes a notification: type=" + type + ", title=" + title);
+
+
+                    notificationManager.fetchChatFromChatNotification(intent, new ApiCallback<Chat>() {
+                        @Override
+                        public void onCompleted(Chat chat) {
+                            sendNotification(title);
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.w(TAG, "Ignore invalid remote notification.");
+                        }
+                    });
+
+                    notificationManager.fetchMeetFromMeetNotification(intent, new ApiCallback<Meet>() {
+                        @Override
+                        public void onCompleted(Meet meet) {
+                            sendNotificationMeet(title);
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.w(TAG, "Ignore invalid remote notification.");
+                        }
+                    });
+                }
+
+               /* NotificationHelper notificationHelper = new NotificationHelper();
+                if (notificationHelper.isValidRemoteNotification(intent)) {
+                    int type = notificationHelper.getValidNotificationType(intent);
+                    String title = notificationHelper.getNotificationMessageText(this, intent);
                     Log.i(TAG, "Here comes a notification: type=" + type + ", title=" + title);
                     switch (type) {
                         case 100:
@@ -96,7 +139,7 @@ public class GcmNotificationService extends GcmListenerService {
                 } else {
                     Log.w(TAG, "Ignore invalid remote notification.");
                     //sendNotification("message receive");
-                }
+                }*/
             } else {
                 Log.w(TAG, "Ignore notification without any extended data.");
             }

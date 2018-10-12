@@ -20,8 +20,6 @@ import com.lifecyclehealth.lifecyclehealth.utils.AESHelper;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.LruBitmapCache;
 import com.moxtra.sdk.ChatClient;
-import com.moxtra.sdk.MXAccountManager;
-import com.moxtra.sdk.MXSDKException;
 import com.segment.analytics.Analytics;
 
 import java.util.Set;
@@ -57,18 +55,20 @@ public class MyApplication extends Application {
         mInstance = this;
         initNotification();
         try {
-            /******for test*********/
+
             ChatClient.initialize(this);
-            MXAccountManager.createInstance(this, "iAQQ9UaAdrQ", "v7cn6OgKXVs", true);
+
+            /******for test*********/
+            //  MXAccountManager.createInstance(this, "iAQQ9UaAdrQ", "v7cn6OgKXVs", true);
 
             /******for production*********/
-            MXAccountManager.createInstance(this, "qfiugFWfGqg", "ous0w9vF1U0", true);
+            //MXAccountManager.createInstance(this, "qfiugFWfGqg", "ous0w9vF1U0", true);
 
             Analytics analytics = new Analytics.Builder(this, "mMJN5zbvWjhUo4KiXFkT91HdlMkWzm4p").build();
             Analytics.setSingletonInstance(analytics);
             setSharedPreference();
 
-        } catch (MXSDKException.InvalidParameter invalidParameter) {
+        } catch (Exception invalidParameter) {
             Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
         }
 
@@ -89,7 +89,7 @@ public class MyApplication extends Application {
     }
 
 
-    private void setSharedPreference(){
+    private void setSharedPreference() {
         String fromSharedPreference = MyApplication.getInstance().getFromSharedPreference(AppConstants.EMAIL_ID);
 
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_USERNAME_EDITABLE, false);

@@ -312,7 +312,20 @@ public class LoginActivity extends BaseActivityLogin implements
     }
 
     private void callMainActivity() {
-        if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGOUT) == false)
+
+        if (MyApplication.getInstance().getBooleanFromSharedPreference(AppConstants.IS_IN_MEET)) {
+            MainActivity instance = MainActivity.getInstance();
+            if (instance != null) {
+                if (instance.mChatClientDelegate != null) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("from_notification", "1");
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }
+
+        if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGOUT) == false){
             if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_TIMEOUT)) {
                 MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_TIMEOUT, false);
                 MainActivity instance = MainActivity.getInstance();
@@ -324,7 +337,7 @@ public class LoginActivity extends BaseActivityLogin implements
                         finish();
                     }
                 }
-            }
+            }}
 
     }
 

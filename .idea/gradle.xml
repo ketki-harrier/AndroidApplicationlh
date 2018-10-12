@@ -11,8 +11,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bottomnavigation" />
             <option value="$PROJECT_DIR$/effectivenavigation" />
-            <option value="$PROJECT_DIR$/expandablelistview" />
-            <option value="$PROJECT_DIR$/fingerprintauth" />
             <option value="$PROJECT_DIR$/horizontalcalendar" />
             <option value="$PROJECT_DIR$/notification_banner" />
           </set>

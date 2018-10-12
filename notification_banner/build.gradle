@@ -5,6 +5,48 @@ repositories {
 }
 
 dependencies {
+    compile "com.android.support:appcompat-v7:${google_support_library}"
+}
+
+project.group = 'com.github.lamydev'
+
+android {
+
+    compileSdkVersion project.maxVersion.toInteger()
+    buildToolsVersion "${buildToolVersion}"
+
+    defaultConfig {
+        minSdkVersion project.minVersion.toInteger()
+        targetSdkVersion project.maxVersion.toInteger()
+        versionCode 1
+        versionName "10"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDir 'src'
+            res.srcDir 'res'
+            assets.srcDir 'assets'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    buildToolsVersion '27.0.3'
+}
+
+
+
+/*
+apply plugin: 'android-library'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
 }
 
@@ -36,3 +78,4 @@ android {
     }
     buildToolsVersion '25.0.0'
 }
+*/

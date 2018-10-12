@@ -28,6 +28,90 @@ ext {
 version = libraryVersion
 
 android {
+    compileSdkVersion project.maxVersion.toInteger()
+    buildToolsVersion "${buildToolVersion}"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion project.minVersion.toInteger()
+        targetSdkVersion project.maxVersion.toInteger()
+        versionCode 1
+        versionName version
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    /*compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1' */
+
+    compile "com.android.support:appcompat-v7:${google_support_library}"
+    compile "com.android.support:recyclerview-v7:${google_support_library}"
+}
+
+
+if (project.hasProperty("android")) { // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+
+/*apply plugin: 'com.android.library'
+//apply plugin: 'com.jfrog.bintray'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'horizontal-calendar'
+
+    publishedGroupId = 'devs.mulham.horizontalcalendar'
+    libraryName = 'Horizontal Calendar'
+    artifact = 'horizontalcalendar'
+
+    libraryDescription = 'A material horizontal calendar view for Android based on RecyclerView'
+
+    siteUrl = 'https://github.com/Mulham-Raee/HorizontalCalendarLibrary'
+    gitUrl = 'https://github.com/Mulham-Raee/HorizontalCalendarLibrary.git'
+
+    libraryVersion = '1.1.1'
+
+    developerId = 'mulham-raee'
+    developerName = 'Mulham Raee'
+    developerEmail = 'mulham.raee@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+version = libraryVersion
+
+android {
     compileSdkVersion 26
     buildToolsVersion '25.0.3'
 
@@ -51,8 +135,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    /*compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1' */
+    *//*compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1' *//*
 
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
@@ -79,7 +163,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives javadocJar
     archives sourcesJar
-}
+}*/
 
 // Bintray
 //Properties properties = new Properties()

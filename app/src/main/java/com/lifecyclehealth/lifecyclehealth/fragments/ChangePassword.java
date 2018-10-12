@@ -202,6 +202,17 @@ public class ChangePassword extends BaseFragmentWithOptions {
                     ConfirmPassword.setVisibility(View.VISIBLE);
                     return;
                 }
+                if (editConfirmPassword.getText().toString().equals(editTextNewPassword.getText().toString())) {
+                    confirmPasword = 1;
+                    // confirmPasswordImage.setVisibility(View.VISIBLE);
+                    ConfirmPassword.setVisibility(View.GONE);
+                } else {
+                    confirmPasword = 0;
+                    // confirmPasswordImage.setVisibility(View.GONE);
+                    ConfirmPassword.setVisibility(View.VISIBLE);
+                    ConfirmPassword.setText(getString(R.string.error_in_password_confirm_2));
+                    return;
+                }
                 if (password == 1 && confirmPasword == 1) {
                     Analytics.with(getContext()).track("Change Password", new Properties().putValue("category", "Mobile"));
                     changePasswordData();

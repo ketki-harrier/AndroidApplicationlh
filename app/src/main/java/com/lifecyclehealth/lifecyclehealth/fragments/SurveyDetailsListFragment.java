@@ -39,6 +39,7 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
     private String titleOfSurvey;
     public static boolean isToDo = false;
     public static boolean isCompleted = false;
+    public static boolean isSchedule = false;
     private int positionOfSurvey;
     TabLayout tabLayout;
 
@@ -119,6 +120,8 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
         } else {
             isToDo = false;
             isCompleted = false;
+            isSchedule=true;
+            surveyTitle = titleOfSurvey;
         }
 
         setupToolbarTitle(toolbar, surveyTitle);

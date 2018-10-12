@@ -95,7 +95,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
                     //Toast.makeText(getContext(),"back_arrow key pressed",Toast.LENGTH_SHORT).show();
-                    mainActivity.finish();
+                    //mainActivity.finish();
                     return true;
 
                 }
@@ -328,6 +328,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                                         PatientSurveyItem patientSurveyItem = new PatientSurveyItem();
                                         patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setName("No item to display");
+                                        patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setPatientSurveyResponseId(-99);
                                         surveyItems.add(patientSurveyItem);
                                         surveyPlanDto.getSurveyPlan().setSurveyPlanCompleted(surveyItems);
@@ -337,6 +338,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                                         PatientSurveyItem patientSurveyItem = new PatientSurveyItem();
                                         patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setName("No item to display");
+                                        patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setPatientSurveyResponseId(-99);
                                         surveyItems.add(patientSurveyItem);
                                         surveyPlanDto.getSurveyPlan().setSurveyPlanSchedule(surveyItems);
@@ -346,6 +348,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                                         PatientSurveyItem patientSurveyItem = new PatientSurveyItem();
                                         patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setName("No item to display");
+                                        patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setPatientSurveyResponseId(-99);
                                         surveyItems.add(patientSurveyItem);
                                         surveyPlanDto.getSurveyPlan().setSurveyPlanTodo(surveyItems);
@@ -380,5 +383,6 @@ public class SurveyFragment extends BaseFragmentWithOptions {
         listLinkedHashMap.put(titleList.get(2), surveyPlanDto.getSurveyPlan().getSurveyPlanCompleted());
         return listLinkedHashMap;
     }
+
 
 }
