@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        icon="@drawable/survey_gray"
+        id="@+id/tab_survey"
+        title="Survey" />
+  <!--  <tab
+        icon="@drawable/patient_diary"
+        id="@+id/tab_episode_list"
+        title="Episode List" />-->
+    <tab
+        icon="@drawable/message_main"
+        id="@+id/tab_message"
+        title="Message" />
+    <tab
+        icon="@drawable/meet_main"
+        id="@+id/tab_meet"
+        title="Meet" />
+    <tab
+        icon="@drawable/more_dot"
+        id="@+id/tab_more"
+        title="More" />
+
+</tabs>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_corner_all"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleViewInvities"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnCancel"
+        android:layout_margin="@dimen/margin_extra_large" />
+
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:text="@string/btn_cancel"
+        android:textColor="@drawable/selector_text_login_btn"
+        fontPath="fonts/Roboto-Regular.ttf" />
+
+
+</RelativeLayout>

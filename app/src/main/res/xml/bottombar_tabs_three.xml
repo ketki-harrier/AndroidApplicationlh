@@ -2,23 +2,25 @@
 <tabs>
 
     <tab
-        icon="@drawable/ic_favorites"
+        icon="@drawable/survey_gray"
         id="@+id/tab_survey"
         title="Survey" />
+  <!--  <tab
+        icon="@drawable/patient_diary"
+        id="@+id/tab_patientDiary"
+        title="Patient Diary" />-->
+
+
     <tab
-        icon="@drawable/ic_nearby"
-        id="@+id/tab_treatment"
-        title="Treatment" />
-    <tab
-        icon="@drawable/ic_friends"
+        icon="@drawable/message_main"
         id="@+id/tab_message"
         title="Message" />
     <tab
-        icon="@drawable/ic_recents"
+        icon="@drawable/meet_main"
         id="@+id/tab_meet"
         title="Meet" />
     <tab
-        icon="@drawable/ic_restaurants"
+        icon="@drawable/more_dot"
         id="@+id/tab_more"
         title="More" />
 

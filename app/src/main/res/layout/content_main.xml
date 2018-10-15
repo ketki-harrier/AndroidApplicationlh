@@ -1,26 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:showIn="@layout/activity_main">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_main">
 
-    <RelativeLayout
-        android:id="@+id/content_main"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.9"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_main">
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
+        <RelativeLayout
+            android:id="@+id/content_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9" >
+
+        </RelativeLayout>
+
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.1"
+            app:bb_activeTabColor="@color/colorPrimaryGreen"
+            app:bb_tabXmlResource="@xml/bottombar_tabs_three" />
+
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/bottomBar_Caregiver"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="0.1"
+            app:bb_activeTabColor="@color/colorPrimaryGreen"
+            app:bb_tabXmlResource="@xml/bottombar_tabs_three_caregiver" />
+    </LinearLayout>
+
+    <zemin.notification.NotificationView
+        android:id="@+id/nv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="0.1"
-        app:bb_activeTabColor="@color/colorPrimaryGreen"
-        app:bb_tabXmlResource="@xml/bottombar_tabs_three"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
 
 
-</LinearLayout>
+</RelativeLayout>

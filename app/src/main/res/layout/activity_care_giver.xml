@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/bg_toolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        android:elevation="0dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@android:color/holo_green_light">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Toolbar Title"
+                android:textColor="@color/colorPrimary"
+                fontPath="fonts/Roboto-Regular.ttf" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_login">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/button"
+                android:orientation="vertical">
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_extra_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/text_caregiver1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/white"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/margin_large"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/margin_large"
+                    android:textAlignment="textStart"></RadioGroup>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_small"
+            android:orientation="horizontal">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                android:id="@+id/btnContinue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:layout_weight="1"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/btn_continue"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@drawable/selector_text_login_btn"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_extra_large"
+                android:layout_marginRight="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_weight="1"
+                android:background="@drawable/selector_white_btn"
+                android:text="@string/btn_cancel"
+                android:textColor="@color/black"
+                fontPath="fonts/Roboto-Regular.ttf" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <zemin.notification.NotificationView
+        android:id="@+id/nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+
+
+</RelativeLayout>

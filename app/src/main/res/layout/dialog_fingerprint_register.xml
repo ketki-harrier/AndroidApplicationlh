@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--WARNINGS CAN IGNORE AS THIS WILL ONLY OPERATE ON NEW DEVICE -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fingerprint_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingBottom="8dp"
+    android:paddingEnd="24dp"
+    android:paddingStart="24dp"
+    android:paddingTop="16dp">
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        fontPath="fonts/Roboto-Regular.ttf"
+        android:id="@+id/fingerprint_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/fingerprint_description"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="@color/text"/>
+
+
+    <ImageView
+        android:id="@+id/fingerprint_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fingerprint_description"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_fp_40px"/>
+
+    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+        android:id="@+id/fingerprint_status"
+        fontPath="fonts/Roboto-Regular.ttf"
+        style="@android:style/TextAppearance.Material.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/fingerprint_icon"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/fingerprint_icon"
+        android:layout_toRightOf="@+id/fingerprint_icon"
+        android:gravity="center_vertical"
+        android:text="@string/fingerprint_hint"
+        android:textColor="@color/hint_color"/>
+
+
+</RelativeLayout>

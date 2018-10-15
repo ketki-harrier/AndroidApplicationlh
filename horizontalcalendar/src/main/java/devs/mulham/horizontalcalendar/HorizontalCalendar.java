@@ -37,6 +37,7 @@ public class HorizontalCalendar {
 
     //Start & End Dates
     private Date dateStartCalendar;
+    public static Calendar selectedCalendarDate;
     private Date dateEndCalendar;
 
     //Interface events
@@ -67,7 +68,7 @@ public class HorizontalCalendar {
 
             //On Scroll, agenda is refresh to update background colors
             if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
-               // Log.e("ScrollTimap", recyclerView.getScrollState() + "" + dx + dy);
+                // Log.e("ScrollTimap", recyclerView.getScrollState() + "" + dx + dy);
                 post(new Runnable() {
                     @Override
                     public void run() {
@@ -124,6 +125,7 @@ public class HorizontalCalendar {
         this.textSizeDayName = builder.textSizeDayName;
         this.numberOfDatesOnScreen = builder.numberOfDatesOnScreen;
         this.dateStartCalendar = builder.dateStartCalendar;
+        this.selectedCalendarDate = builder.selectedCalendarDate;
         this.dateEndCalendar = builder.dateEndCalendar;
         this.centerToday = builder.centerToday;
         this.showDayName = builder.showDayName;
@@ -164,9 +166,11 @@ public class HorizontalCalendar {
      *
      * @param immediate pass true to make the calendar scroll as fast as possible to reach the date of today
      *                  ,or false to play default scroll animation speed.
+     * @param time
      */
-    public void goToday(boolean immediate) {
-        selectDate(new Date(), immediate);
+    public void goToday(boolean immediate, Date time) {
+        selectDate(time, immediate);
+        //selectDate(new Date(), immediate);
         mCalendarAdapter.notifyDataSetChanged();
     }
 
@@ -410,6 +414,7 @@ public class HorizontalCalendar {
         int textColorNormal, textColorSelected;
         int selectedDateBackground;
         int selectorColor;
+        Calendar selectedCalendarDate;
         private float textSizeMonthName, textSizeDayNumber, textSizeDayName;
 
         boolean showMonthName = true;
@@ -436,6 +441,11 @@ public class HorizontalCalendar {
 
         public Builder centerToday(boolean value) {
             centerToday = value;
+            return this;
+        }
+
+        public Builder selectedCalendarDate(Calendar calendar) {
+            selectedCalendarDate = calendar;
             return this;
         }
 
@@ -593,17 +603,20 @@ public class HorizontalCalendar {
             GregorianCalendar calendar = new GregorianCalendar();
 
             calendar.setTime(dateStartCalendar);
-            calendar.add(Calendar.DATE, -(numberOfDatesOnScreen / 2));
+            calendar.add(selectedCalendarDate.DATE, -(numberOfDatesOnScreen / 2));
+           // calendar.add(Calendar.DATE, -(numberOfDatesOnScreen / 2));
             Date dateStartBefore = calendar.getTime();
             calendar.setTime(dateEndCalendar);
-            calendar.add(Calendar.DATE, numberOfDatesOnScreen / 2);
+            calendar.add(selectedCalendarDate.DATE, numberOfDatesOnScreen / 2);
+            //calendar.add(Calendar.DATE, numberOfDatesOnScreen / 2);
             Date dateEndAfter = calendar.getTime();
 
             Date date = dateStartBefore;
             while (!date.after(dateEndAfter)) {
                 mListDays.add(date);
                 calendar.setTime(date);
-                calendar.add(Calendar.DATE, 1);
+                calendar.add(selectedCalendarDate.DATE, 1);
+                //calendar.add(Calendar.DATE, 1);
                 date = calendar.getTime();
             }
 
@@ -620,7 +633,7 @@ public class HorizontalCalendar {
             calendarView.setLayoutManager(new HorizontalLayoutManager(calendarView.getContext(), false));
 
             if (centerToday) {
-                goToday(true);
+                goToday(true,selectedCalendarDate.getTime());
             } else {
                 show();
             }

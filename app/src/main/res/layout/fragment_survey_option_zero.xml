@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_margin="@dimen/margin_large"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/margin_large"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +16,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                fontPath="fonts/Roboto-Regular.ttf"
+                android:id="@+id/surveyForName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -23,9 +37,11 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_extra__extra_large"
                 android:text="@string/app_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary"/>
 
-            <TextView
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/questionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,6 +54,16 @@
             <View
                 style="@style/Line"
                 android:layout_marginTop="@dimen/margin"/>
+
+
+            <ImageView
+                android:layout_margin="@dimen/margin_extra__extra_large"
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:layout_height="wrap_content" />
+
 
             <RadioGroup
                 android:id="@+id/radioGroup"

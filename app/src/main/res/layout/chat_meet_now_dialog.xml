@@ -1,0 +1,283 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.lifecyclehealth.lifecyclehealth.fragments.MeetDetailsForProviderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey"
+            android:padding="@dimen/margin_extra__extra_large"
+            android:text="@string/meet_now"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            fontPath="fonts/Roboto-Regular.ttf" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_extra_large">
+
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:text="@string/meeting_title"
+                android:textColor="@color/uvv_titlebar_bg"
+                android:textStyle="bold"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                android:id="@+id/meetingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_extra__extra_large"
+                android:layout_marginTop="@dimen/margin"
+
+                android:hint="@string/meeting_title"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint_color"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:text="@string/meeting_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_extra__extra_large"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:weightSum="1">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/provider_to_provider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:paddingLeft="@dimen/margin"
+                    android:text="@string/provider_to_provider"
+                    android:textColor="@color/hint_color"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/patient_related_episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:paddingLeft="@dimen/margin"
+                    android:text="@string/patient_related_episode"
+                    android:textColor="@color/hint_color"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+                <LinearLayout
+                    android:id="@+id/linear_patient_related_episode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:id="@+id/txt_patient_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:text="@string/patient_name"
+                        android:textColor="@color/hint_color"
+                        android:textStyle="bold"
+                        fontPath="fonts/Roboto-Regular.ttf" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spinnerPatientName"
+                        style="@style/CustomSpinnerTheme"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_extra_large"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textColor="@color/black" />
+
+
+                  <!--  <Spinner
+                        android:id="@+id/spinnerPatientName"
+                        style="@style/CustomSpinnerTheme"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_extra_large"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textColor="@color/black" />-->
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:id="@+id/txt_episode_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:text="@string/episode_name"
+                        android:textColor="@color/hint_color"
+                        android:textStyle="bold"
+                        fontPath="fonts/Roboto-Regular.ttf" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spinner_episode_name"
+                        style="@style/CustomSpinnerTheme"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_extra_large"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/provider_patient_with_no_episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:paddingLeft="@dimen/margin"
+                    android:text="@string/provider_patient_with_no_episode"
+                    android:textColor="@color/hint_color"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+
+                <LinearLayout
+                    android:id="@+id/linear_provider_patient_with_no_episode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        android:id="@+id/txt_no_episode_patient_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:text="@string/patient_name"
+                        android:textColor="@color/hint_color"
+                        android:textStyle="bold"
+                        fontPath="fonts/Roboto-Regular.ttf" />
+
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spinner_no_episode_PatientName"
+                        style="@style/CustomSpinnerTheme"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_extra_large"
+                        android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:paddingTop="@dimen/size_15dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/provider_with_multiple_patient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin"
+                    android:paddingLeft="@dimen/margin"
+                    android:text="@string/provider_with_multiple_patient"
+                    android:textColor="@color/hint_color"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/btnInvitees"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_login_btn"
+                    android:text="@string/invitees"
+                    android:textColor="@drawable/selector_text_login_btn"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/startMeet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_login_btn"
+                    android:text="@string/start_meet"
+                    android:textColor="@drawable/selector_text_login_btn"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+
+                <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_extra_large"
+                    android:layout_marginRight="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_white_btn"
+                    android:text="@string/btn_cancel"
+                    android:textColor="@color/black"
+                    fontPath="fonts/Roboto-Regular.ttf" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+

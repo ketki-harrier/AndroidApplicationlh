@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">LifecycleHealth</string>
+    <string name="app_name">Lifecycle Health</string>
+
+    <!--<string name="font_name_fontawesome">fontawesome</string>
+    <string name="font_name_source_sans_pro">Roboto-Regular.ttf</string>-->
+
     <string name="large_text">Material is the metaphor</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
@@ -7,27 +11,34 @@
     <string name="title_tracking_log">Patient Tracking Log</string>
     <string name="title_message">Conversation</string>
     <string name="title_meet">eVisit</string>
+    <string name="title_patient_diary">Patient Diary</string>
     <string name="title_more">More</string>
     <string name="title_survey_details">To Do </string>
     <string name="error_title">Error</string>
     <string name="ok">Ok</string>
+    <string name="yes_sure">YES, SURE!</string>
     <string name="tringle">▼</string>
     <string name="star">*</string>
+    <string name="back">Back</string>
     <string name="view_all">View All</string>
     <string name="empty_meet_tv">No meet scheduled for this date.</string>
     <string name="hint_username">Username</string>
     <string name="error_username">kindly provide username.</string>
+
 
     <!--SIGN IN-->
     <string name="hint_password">Password</string>
     <string name="error_password">kindly provide password.</string>
     <string name="term_condi_part_1">I agree and accept the</string>
     <string name="term_condi_part_2"> term and conditions.</string>
+    <string name="term_condi_part_3">Our Terms of Service has changed. You will be asked to Please Accept Terms of Service prior to gaining access.</string>
     <string name="sign_in">Sign In</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_username">Forgot Username?</string>
     <string name="error_tern_condition">Please select term and condition.</string>
     <string name="error_no_network">Please check your network connection and try again.</string>
     <string name="error_someting_went_wrong">Something went wrong.Please try again later.</string>
+    <string name="incomplete_profile">Your profile is incomplete. Please login to the website for complete it.</string>
 
     <!--VERIFY MOBILE NUMBER-->
     <string name="verify_screen_title">Verify SMS Text Messaging</string>
@@ -47,12 +58,19 @@
     <string name="error_verify_contact_num">Please check mobile number.</string>
     <string name="error_verify_country_code">Please check country code.</string>
 
+    <!--FORGOT USERNAME-->
+    <string name="forgot_username_statement">Please enter the email address associate with your account. We will send an email containing the Username.</string>
+    <string name="email">Email</string>
+    <string name="error_email">kindly provide email.</string>
+    <string name="send_email">SEND EMAIL</string>
+
+
     <!--FORGOT PASSWORD-->
     <string name="forgot_pass_title_step_one">Forgot Password</string>
     <string name="forgot_pass_title_step_two">Authorization Code</string>
     <string name="forgot_pass_title_step_three">Reset Password</string>
     <string name="forgot_pass_title_step_four">Success</string>
-    <string name="step_one_instruction">To Verify identity-we will send you an authorization code to ypur account.</string>
+    <string name="step_one_instruction">To Verify identity-we will send you an authorization code to your account.</string>
     <string name="step_one_btn_text">Send Code</string>
     <string name="step_two_instruction_title"> An authorization code was sent to your email address or mobile number.</string>
     <string name="step_two_instruction_email">Check your email or message and enter the authorization code:</string>
@@ -62,8 +80,8 @@
     <string name="btn_save_pass">Save Password</string>
     <string name="hint_new_password">New Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
-    <string name="error_in_password_new">Your password must have:6 or more characters,upper and lower letters,at least one number</string>
-    <string name="error_in_password_confirm">Please enter conferm password.</string>
+    <string name="error_in_password_new">Your password must have: 6 or more charecters, Upper and lower letters, at least one number</string>
+    <string name="error_in_password_confirm">Please Enter Confirm Password</string>
     <string name="error_in_password_confirm_2">Password do not match</string>
     <string name="step_four_instruction_title">For security purposes,please login again.</string>
     <string name="step_four_instruction_success">You have successfully reset password.</string>
@@ -74,5 +92,160 @@
     <string name="step_four_cancel_message_btn_back">Yes</string>
     <string name="step_four_cancel_message_btn_No">No</string>
     <string name="step_four_btn_sign_in">Sign In</string>
+
+    //Caregiver
+    <string name="text_caregiver1">Please select role for which you want to login.</string>
+
+    //electonic signature
+    <string name="electroic_signature">Electronic Signature</string>
+    <string name="electroic_signature_text">"\""By selecting the "\""Submit"\"" button, you warrant the truthfullness of the information provided,and confirm with your electonic signature verification for submitting this information."\""</string>
+    <string name="submit">Submit</string>
+    <string name="score">Score</string>
+
+    <string name="download">Download</string>
+    <string name="select_file">Select File</string>
+
+    <string name="btn_invite">Invite</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    //More
+    <string name="more">More</string>
+    <string name="logout">Log Out</string>
+    <string name="profile">Profile</string>
+    <string name="health">Health</string>
+    <string name="notification">Notification</string>
+    <string name="treatment">Treatment</string>
+    <string name="patient_summary">Patient Summary</string>
+    <string name="patient_diary">Patient Diary</string>
+    <string name="todo">To Do</string>
+    <string name="add_patient_express">Add Patient</string>
+
+    //Logout
+    <string name="logout1">Are you sure?</string>
+    <string name="logout2">You will be signed out</string>
+    <string name="yes_sign_out">YES, SIGN OUT!</string>
+
+    //change password
+    <string name="err_msg_password">Please Enter your password</string>
+    <string name="err_msg_confirmpassword">Please Enter the confirm password</string>
+    <string name="err_msg_newpassword">Please Enter your new password</string>
+    <string name="err_msg_oldpassword">Please Enter your current password</string>
+    <string name="err_msg_confirmnewpassword">Please confirm new password</string>
+    <string name="err_msg_confirm_mismatch_password">Password does not match</string>
+    <string name="err_msg_confirm_mismatch_newpassword">Password does not match</string>
+    <string name="err_msg_pass_6_dig">Please enter a password length of at least 6 characters</string>
+    <string name="err_msg_pass_alphanumeric">Please include at least one number and one character</string>
+
+
+    <string name="btnTakePicture">Capture Image</string>
+    <string name="btnRecordVideo">Record Video</string>
+    <string name="or">(or)</string>
+
+
+    <!--Fingure Print-->
+    <string name="fingerprint_description">Confirm fingerprint to continue</string>
+    <string name="fingerprint_cancel_btn">Cancel</string>
+    <string name="fingerprint_main_dia_title">Fingerprint Authentication</string>
+    <string name="fingerprint_max_limit_contain"> You have exceeded the number of attempts.\n  Please verify using PIN</string>
+    <string name="fingerprint_max_limit_ok">Ok</string>
+    <string name="fingerprint_configuration_contain"> Would you like to configure TouchID login for this account?</string>
+    <string name="fingerprint_configuration_yes">Yes</string>
+    <string name="fingerprint_configuration_no">NO</string>
+    <string name="fingerprint_configuration_dont_ask">Don\'t ask me again!</string>
+    <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="fingerprint_success">Fingerprint recognized</string>
+    <string name="fingerprint_hint">Touch sensor</string>
+    <string name="fingerprint_no_key_guard">Currently these is no key guard is setup for phone. \n Please configure keyguard.</string>
+    <string name="fingerprint_no_finger_print">Please configure at least one fingerprint in device.</string>
+    <string name="fingerprint_goto_settings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_capital">CANCEL</string>
+    <string name="fingerprint_enable">Configure touch id</string>
+    <string name="fingerprint_disable">Disable touch id</string>
+
+
+    <!--Meet-->
+    <string name="meeting_title">Meeting Title</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="episode_name">Episode Name</string>
+    <string name="start_time">Start Time</string>
+    <string name="duration">Duration</string>
+    <string name="start_d">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="provider_to_provider">Provider to Provider(General)</string>
+    <string name="patient_related_episode">Patient Related Episode</string>
+    <string name="provider_patient_with_no_episode">Provider Patient With No Episode</string>
+    <string name="provider_with_multiple_patient">Provider With Multiple Patient</string>
+    <string name="invitees">Invitees</string>
+    <string name="default_badge_number">0</string>
+
+    <!--Messages-->
+    <string name="create_conversation">Create Conversation</string>
+    <string name="message_type">Message Type</string>
+    <string name="name_of_conversation">Name of Conversation</string>
+    <string name="start_message">Start Message</string>
+    <string name="type_initial_message">Type initial message</string>
+    <string name="binder_setting">Binder Setting</string>
+    <string name="meet_now">Meet Now</string>
+    <string name="topic">Topic</string>
+    <string name="cover_image">Cover Image</string>
+    <string name="start_meet">Start Meet</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="message_ack">Lifecycle Health Messages are intended for non-emergency healthcare conversations only. Please contact your healthcare provider\'s office via telephone for urgent matters. If you are experiencing a medical emergency, call 911 or visit your nearest Emergency Room immediately.</string>
+    <string name="message_ack1">I understand. Do not show me warning this again.</string>
+
+    <!--Invitees-->
+    <string name="designate_available_message">The selected participant has a Designate and will also be added to the Message.</string>
+
+
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"http://www.moxtra.com\",\n  }\n}]</string>
+
+
+    <string name="touch_id1">Terms and Conditions for Enabling Touch ID Functionality.</string>
+    <string name="touch_id6">Terms &amp; Conditions</string>
+    <string name="touch_id2">To enable Touch ID for sign in, you are required to save your User ID on this device.\", secondString: \" Once Touch ID is enabled, you understand and agree that any Touch ID fingerprint stored on this device can be used to access your accounts in Lifecycle Health mobile app.</string>
+    <string name="touch_id3">Lifecycle Health Inc. neither controls the functionality of Touch ID nor has access to your fingerprint information.</string>
+    <string name="touch_id4">There may be circumstances where Touch ID will not functions as expected and we may ask you to sign in using any username and password.</string>
+    <string name="touch_id5">By choosing Accept, you agree to these terms and conditions. Choose Decline to cancel set up of Touch ID for Lifecycle Health mobile app.</string>
+
+
+    <string name="choose_id_title">Choose ID to Sign In</string>
+    <string name="use_different_id">Use a different ID</string>
+    <string name="touch_id_on">Touch ID ON</string>
+
+    <string name="delete">DELETE</string>
+    <string name="delete1">Delete</string>
+
+    <string name="episode_level_notification">Episode Level Notification</string>
+    <string name="include_archived_notifications">Include Archived Notifications</string>
+
+    <!--Survey Report-->
+    <string name="survey_report">Survey Report</string>
+    <string name="survey_related_to_patient">Survey related to patient:</string>
+    <string name="submitted_by">Submitted by:</string>
+    <string name="submitted_on">Submitted on:</string>
+    <string name="score_survey">Score:</string>
+
+
+    <string name="caregiver_for">No caregiver relationships assigned</string>
+
+    <!--Patient Diary-->
+    <string name="episode">Episode</string>
+    <string name="stage">Stage</string>
+    <string name="what_do_you_want_to_log">What do you want to log?</string>
+    <string name="admission">ADMISSION</string>
+    <string name="discharge">DISCHARGE</string>
+    <string name="visit">VISIT</string>
+    <string name="hospital_re_Admission">HOSPITAL RE-ADMISSION</string>
+    <string name="log_history">Log History</string>
+
+
+    <string name="My_Account">My Account</string>
+    <string name="Upload">Upload</string>
+
+
 
 </resources>

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Three Buttons Bar"
-            android:id="@+id/textView"
+            android:id="@+id/TextView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textColor="@color/colorPrimary"

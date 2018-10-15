@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+
+    <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/webView"
+        android:layout_alignRight="@+id/webView"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dip"
+        android:indeterminateDrawable="@drawable/progress_indeterminate"
+        android:indeterminateTint="@color/indeterminate_drawable_color"
+        android:indeterminateTintMode="src_in" />
+
+
+    <ImageView
+        android:id="@+id/printPdf"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/size_15dp"
+        android:src="@drawable/print" />
+
+</RelativeLayout>

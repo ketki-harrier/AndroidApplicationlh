@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/appBar"
     android:layout_width="match_parent"
@@ -8,73 +7,99 @@
     android:background="@color/white"
     android:theme="@style/AppTheme.AppBarOverlay">
 
-    <android.support.v7.widget.Toolbar
+    <!--   <android.support.v7.widget.Toolbar
+           android:id="@+id/toolbar"
+           android:layout_width="match_parent"
+           android:layout_height="?actionBarSize"
+           android:background="@drawable/bg_toolbar"
+           android:contentInsetLeft="0dp"
+           android:contentInsetStart="0dp"
+           app:contentInsetLeft="0dp"
+           app:contentInsetStart="0dp"
+           app:popupTheme="@style/AppTheme.PopupOverlay">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+               <TextView
+                   style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                   android:id="@+id/toolbar_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerInParent="true"
+                   android:layout_centerVertical="true"
+                   android:text="@string/app_name"
+                   android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                   android:textColor="@color/colorPrimary"/>
+           </RelativeLayout>
+       </android.support.v7.widget.Toolbar>-->
+
+    <!-- Load the toolbar here -->
+    <include
         android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@drawable/bg_toolbar"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:text="@string/app_name"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary"/>
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
 
-        <TextView
-            android:textStyle="bold"
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+            android:id="@+id/btnScheduleMeet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_extra__extra_large"
+            android:background="@drawable/selector_login_btn"
+            android:gravity="center"
+            android:padding="@dimen/margin_extra__extra_large"
+            android:text="SCHEDULE MEET"
+            android:textColor="@drawable/selector_text_login_btn"
+            fontPath="fonts/Roboto-Regular.ttf" />
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             android:id="@+id/selectedDateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/margin_extra__extra_large"
-            android:text="April-13,2017"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-            android:textColor="@color/colorPrimary"/>
+            android:layout_below="@+id/btnScheduleMeet"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            fontPath="fonts/Roboto-Regular.ttf" />
 
         <devs.mulham.horizontalcalendar.HorizontalCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/selectedDateTv"
-            app:textColorSelected="#FFFF"/>
+            app:textColorSelected="#FFFF" />
 
 
-        <TextView
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/emptyViewTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="@color/text_color_grey"
-            android:text="@string/empty_meet_tv"/>
+            android:text="@string/empty_meet_tv"
+            android:textColor="@color/text_color_grey" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:layout_below="@+id/calendarView"
+            android:layout_marginTop="@dimen/margin_padding_5" />
+
     </RelativeLayout>
 
 

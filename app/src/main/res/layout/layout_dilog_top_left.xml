@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/margin"
+    android:layout_marginStart="@dimen/margin"
+    android:orientation="vertical">
 
     <View
         android:id="@+id/viewBubbleRight"
@@ -15,17 +16,17 @@
         android:layout_marginLeft="-8dp"
         android:layout_marginStart="-8dp"
         android:background="@drawable/bg_bubble_right_top"
-        android:rotation="180"
-        />
+        android:rotation="180" />
+
     <View
         android:id="@+id/viewBubbleLeft"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:background="@drawable/bg_bubble_right_top"
-        android:rotation="180"
-        />
+        android:rotation="180" />
+
     <RelativeLayout
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"
@@ -33,22 +34,58 @@
         android:layout_marginTop="35dp"
         android:background="@drawable/bg_round_corner">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view"
+            android:layout_alignParentTop="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleView_Meet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false">
+
+                </android.support.v7.widget.RecyclerView>
+
 
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+            android:id="@+id/messageHint"
+            android:layout_gravity="center"
+            android:layout_above="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_extra_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center"
+            android:text="No new message exist"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/margin_large"
+            fontPath="fonts/Roboto-Regular.ttf"/>
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_above="@+id/view_all_btn"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
         <Button
             android:id="@+id/view_all_btn"
@@ -56,6 +93,91 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/bg_round_corner_bottom"
-            android:text="@string/view_all"/>
+            android:text="@string/view_all" />
     </RelativeLayout>
 </RelativeLayout>
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginStart="@dimen/margin"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewBubbleRight"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginStart="-8dp"
+            android:background="@drawable/bg_bubble_right_top"
+            android:rotation="180" />
+
+        <View
+            android:id="@+id/viewBubbleLeft"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_bubble_right_top"
+            android:rotation="180" />
+
+        <RelativeLayout
+            android:id="@+id/layout_frame"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/bg_round_corner">
+
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_round_corner_bottom"
+                android:textAllCaps="false"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+
+            <ScrollView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                &lt;!&ndash;android:background="@drawable/coming_soon"&ndash;&gt;
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_above="@+id/view_all_btn"
+                android:background="@android:color/darker_gray" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                android:id="@+id/view_all_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_round_corner_bottom"
+                android:text="@string/view_all"
+                fontPath="fonts/Roboto-Regular.ttf" />
+        </RelativeLayout>
+    </RelativeLayout>-->

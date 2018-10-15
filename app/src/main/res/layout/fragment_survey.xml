@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"/>
 
     <ExpandableListView
+        android:background="@color/white"
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

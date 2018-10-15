@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_large"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                fontPath="fonts/Roboto-Regular.ttf"
+                android:id="@+id/surveyForName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/surveyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_extra__extra_large"
+                android:text="@string/app_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/questionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/appbar_scrolling_view_behavior"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                fontPath="fonts/Roboto-Regular.ttf" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/selectFirstTimeLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/margin_small"
+                    android:orientation="horizontal">
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                        android:id="@+id/editputName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:hint="@string/select_file"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        fontPath="fonts/Roboto-Regular.ttf" />
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        android:id="@+id/btnSelectFile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_white_btn"
+                        android:text="@string/select_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        fontPath="fonts/Roboto-Regular.ttf" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/uploadFileLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/margin_small"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="horizontal">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            android:id="@+id/editchangeName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:layout_toLeftOf="@+id/imageView"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+                        <!--       <ImageView
+                                   android:layout_alignParentRight="true"
+                                   android:id="@+id/imageView"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:textColor="@color/black" />-->
+
+                        <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="5dip"
+                            android:indeterminateTint="@color/indeterminate_drawable_color"
+                            android:indeterminateTintMode="src_in"
+                            android:progressDrawable="@drawable/spinner_icon" />
+                        <!--android:indeterminateDrawable="@drawable/progress_indeterminate"-->
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="horizontal">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                            android:id="@+id/btnChangeFile"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_extra_large"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_white_btn"
+                            android:text="@string/Change"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            fontPath="fonts/Roboto-Regular.ttf" />
+
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                            android:id="@+id/btnUploadImage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_login_btn"
+                            android:text="@string/Upload"
+                            android:textAllCaps="false"
+                            android:textColor="@drawable/selector_text_login_btn"
+                            fontPath="fonts/Roboto-Regular.ttf" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/removeFileLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/margin_small"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="horizontal">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            android:id="@+id/editRemoveName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_large"
+                            android:layout_toLeftOf="@+id/imageViewRemove"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            fontPath="fonts/Roboto-Regular.ttf" />
+
+                        <ImageView
+                            android:id="@+id/imageViewRemove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/black" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="horizontal">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                            android:id="@+id/btnRemove"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_extra_large"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_white_btn"
+                            android:text="@string/Remove"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            fontPath="fonts/Roboto-Regular.ttf" />
+
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAllCaps="false"
+                            fontPath="fonts/Roboto-Regular.ttf" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

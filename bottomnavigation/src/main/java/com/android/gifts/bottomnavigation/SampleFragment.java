@@ -27,9 +27,9 @@ public class SampleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(getArguments().getString(STARTING_TEXT));
+        TextView TextView = new TextView(getActivity());
+        TextView.setText(getArguments().getString(STARTING_TEXT));
 
-        return textView;
+        return TextView;
     }
 }
