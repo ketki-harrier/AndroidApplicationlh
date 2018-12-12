@@ -51,7 +51,6 @@ public class NotificationRootView extends FrameLayout
     /**
      * Get notification view.
      *
-     * @param NotificationView
      */
     public NotificationView getView() {
         return mView;
@@ -60,7 +59,6 @@ public class NotificationRootView extends FrameLayout
     /**
      * Get notification board.
      *
-     * @param NotificationBoard
      */
     public NotificationBoard getBoard() {
         return mBoard;

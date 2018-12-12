@@ -57,7 +57,6 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
             default:
                 Log.e("call", "default");
                 return SurveyOptionZeroFragment.newInstance(data, position);
-
         }
     }
 

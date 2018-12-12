@@ -130,45 +130,57 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
 
 
     private void initializeView(View view) {
-        MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET_FRAGMENT, true);
-        messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
-        notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
-        Analytics.with(getContext()).screen("Calendar Meet");
+        try{
+            MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET_FRAGMENT, true);
+            messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
+            notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
+            Analytics.with(getContext()).screen("Calendar Meet");
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        setupToolbarTitle(toolbar, getString(R.string.title_meet));
+            Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+            setupToolbarTitle(toolbar, getString(R.string.title_meet));
 
-        isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
-        RelativeLayout notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
-        RelativeLayout messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
-        countTextViewMessage = (TextView) view.findViewById(R.id.countTextViewMessage);
-        notificationCountTextViewMessage = (TextView) view.findViewById(R.id.countTextViewNotificatione);
-         imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
-         imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
-        //get Notification count
-        getNotificationCount(notificationCountTextViewMessage, mainActivity);
-        changeMessageIcon();
+            isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
+            RelativeLayout notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
+            RelativeLayout messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
+            countTextViewMessage = (TextView) view.findViewById(R.id.countTextViewMessage);
+            notificationCountTextViewMessage = (TextView) view.findViewById(R.id.countTextViewNotificatione);
+            imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
+            imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
+            //get Notification count
 
+            new MeetThread().run();
 
+            notificationHolderLayout.setOnClickListener(this);
+            messageHolderLayout.setOnClickListener(this);
 
-        notificationHolderLayout.setOnClickListener(this);
-        messageHolderLayout.setOnClickListener(this);
-
-        dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
-        emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
-        recyclerView.hasFixedSize();
-        btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
-        btnScheduleMeet.setOnClickListener(this);
-        if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
-            btnScheduleMeet.setVisibility(View.GONE);
-        } else {
-            btnScheduleMeet.setVisibility(View.VISIBLE);
+            dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
+            emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
+            recyclerView.hasFixedSize();
+            btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
+            btnScheduleMeet.setOnClickListener(this);
+            if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
+                btnScheduleMeet.setVisibility(View.GONE);
+            } else {
+                btnScheduleMeet.setVisibility(View.VISIBLE);
+            }
+            view1 = view;
+            setupCalendar(view);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        view1 = view;
-        setupCalendar(view);
+
     }
 
+
+    class MeetThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            getNotificationCount(notificationCountTextViewMessage, mainActivity);
+            changeMessageIcon();
+        }
+    }
 
     public void changeMessageIcon(){
         if (!messageCount.equals("0")) {

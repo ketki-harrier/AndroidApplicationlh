@@ -170,9 +170,7 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
                 android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.commit();
-
                 // SurveyDetailsItemFragment.newInstance(data);
-
             }
 
             @Override

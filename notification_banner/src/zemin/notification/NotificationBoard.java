@@ -45,7 +45,6 @@ import java.util.ListIterator;
  * A board showing a list of current notifications. You can provide your own implementation
  * of {@link NotificationBoardCallback} to customize the board appearance.
  *
- * @see NotificationBoard#setCallback.
  */
 public class NotificationBoard extends FrameLayout
         implements NotificationListener,
@@ -290,14 +289,7 @@ public class NotificationBoard extends FrameLayout
         return mCallback != null;
     }
 
-    /**
-     * Set the callback. You can have your board layout customized by
-     * extending {@link NotificationBoardCallback}.
-     *
-     * @see NotificationBoardCallback.
-     *
-     * @param cb
-     */
+
     public void setCallback(NotificationBoardCallback cb) {
         if (mCallback != cb) {
             mCallback = cb;
@@ -427,7 +419,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * add {@link NotificationBoard#StateListener}.
      *
      * @param l
      */
@@ -441,7 +432,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * remove {@link NotificationBoard#StateListener}.
      *
      * @param l
      */
@@ -452,7 +442,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * @see GestureListener.
      *
      * @param l
      */
@@ -472,7 +461,6 @@ public class NotificationBoard extends FrameLayout
     /**
      * Get the duration of the open animation.
      *
-     * @param ms
      */
     public int getOpenTransitionTime() {
         return mOpenTransitionTime;
@@ -490,7 +478,6 @@ public class NotificationBoard extends FrameLayout
     /**
      * Get the duration of the close animation.
      *
-     * @param ms
      */
     public int getCloseTransitionTime() {
         return mCloseTransitionTime;
@@ -884,7 +871,6 @@ public class NotificationBoard extends FrameLayout
     /**
      * Get the height of footer divider.
      *
-     * @param int
      */
     public int getFooterDividerHeight() {
         return mFooterDividerHeight;
@@ -922,7 +908,6 @@ public class NotificationBoard extends FrameLayout
      *
      * @see View#OVER_SCROLL_ALWAYS
      * @see View#OVER_SCROLL_IF_CONTENT_SCROLLS
-     * @see View#OVER_SCROLL_NONE
      *
      * @param mode
      */
@@ -935,7 +920,6 @@ public class NotificationBoard extends FrameLayout
      *
      * @see View#OVER_SCROLL_ALWAYS
      * @see View#OVER_SCROLL_IF_CONTENT_SCROLLS
-     * @see View#OVER_SCROLL_NONE
      *
      * @return int
      */
@@ -944,7 +928,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * Get {@link NotificationBoard#RowView} by the id of {@link NotificationEntry}.
      *
      * @param notification
      * @return RowView
@@ -960,7 +943,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * Get {@link NotificationBoard#RowView} by its children.
      *
      * @param child
      * @return RowView
@@ -974,7 +956,6 @@ public class NotificationBoard extends FrameLayout
     }
 
     /**
-     * Get {@link NotificationBoard#RowView} by touch event.
      *
      * @param event
      */

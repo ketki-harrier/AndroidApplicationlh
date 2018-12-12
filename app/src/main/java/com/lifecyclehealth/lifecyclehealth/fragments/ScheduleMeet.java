@@ -120,7 +120,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     private String selectedEpisode = "";
     MeetInviteParticipantsWithEpisodeAdapter adapterWithEpisode;
     MeetInviteParticipantsWithoutEpisodeAdapter adapterWithoutEpisode;
-
+    public static boolean comingFromMultiplePatient;
     MainActivity mainActivity;
 
 
@@ -231,7 +231,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         linear_provider_patient_with_no_episode.setVisibility(View.GONE);
                         setSpinnerAdapter();
                         getPatientList();
-
+                        comingFromMultiplePatient = false;
                         break;
 
                     case R.id.provider_patient_with_no_episode:
@@ -244,6 +244,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         linear_patient_related_episode.setVisibility(View.GONE);
                         linear_provider_patient_with_no_episode.setVisibility(View.VISIBLE);
                         getPatientList();
+                        comingFromMultiplePatient = false;
                         break;
 
                     case R.id.provider_to_provider:
@@ -255,6 +256,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         patient_related_episode.setSupportButtonTintList(deSelectColorList());
                         linear_patient_related_episode.setVisibility(View.GONE);
                         linear_provider_patient_with_no_episode.setVisibility(View.GONE);
+                        comingFromMultiplePatient = false;
                         break;
 
                     case R.id.provider_with_multiple_patient:
@@ -266,6 +268,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         patient_related_episode.setSupportButtonTintList(deSelectColorList());
                         linear_patient_related_episode.setVisibility(View.GONE);
                         linear_provider_patient_with_no_episode.setVisibility(View.GONE);
+                        comingFromMultiplePatient = true;
                         break;
 
                 }
@@ -843,15 +846,18 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         switch (selectedTypePatient) {
             case 1: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_PROVIDER_TO_PROVIDER;
+                comingFromMultiplePatient = false;
                 break;
             }
             case 2: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_EPISODE + "/" + selectedEpisode;
+                comingFromMultiplePatient = false;
                 break;
             }
             case 3: {
                 try {
                     url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_NO_EPISODE + "/" + AESHelper.decrypt(seedValue, MyApplication.getInstance().getFromSharedPreference(LOGIN_ID));
+                    comingFromMultiplePatient = false;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -859,6 +865,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
             }
             case 4: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_PROVIDER_WITH_MULTIPLE_PATIENT;
+                comingFromMultiplePatient = true;
                 break;
             }
         }
@@ -896,7 +903,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                                     //UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(k).getUserID());
                                                                 }
                                                             }
-                                                            UserIDs = new ArrayList<String>();
+//                                                            UserIDs = new ArrayList<String>();
                                                             MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant = new ArrayList<String>();
 
                                                             for (int h = 0; h < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); h++) {
@@ -1201,16 +1208,15 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             if (MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(episodeParticipantForDesignate.getUserID())) {
                                 //showDialogWithOkButton1(text);
 
-
                                 final MeetInviteParticipantsModel.EpisodeParticipantList finalEpisodeParticipantForDesignate = episodeParticipantForDesignate;
                                 showDialogWithOkCancelButton1("Designate will also be removed", new OnOkClick() {
                                     @Override
                                     public void OnOkClicked() {
                                         for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
-                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+                                            if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID().equals(finalEpisodeParticipantForDesignate.getUserID())) {
                                                 meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).setChecked(false);
                                                 printLog("checked provider");
-                                                int r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(response.getDesignateList().get(0).getProvider_UserID());
+                                                int r = MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.indexOf(finalEpisodeParticipantForDesignate.getUserID());
                                                 if (r >= 0)
                                                     MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.remove(r);
                                                 int user = UserIDs.indexOf(meetList.getUserID());
@@ -1458,19 +1464,23 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         switch (selectedTypePatient) {
             case 1: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_PROVIDER_TO_PROVIDER;
+                comingFromMultiplePatient = false;
                 break;
             }
             case 2: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_EPISODE + "/" + selectedEpisode;
+                comingFromMultiplePatient = false;
                 break;
             }
 
             case 3: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_NO_EPISODE + "/" + PatientID;
+                comingFromMultiplePatient = false;
                 break;
             }
             case 4: {
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_PROVIDER_WITH_MULTIPLE_PATIENT;
+                comingFromMultiplePatient = true;
                 break;
             }
         }
@@ -1510,7 +1520,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                                     // UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).getUserID());
                                                                 }
                                                             }
-                                                            UserIDs = new ArrayList<String>();
+//                                                            UserIDs = new ArrayList<String>();
                                                             MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout = new ArrayList<String>();
                                                             for (int h = 0; h < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); h++) {
                                                                 String role = TextUtils.join(",", meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getRoleName());
@@ -1619,6 +1629,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
             }
         });
 
+        UserIDs.clear();
         adapterWithoutEpisode = new MeetInviteParticipantsWithoutEpisodeAdapter(meetInviteParticipantsWithoutEpisodeModel.getUserList(), getContext(), UserIDs, new MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MeetInviteParticipantsWithoutEpisodeModel.UserList item, String Type, String pos) {

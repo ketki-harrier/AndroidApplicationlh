@@ -155,6 +155,14 @@ public class MainActivity extends BaseActivity {
         if (value.trim().equals("1")) {
             setupBottomBar();
         } else {
+            new InitThread().run();
+        }
+    }
+
+    class InitThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
             initialiseMoxtra();
             getMessageCount();
         }
@@ -490,7 +498,6 @@ public class MainActivity extends BaseActivity {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-
                 if (value.trim().equals("1")) {
                     openFragment(R.id.tab_message);
                 } else {
@@ -622,7 +629,6 @@ public class MainActivity extends BaseActivity {
             //showNoNetworkMessage();
         }
         getNotificationCount();
-
     }
 
     private void getNotificationCount() {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import com.lifecyclehealth.lifecyclehealth.R;
+import com.lifecyclehealth.lifecyclehealth.fragments.ScheduleMeet;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsWithoutEpisodeModel;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -67,7 +68,6 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
                 if (selectedUsers.contains(meetList.getUserID())) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipantWithout.add(meetList.getUserID());
-
                 }
             } else {
                 if (meetResponseList.size() == 1) {
@@ -77,7 +77,7 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
                 if (meetList.isLoggedInUser()) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipantWithout.add(meetList.getUserID());
-                } else if (role.contains("Patient")) {
+                } else if (role.contains("Patient") && !ScheduleMeet.comingFromMultiplePatient) {
                     if (meetList.isPatientSelected()) {
                     } else {
                         holder.addParticipant.setVisibility(View.VISIBLE);

@@ -97,7 +97,6 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_FOUR_TYPE), SurveyDetailsModel.class);
         setupView(view);
     }

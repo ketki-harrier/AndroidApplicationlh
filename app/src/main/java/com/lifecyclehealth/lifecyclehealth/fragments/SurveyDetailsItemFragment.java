@@ -121,7 +121,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
     private void initView(View view) {
         viewPager = (CustomViewPager) view.findViewById(R.id.viewPager);
-        getSurveyList(surveyItem.getPatientSurveyResponseId());
+        getSurveyList(surveyItem.getPatientSurveyId());
     }
 
     /* Set view pager with values*/
@@ -157,7 +157,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
                 if (checkDirection) {
                     if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
-
                         //for completed
                         if (SurveyDetailsListFragment.isCompleted) {
                             if (arrayKey.size() == 1) {
@@ -188,7 +187,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                 }
                             }
-
                         }
                     } else {
                         printLog("left");
@@ -333,7 +331,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 if (questionDto.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     int id = questionDto.getSurveyQuestion().getSurveyDetails().getSurveyId();
                                     List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
-
                                     printLog("Type: " + questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus());
 
                                     /*if (questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus().equals("Completed")) {
@@ -389,7 +386,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
 
     private void selectSurveyDialog(String title) {
-
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(mainActivity);

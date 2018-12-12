@@ -93,7 +93,6 @@ public class SurveyFragment extends BaseFragmentWithOptions {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
                     //Toast.makeText(getContext(),"back_arrow key pressed",Toast.LENGTH_SHORT).show();
                     //mainActivity.finish();
                     return true;

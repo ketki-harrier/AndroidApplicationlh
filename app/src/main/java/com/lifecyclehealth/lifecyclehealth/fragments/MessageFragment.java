@@ -175,10 +175,20 @@ public class MessageFragment extends BaseFragmentWithOptions {
         @Override
         public void onClick(View view) {
             //checkMessageAcknowledge();
-            checkBusinessHours();
+
+            new MessageData().run();
+
         }
     };
 
+
+    class MessageData extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            checkBusinessHours();
+        }
+    }
 
     private void checkBusinessHours() {
         showProgressDialog(true);

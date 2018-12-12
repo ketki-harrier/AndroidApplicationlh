@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LifecycleHealth.iml" filepath="$PROJECT_DIR$/LifecycleHealth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidApplication.iml" filepath="$PROJECT_DIR$/AndroidApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bottomnavigation/bottomnavigation.iml" filepath="$PROJECT_DIR$/bottomnavigation/bottomnavigation.iml" />
       <module fileurl="file://$PROJECT_DIR$/effectivenavigation/effectivenavigation.iml" filepath="$PROJECT_DIR$/effectivenavigation/effectivenavigation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/expandablelistview/expandablelistview.iml" filepath="$PROJECT_DIR$/expandablelistview/expandablelistview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fingerprintauth/fingerprintauth.iml" filepath="$PROJECT_DIR$/fingerprintauth/fingerprintauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/horizontalcalendar/horizontalcalendar.iml" filepath="$PROJECT_DIR$/horizontalcalendar/horizontalcalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/notification_banner/notification_banner.iml" filepath="$PROJECT_DIR$/notification_banner/notification_banner.iml" />
     </modules>
