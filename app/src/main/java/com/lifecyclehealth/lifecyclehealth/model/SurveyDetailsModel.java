@@ -23,6 +23,16 @@ public class SurveyDetailsModel {
 
     private String Patient_Survey_ResponseID;
 
+    public String getMultipleQustionsId() {
+        return multipleQustionsId;
+    }
+
+    public void setMultipleQustionsId(String multipleQustionsId) {
+        this.multipleQustionsId = multipleQustionsId;
+    }
+
+    private String multipleQustionsId;
+
 
     public QuestionModel getQuestionModel() {
         return questionModel;

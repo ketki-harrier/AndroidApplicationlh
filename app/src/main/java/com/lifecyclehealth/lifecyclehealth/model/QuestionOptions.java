@@ -22,6 +22,18 @@ public class QuestionOptions {
     @SerializedName("Question_Option_Value_From")
     private int Question_Option_Value_From;
 
+    public int getMultiple_Options() {
+        return Multiple_Options;
+    }
+
+    public void setMultiple_Options(int multiple_Options) {
+        Multiple_Options = multiple_Options;
+    }
+
+    @SerializedName("Patient_Survey_Question_OptionID1")
+    private int Multiple_Options;
+
+
     public int getQuestion_Option_Value_From() {
         return Question_Option_Value_From;
     }

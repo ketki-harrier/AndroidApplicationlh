@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Html;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
@@ -30,6 +32,8 @@ import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
 import org.json.JSONObject;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
@@ -46,6 +50,10 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     static int status = 0;
     private static int pagePosition;
     ImageView imageView;
+    int id;
+    HashMap<String, String> requestParameter = new HashMap<String, String>();
+    final ArrayList<Integer> arrayList = new ArrayList<>();
+
 
     public static SurveyOptionZeroFragment newInstance(String data, int position) {
         SurveyOptionZeroFragment zeroFragment = new SurveyOptionZeroFragment();
@@ -116,8 +124,104 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             imageView.setVisibility(View.GONE);
         }
 
-        addRadioButtons();
+        if(surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5){
+            addCheckBoxes();
+        }else{
+            addRadioButtons();
+        }
+    }
 
+    @SuppressLint("RestrictedApi")
+    private void addCheckBoxes() {
+        final int number = surveyDetailsModel.getQuestionModel().getQuestionOptions().size();
+        for (int row = 0; row < 1; row++) {
+            final RadioGroup ll = new RadioGroup(mainActivity);
+            ll.setOrientation(LinearLayout.VERTICAL);
+
+            for (int i = 1; i <= number; i++) {
+                String optionsToadd = surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getName();
+                final AppCompatCheckBox rdbtn = new AppCompatCheckBox(mainActivity);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                layoutParams.setMargins(0, 10, 0, 5);
+                rdbtn.setLayoutParams(layoutParams);
+                rdbtn.setPadding(5, 0, 0, 0);
+                rdbtn.setTextColor(ContextCompat.getColor(mainActivity, R.color.black));
+                Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
+                rdbtn.setTypeface(font);
+
+                rdbtn.setId(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getOptionId());
+                rdbtn.setText(optionsToadd);
+                if (SurveyDetailsListFragment.isToDo) {
+                    rdbtn.setButtonDrawable(R.drawable.selector_radiobutton1);
+                    rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
+                    rdbtn.setSupportButtonTintList(getColorList());
+                    rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
+                } else {
+                    rdbtn.setButtonDrawable(R.drawable.deselector_radiobutton1);
+                    rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
+                    rdbtn.setSupportButtonTintList(getDeColorList());
+                    rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.black));
+                    rdbtn.setFocusable(false);
+                    rdbtn.setClickable(false);
+                    rdbtn.setCursorVisible(false);
+                }
+
+                if (surveyDetailsModel.getQuestionModel().getAnswerId() == surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getOptionId()) {
+                    rdbtn.setChecked(true);
+                    SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                }
+                rdbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @SuppressLint("NewApi")
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                           id = buttonView.getId();
+                            for (int loop = 1; loop <= surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); loop++) {
+                                if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionId() == id) {
+                                    requestParameter.put("ResponseId", surveyDetailsModel.getPatient_Survey_ResponseID());
+                                    requestParameter.put("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
+                                    requestParameter.put("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer()+"");
+                                    arrayList.add(id);
+//                                    requestParameter.put("Multiple_Options", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getMultiple_Options()+ "");
+                                    requestParameter.put("Score", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionValue() + "");
+                                }
+                            }
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                            SurveyDetailsItemFragment.scrollViewPager();
+                            status = 1;
+                           if (SurveyDetailsListFragment.isToDo) {
+                                submitMultipleSelectedAnswerOfSurvey(requestParameter, arrayList);
+                            }
+                        } else {
+                            /*id = buttonView.getId();
+                            HashMap<String, String> requestParameter = new HashMap<String, String>();
+                            for (int loop = 1; loop <= surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); loop++) {
+                                if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionId() == id) {
+                                    requestParameter.remove("ResponseId", surveyDetailsModel.getPatient_Survey_ResponseID());
+                                    requestParameter.remove("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
+                                    requestParameter.remove("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer()+"");
+                                    arrayList.remove(id);
+//                                    requestParameter.remove("Multiple_Options", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getMultiple_Options()+ "");
+                                    requestParameter.remove("Score", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionValue() + "");
+                                }
+                            }
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                            SurveyDetailsItemFragment.scrollViewPager();
+                            status = 1;
+                            if (SurveyDetailsListFragment.isToDo) {
+                                submitMultipleSelectedAnswerOfSurvey(requestParameter,arrayList);
+                            }*/
+                        }
+                    }
+                });
+
+                ((ViewGroup) getView().findViewById(R.id.radioGroup)).addView(rdbtn);
+
+            }
+        }
     }
 
     private void addImage() {
@@ -143,21 +247,17 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     @SuppressLint("RestrictedApi")
     private void addRadioButtons() {
         final int number = surveyDetailsModel.getQuestionModel().getQuestionOptions().size();
-
         for (int row = 0; row < 1; row++) {
-
             final RadioGroup ll = new RadioGroup(mainActivity);
             ll.setOrientation(LinearLayout.VERTICAL);
 
-
             for (int i = 1; i <= number; i++) {
                 String optionsToadd = surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getName();
-
                 final AppCompatRadioButton rdbtn = new AppCompatRadioButton(mainActivity);
                 RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 5, 0, 5);
+                layoutParams.setMargins(0, 10, 0, 5);
                 rdbtn.setLayoutParams(layoutParams);
                 rdbtn.setPadding(5, 0, 0, 0);
                 rdbtn.setTextColor(ContextCompat.getColor(mainActivity, R.color.black));
@@ -243,6 +343,50 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     }
                 });
             } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            showNoNetworkMessage();
+        }
+    }
+
+
+    public void submitMultipleSelectedAnswerOfSurvey(HashMap<String, String> hashMap, ArrayList<Integer> arrayList) {
+        if (isConnectedToNetwork(mainActivity)) {
+            try {
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("ResponseId", hashMap.get("ResponseId"));
+                params.put("QuestionId", hashMap.get("QuestionId"));
+                params.put("Score", hashMap.get("Score"));
+                params.put("Type_Of_Section", surveyDetailsModel.getQuestionModel().getTypeOfAnswer() + "");
+                params.put("Descriptive_Answer", "");
+                params.put("OptionId", "0");
+                JsonArray array = new JsonArray();
+                for(int s: arrayList){
+                    array.add(s);
+                }
+                params.put("Multiple_Options", array);
+
+                HashMap<String, HashMap<String, Object>> hashMapRequest = new HashMap<>();
+                hashMapRequest.put("SurveyDetails", params);
+                JSONObject requestJson = new JSONObject(new Gson().toJson(hashMapRequest));
+
+                Log.e("JSONObject", requestJson+"");
+                mainActivity.networkRequestUtil.postDataSecure(BASE_URL + URL_SURVEY_SUBMIT_ANSWER, requestJson, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        if (response != null) {
+                            printLog("Response:survey submit" + response);
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        error.getMessage();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             showNoNetworkMessage();

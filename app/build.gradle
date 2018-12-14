@@ -16,7 +16,7 @@ android {
         minSdkVersion project.minVersion.toInteger()
         targetSdkVersion project.maxVersion.toInteger()
         multiDexEnabled true
-        versionCode 75
+        versionCode 76
         versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

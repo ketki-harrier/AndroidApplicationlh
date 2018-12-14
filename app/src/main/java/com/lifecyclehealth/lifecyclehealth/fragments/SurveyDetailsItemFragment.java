@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -121,7 +122,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
     private void initView(View view) {
         viewPager = (CustomViewPager) view.findViewById(R.id.viewPager);
-        getSurveyList(surveyItem.getPatientSurveyId());
+        getSurveyList(surveyItem.getPatientSurveyResponseId());
     }
 
     /* Set view pager with values*/
@@ -141,11 +142,11 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
             }
         }
 
-        SurveyPagerAdapter pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
+        final SurveyPagerAdapter pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
         viewPager.setAdapter(pagerAdapter);
 
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
@@ -154,8 +155,8 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 printLog("Total arraysize" + arrayKey.size());
 
                 int status = 0;
-
                 if (checkDirection) {
+
                     if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
                         //for completed
                         if (SurveyDetailsListFragment.isCompleted) {
@@ -169,6 +170,18 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 }
                             }
                         } else if (SurveyDetailsListFragment.isToDo) {
+
+                           /* Fragment item = pagerAdapter.getItem(position);
+                            if(item != null && item instanceof SurveyOptionZeroFragment){
+                                try {
+                                    SurveyOptionZeroFragment item1 = (SurveyOptionZeroFragment) item;
+//                                    item1.submitMultipleSelectedAnswerOfSurvey(item1.requestParameter, item1.arrayList);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }*/
+
+
                             int currentPage = viewPager.getCurrentItem();
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
@@ -188,17 +201,17 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 }
                             }
                         }
-                    } else {
+                    } else /*{
                         printLog("left");
                         if (SurveyDetailsListFragment.isCompleted) {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
-                        }  /*if (SurveyDetailsListFragment.isSchedule) {
+                        }  *//*if (SurveyDetailsListFragment.isSchedule) {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 //showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
-                        } */else if (SurveyDetailsListFragment.isToDo) {
+                        } *//*else if (SurveyDetailsListFragment.isToDo) {
                             int currentPage = viewPager.getCurrentItem();
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
@@ -209,13 +222,13 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                             } else {
                                 viewPager.disableScroll(true);
                                 status = 1;
-                                selectSurveyDialog(hashmapOfKeyTitle.get(s));
+//                                selectSurveyDialog(hashmapOfKeyTitle.get(s));
                             }
                             if (status == 0) {
                                 final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
                                 if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1) {
                                     mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                   /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                   *//* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
                                         public void onSwipeOutAtStart() {
                                             printLog("swipe start");
@@ -226,14 +239,14 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             printLog("swipe end");
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
-                                    });*/
+                                    });*//*
 
                                 }
                             }
 
                         }
 
-                    }
+                    }*/
 
                     checkDirection = false;
                 }
