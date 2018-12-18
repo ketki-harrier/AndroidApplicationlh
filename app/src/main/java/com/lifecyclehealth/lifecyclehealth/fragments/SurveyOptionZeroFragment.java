@@ -169,10 +169,11 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setCursorVisible(false);
                 }
 
-                if (surveyDetailsModel.getQuestionModel().getAnswerId() == surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getOptionId()) {
-                    rdbtn.setChecked(true);
-                    SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
-                }
+                        if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).isSelected()) {
+                            rdbtn.setChecked(true);
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                        }
+
                 rdbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @SuppressLint("NewApi")
                     @Override
@@ -270,7 +271,8 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
                     rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
-                } else {
+                }
+                else {
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
                     rdbtn.setSupportButtonTintList(getDeColorList());
                     rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.black));
@@ -305,12 +307,12 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                                 submitSelectedAnswerOfSurvey(requestParameter);
                             }
                         } else {
+
                         }
                     }
                 });
 
                 ((ViewGroup) getView().findViewById(R.id.radioGroup)).addView(rdbtn);
-
             }
         }
     }
@@ -349,7 +351,6 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             showNoNetworkMessage();
         }
     }
-
 
     public void submitMultipleSelectedAnswerOfSurvey(HashMap<String, String> hashMap, ArrayList<Integer> arrayList) {
         if (isConnectedToNetwork(mainActivity)) {

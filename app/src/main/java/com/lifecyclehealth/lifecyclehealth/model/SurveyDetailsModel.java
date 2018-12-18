@@ -13,6 +13,16 @@ public class SurveyDetailsModel {
     private String description;
     private int typeOfSection;
 
+    public AnswerOption getAnswerOption() {
+        return answerOption;
+    }
+
+    public void setAnswerOption(AnswerOption answerOption) {
+        this.answerOption = answerOption;
+    }
+
+    private AnswerOption answerOption;
+
     public String getPatient_Survey_ResponseID() {
         return Patient_Survey_ResponseID;
     }

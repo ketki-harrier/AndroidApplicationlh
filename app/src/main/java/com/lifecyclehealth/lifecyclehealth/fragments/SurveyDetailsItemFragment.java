@@ -170,18 +170,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 }
                             }
                         } else if (SurveyDetailsListFragment.isToDo) {
-
-                           /* Fragment item = pagerAdapter.getItem(position);
-                            if(item != null && item instanceof SurveyOptionZeroFragment){
-                                try {
-                                    SurveyOptionZeroFragment item1 = (SurveyOptionZeroFragment) item;
-//                                    item1.submitMultipleSelectedAnswerOfSurvey(item1.requestParameter, item1.arrayList);
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }*/
-
-
                             int currentPage = viewPager.getCurrentItem();
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
@@ -201,17 +189,18 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 }
                             }
                         }
-                    } else /*{
+                    }
+                    else {
                         printLog("left");
                         if (SurveyDetailsListFragment.isCompleted) {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
-                        }  *//*if (SurveyDetailsListFragment.isSchedule) {
+                        }  //*if (SurveyDetailsListFragment.isSchedule) {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 //showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
-                        } *//*else if (SurveyDetailsListFragment.isToDo) {
+                         //*else if (SurveyDetailsListFragment.isToDo) {
                             int currentPage = viewPager.getCurrentItem();
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
@@ -224,11 +213,12 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 status = 1;
 //                                selectSurveyDialog(hashmapOfKeyTitle.get(s));
                             }
+
                             if (status == 0) {
                                 final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
                                 if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1) {
                                     mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                   *//* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                  /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
                                         public void onSwipeOutAtStart() {
                                             printLog("swipe start");
@@ -239,18 +229,14 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             printLog("swipe end");
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
-                                    });*//*
-
+                                    });*/
                                 }
                             }
-
                         }
 
-                    }*/
-
+                    }
                     checkDirection = false;
                 }
-            }
 
             @Override
             public void onPageSelected(int position) {

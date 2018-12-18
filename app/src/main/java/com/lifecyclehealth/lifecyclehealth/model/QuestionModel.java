@@ -34,6 +34,17 @@ public class QuestionModel {
     @SerializedName("Box_After_Deliminater")
     private String Box_After_Deliminater;
 
+    public boolean isSelected() {
+        return Selected;
+    }
+
+    public void setSelected(boolean selected) {
+        Selected = selected;
+    }
+
+    @SerializedName("Selected")
+    boolean Selected;
+
     public String getDeliminater() {
         return Deliminater;
     }

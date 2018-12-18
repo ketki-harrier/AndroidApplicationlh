@@ -22,6 +22,17 @@ public class QuestionOptions {
     @SerializedName("Question_Option_Value_From")
     private int Question_Option_Value_From;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    @SerializedName("Selected")
+    private boolean isSelected;
+
     public int getMultiple_Options() {
         return Multiple_Options;
     }
