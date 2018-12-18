@@ -27,6 +27,7 @@ import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
+import com.lifecyclehealth.lifecyclehealth.application.TinyDB;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_CHECKED;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_SURVEY_SUBMIT_ANSWER;
 
@@ -53,7 +55,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     int id;
     HashMap<String, String> requestParameter = new HashMap<String, String>();
     final ArrayList<Integer> arrayList = new ArrayList<>();
-
+//    TinyDB tinydb;
 
     public static SurveyOptionZeroFragment newInstance(String data, int position) {
         SurveyOptionZeroFragment zeroFragment = new SurveyOptionZeroFragment();
@@ -109,6 +111,14 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
         }
 
+       /* tinydb = new TinyDB(getActivity().getApplicationContext());
+
+        if(tinydb.getListInt(PREF_IS_CHECKED) != null && tinydb.getListInt(PREF_IS_CHECKED).size() > 0){
+            for (int i = 0; i < tinydb.getListInt(PREF_IS_CHECKED).size(); i++) {
+                arrayList.add(tinydb.getListInt(PREF_IS_CHECKED).get(i));
+            }
+        }*/
+
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
         if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
             TextViewForName.setVisibility(View.GONE);
@@ -124,9 +134,9 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             imageView.setVisibility(View.GONE);
         }
 
-        if(surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5){
+        if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
             addCheckBoxes();
-        }else{
+        } else {
             addRadioButtons();
         }
     }
@@ -169,52 +179,60 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setCursorVisible(false);
                 }
 
-                        if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).isSelected()) {
-                            rdbtn.setChecked(true);
-                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
-                        }
+                try {
+                    if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).isSelected()) {
+                        rdbtn.setChecked(true);
+                        SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                        arrayList.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).getOptionId());
+                    }else{
+                        rdbtn.setChecked(false);
+                        arrayList.remove(arrayList.indexOf(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).getOptionId()));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 rdbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @SuppressLint("NewApi")
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                           id = buttonView.getId();
+                            id = buttonView.getId();
                             for (int loop = 1; loop <= surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); loop++) {
                                 if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionId() == id) {
                                     requestParameter.put("ResponseId", surveyDetailsModel.getPatient_Survey_ResponseID());
                                     requestParameter.put("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
-                                    requestParameter.put("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer()+"");
-                                    arrayList.add(id);
-//                                    requestParameter.put("Multiple_Options", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getMultiple_Options()+ "");
+                                    requestParameter.put("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer() + "");
                                     requestParameter.put("Score", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionValue() + "");
+                                    arrayList.add(id);
                                 }
                             }
+
                             SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                             SurveyDetailsItemFragment.scrollViewPager();
                             status = 1;
-                           if (SurveyDetailsListFragment.isToDo) {
+                            if (SurveyDetailsListFragment.isToDo) {
                                 submitMultipleSelectedAnswerOfSurvey(requestParameter, arrayList);
                             }
                         } else {
-                            /*id = buttonView.getId();
-                            HashMap<String, String> requestParameter = new HashMap<String, String>();
+                           id = buttonView.getId();
+
                             for (int loop = 1; loop <= surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); loop++) {
                                 if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionId() == id) {
-                                    requestParameter.remove("ResponseId", surveyDetailsModel.getPatient_Survey_ResponseID());
-                                    requestParameter.remove("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
-                                    requestParameter.remove("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer()+"");
-                                    arrayList.remove(id);
-//                                    requestParameter.remove("Multiple_Options", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getMultiple_Options()+ "");
-                                    requestParameter.remove("Score", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionValue() + "");
+                                    requestParameter.put("ResponseId", surveyDetailsModel.getPatient_Survey_ResponseID());
+                                    requestParameter.put("QuestionId", surveyDetailsModel.getQuestionModel().getPatientSurveyId());
+                                    requestParameter.put("TypeOfSection", surveyDetailsModel.getQuestionModel().getTypeOfAnswer() + "");
+                                    arrayList.remove(arrayList.indexOf(id));
+                                    requestParameter.put("Score", surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionValue() + "");
                                 }
                             }
+
                             SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                             SurveyDetailsItemFragment.scrollViewPager();
                             status = 1;
                             if (SurveyDetailsListFragment.isToDo) {
                                 submitMultipleSelectedAnswerOfSurvey(requestParameter,arrayList);
-                            }*/
+                            }
                         }
                     }
                 });
@@ -271,8 +289,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
                     rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
-                }
-                else {
+                } else {
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
                     rdbtn.setSupportButtonTintList(getDeColorList());
                     rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.black));
@@ -363,16 +380,20 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                 params.put("Descriptive_Answer", "");
                 params.put("OptionId", "0");
                 JsonArray array = new JsonArray();
-                for(int s: arrayList){
+
+                for (int s : arrayList) {
                     array.add(s);
                 }
                 params.put("Multiple_Options", array);
+
+//                tinydb.putListInt(PREF_IS_CHECKED, arrayList);
+
 
                 HashMap<String, HashMap<String, Object>> hashMapRequest = new HashMap<>();
                 hashMapRequest.put("SurveyDetails", params);
                 JSONObject requestJson = new JSONObject(new Gson().toJson(hashMapRequest));
 
-                Log.e("JSONObject", requestJson+"");
+                Log.e("JSONObject", requestJson + "");
                 mainActivity.networkRequestUtil.postDataSecure(BASE_URL + URL_SURVEY_SUBMIT_ANSWER, requestJson, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {

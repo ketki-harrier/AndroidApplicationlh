@@ -171,6 +171,7 @@ public class AppConstants {
     public static final String PREF_CURRENT_USER = "current_user";
     public static final String PREF_ROLE_CURRENT_USER = "user_role";
     public static final String PREF_IS_PATIENT = "isPatient";
+    public static final String PREF_IS_CHECKED = "isChecked";
     public static final String LOGIN_NAMECAREGIVER = "LOGIN_NAMECAREGIVER";
 
     public static final String CONST_PATIENT = "Patient";

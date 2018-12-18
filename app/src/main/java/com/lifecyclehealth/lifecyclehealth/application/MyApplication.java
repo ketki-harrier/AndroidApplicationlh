@@ -22,6 +22,7 @@ import com.lifecyclehealth.lifecyclehealth.utils.LruBitmapCache;
 import com.moxtra.sdk.ChatClient;
 import com.segment.analytics.Analytics;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import zemin.notification.NotificationDelegater;
@@ -47,6 +48,15 @@ public class MyApplication extends Application {
     private boolean isRealiseModeOn = false;
     private Typeface helveticaNeue;
     private ImageLoader mImageLoader;
+    public ArrayList<Integer> arrayListChecked;
+
+    public ArrayList<Integer> getArrayListChecked() {
+        return arrayListChecked;
+    }
+
+    public void setArrayListChecked(ArrayList<Integer> arrayListChecked) {
+        this.arrayListChecked = arrayListChecked;
+    }
 
 
     @Override
@@ -203,6 +213,20 @@ public class MyApplication extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(key, value).commit();
     }
+
+
+   /* public void setCheckedToSharedPreference(String key, ArrayList<Integer> value) {
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key,  value).commit();
+    }
+
+    public int getCheckedFromSharedPreference(String key) {
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences.getInt(key,0);
+        return sharedPreferences.getInt(key ,0);
+    }*/
+
 
     public Set<String> getListFromSharedPreference(String key) {
         sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
