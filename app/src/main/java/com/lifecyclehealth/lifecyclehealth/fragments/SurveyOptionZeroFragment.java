@@ -227,8 +227,13 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                                 }
                             }
 
-                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
-                            SurveyDetailsItemFragment.scrollViewPager();
+                            if(arrayList.size() > 0){
+                                SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                                SurveyDetailsItemFragment.scrollViewPager();
+                            }else{
+                                SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
+                                SurveyDetailsItemFragment.scrollViewPager();
+                            }
                             status = 1;
                             if (SurveyDetailsListFragment.isToDo) {
                                 submitMultipleSelectedAnswerOfSurvey(requestParameter,arrayList);
@@ -387,7 +392,6 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                 params.put("Multiple_Options", array);
 
 //                tinydb.putListInt(PREF_IS_CHECKED, arrayList);
-
 
                 HashMap<String, HashMap<String, Object>> hashMapRequest = new HashMap<>();
                 hashMapRequest.put("SurveyDetails", params);
