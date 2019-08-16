@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ import com.lifecyclehealth.lifecyclehealth.designate.GlobalDesignateCallBack;
 import com.lifecyclehealth.lifecyclehealth.dto.CreateMessageConversationDTO;
 import com.lifecyclehealth.lifecyclehealth.dto.MeetListDTO;
 import com.lifecyclehealth.lifecyclehealth.model.CheckProviderResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.GlobalCheckProviderResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsWithoutEpisodeModel;
@@ -120,6 +122,9 @@ public class MessageFragment extends BaseFragmentWithOptions {
     private ChatController mChatController;
     private ChatListAdapter mAdapter;
     private String selectedEpisode = "";
+    private ColorCode colorCode;
+    String Stringcode = "";
+    String newdemo;
 
     @Override
     String getFragmentTag() {
@@ -153,13 +158,35 @@ public class MessageFragment extends BaseFragmentWithOptions {
     }
 
     private void initializeView(View view) {
+        //try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            final String nStringcode = "";
+            String hashcode = "";
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+           /* }
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+      //  }catch (Exception e){e.printStackTrace();}
         this.view = view;
        /* MainActivity.bottomBar.selectTabWithId(R.id.tab_message);
         MainActivity.bottomBarCaregiver.selectTabWithId(R.id.tab_message);*/
         Analytics.with(getContext()).screen("Conversation");
         isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        setupToolbarTitle(toolbar, getString(R.string.title_message));
+        newsetupToolbarTitle(toolbar, getString(R.string.title_message),colorCode.getVisualBrandingPreferences().getColorPreference());
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
@@ -169,6 +196,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         callGetList();
 
     }
+
 
 
     private View.OnClickListener createConversationLayoutListener = new View.OnClickListener() {
@@ -465,8 +493,12 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
         @Override
         protected Void doInBackground(Void... unused) {
+            try {
+                mainActivity.chatList = mainActivity.mChatRepo.getList();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            mainActivity.chatList = mainActivity.mChatRepo.getList();
             return null;
         }
 
@@ -541,29 +573,39 @@ public class MessageFragment extends BaseFragmentWithOptions {
             new asyncCreateText().execute();
         }
 
-        mainActivity.mChatRepo.setOnChangedListener(new BaseRepo.OnRepoChangedListener<Chat>() {
-            @Override
-            public void onCreated(List<Chat> items) {
-                Log.d(TAG, "Chat: onCreated");
-                mainActivity.chatList = mainActivity.mChatRepo.getList();
-                setAdapterUpdate();
-            }
+        try {
+            mainActivity.mChatRepo.setOnChangedListener(new BaseRepo.OnRepoChangedListener<Chat>() {
+                @Override
+                public void onCreated(List<Chat> items) {
+                    Log.d(TAG, "Chat: onCreated");
+                    mainActivity.chatList = mainActivity.mChatRepo.getList();
 
-            @Override
-            public void onUpdated(List<Chat> items) {
-                Log.d(TAG, "Chat: onUpdated");
-                mainActivity.chatList = mainActivity.mChatRepo.getList();
-                setAdapterUpdate();
-            }
+                        setAdapterUpdate();
 
-            @Override
-            public void onDeleted(List<Chat> items) {
-                Log.d(TAG, "Chat: onDeleted");
-                mainActivity.chatList = mainActivity.mChatRepo.getList();
-                setAdapterUpdate();
-            }
-        });
 
+                }
+
+                @Override
+                public void onUpdated(List<Chat> items) {
+                    Log.d(TAG, "Chat: onUpdated");
+                    mainActivity.chatList = mainActivity.mChatRepo.getList();
+
+                        setAdapterUpdate();
+
+
+                }
+
+                @Override
+                public void onDeleted(List<Chat> items) {
+                    Log.d(TAG, "Chat: onDeleted");
+                    mainActivity.chatList = mainActivity.mChatRepo.getList();
+
+                        setAdapterUpdate();
+
+
+                }
+            });
+        }catch (Exception e){e.printStackTrace();}
     }
 
 
@@ -619,6 +661,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
         alertDialogCreateConversation = builder.create();
 
         btnInvite = (Button) dialogView.findViewById(R.id.btnInvite);
+        String newdemo = Stringcode;
+        btnInvite.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
         nameOfConversation = (EditText) dialogView.findViewById(R.id.nameOfConversation);
         spinner_no_episode_PatientName = (Spinner) dialogView.findViewById(R.id.spinner_no_episode_PatientName);
@@ -929,7 +973,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[]{ContextCompat.getColor(mainActivity, R.color.colorPrimary)}
+                new int[]{Color.parseColor("#"+Stringcode)}
         );
     }
 
@@ -1172,7 +1216,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
         }
     }
 
-
     private void getInviteesWithOutEpisode(String PatientID) {
         showProgressDialog(true);
         String url = null;
@@ -1407,6 +1450,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
         final EditText initialMessage = (EditText) dialogView.findViewById(R.id.initialMessage);
         Button btn_ok = (Button) dialogView.findViewById(R.id.btn_ok);
+        btn_ok.setBackgroundColor(Color.parseColor("#"+Stringcode));
         Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
 
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -1484,21 +1528,27 @@ public class MessageFragment extends BaseFragmentWithOptions {
                         MessageCreateConversationResponse messageCreateConversationResponse = new Gson().fromJson(response.toString(), MessageCreateConversationResponse.class);
                         if (messageCreateConversationResponse != null) {
                             if (messageCreateConversationResponse.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                try {
+                                        for (Chat chat : mainActivity.mChatRepo.getList()) {
+                                            printLog("Id: " + chat.getId());
+                                            if (chat.getId().equals(messageCreateConversationResponse.getBinderID())) {
+                                                showProgressDialog(false);
+                                                Analytics.with(getContext()).track("conversation Read", new Properties().putValue("category", "Mobile")
+                                                        .putValue("conversationID", chat.getId())
+                                                        .putValue("conversationName", chat.getTopic()));
+                                                ChatActivity.showChat(getActivity(), chat);
+                                            }
+                                        }
 
-                                for (Chat chat : mainActivity.mChatRepo.getList()) {
-                                    printLog("Id: " + chat.getId());
-                                    if (chat.getId().equals(messageCreateConversationResponse.getBinderID())) {
-                                        showProgressDialog(false);
-                                        Analytics.with(getContext()).track("conversation Read", new Properties().putValue("category", "Mobile")
-                                                .putValue("conversationID", chat.getId())
-                                                .putValue("conversationName", chat.getTopic()));
-                                        ChatActivity.showChat(getActivity(), chat);
-                                    }
+                                }catch (Exception e){
+                                    showProgressDialog(false);
+                                    e.printStackTrace();
                                 }
-
                             } else
+                                showProgressDialog(false);
                                 showDialogWithOkButton(messageCreateConversationResponse.getMessage());
                         } else {
+                            showProgressDialog(false);
                             showDialogWithOkButton(getString(R.string.error_someting_went_wrong));
                         }
                     }
@@ -1600,6 +1650,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1609,6 +1660,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialog.findViewById(R.id.btn_start_message);
+        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2080,6 +2132,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2089,6 +2142,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialog.findViewById(R.id.btn_start_message);
+        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2362,9 +2416,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         /*For checked*/
         else {
             printLog("add");
-
             // if (meetList.isDesignate_Exist()) {
-
             NetworkAdapter networkAdapter = new NetworkAdapter();
             networkAdapter.checkProviderListGlobal(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new GlobalDesignateCallBack() {
                 @Override
@@ -2726,6 +2778,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2735,6 +2788,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialog.findViewById(R.id.btn_start_message);
+        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3179,6 +3233,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3188,6 +3243,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialog.findViewById(R.id.btn_start_message);
+        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3198,10 +3254,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
                     UserIDs = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout;
                     initialMessageDialog(getActivity());
                 }
-
             }
         });
-
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -3210,12 +3264,9 @@ public class MessageFragment extends BaseFragmentWithOptions {
         dialog.getWindow().setAttributes(lp);
         //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
-
     }
 
     private void setAdapterWithOutEpisodeGlobal(final MeetInviteParticipantsWithoutEpisodeModel.UserList meetList, final String Type, final String pos) {
-
-
         MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout = new ArrayList();
 
         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
@@ -3660,9 +3711,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
         boolean contains = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(meetList.getUserID());
         /*For checked*/
         printLog("add");
-
         if (meetList.isDesignate_Exist()) {
-
             NetworkAdapter networkAdapter = new NetworkAdapter();
             networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetList.getUserID(), new DesignateCallBack() {
                 @Override
@@ -3897,7 +3946,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
 
     private void getMessageCount() {
-
         if (isConnectedToNetwork(mainActivity)) {
             try {
                 mainActivity.networkRequestUtil.getDataSecure(BASE_URL + URL_MESSAGE_GET_CONVERSATION, new VolleyCallback() {
@@ -3917,7 +3965,6 @@ public class MessageFragment extends BaseFragmentWithOptions {
                                 } else {
                                     MyApplication.getInstance().addToSharedPreference(messageCount, "0");
                                 }
-
                             } else {
                                 MyApplication.getInstance().addToSharedPreference(messageCount, "0");
                                 //showDialogWithOkButton(messageEpisodeListResponse.getMessage());
@@ -3937,5 +3984,13 @@ public class MessageFragment extends BaseFragmentWithOptions {
             //showNoNetworkMessage();
         }
     }
+
+
+   /* @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //getActivity().finish();
+
+    }*/
 }
 

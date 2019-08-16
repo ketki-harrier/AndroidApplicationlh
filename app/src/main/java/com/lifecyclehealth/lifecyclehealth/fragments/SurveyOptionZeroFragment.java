@@ -3,7 +3,10 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -29,7 +32,9 @@ import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.application.TinyDB;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import org.json.JSONObject;
 
@@ -56,6 +61,8 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     HashMap<String, String> requestParameter = new HashMap<String, String>();
     final ArrayList<Integer> arrayList = new ArrayList<>();
 //    TinyDB tinydb;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static SurveyOptionZeroFragment newInstance(String data, int position) {
         SurveyOptionZeroFragment zeroFragment = new SurveyOptionZeroFragment();
@@ -101,14 +108,38 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     }
 
     private void setupView(View view) {
+      //  try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcoden = "";
+            String hashcode = "";
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+          /*  }
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+   //     }catch (Exception e){e.printStackTrace();}
         TextView TextViewName = (TextView) view.findViewById(R.id.surveyName);
         TextView TextViewQuestion = (TextView) view.findViewById(R.id.questionTv);
+        TextViewName.setTextColor(Color.parseColor("#"+Stringcode));
+
         imageView = (ImageView) view.findViewById(R.id.imageView);
         String text;
         if (surveyDetailsModel.getQuestionModel().isRequired()) {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "" + " </font>" + " <font color=#ffcc00>*</font>";
         } else {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "";
         }
 
        /* tinydb = new TinyDB(getActivity().getApplicationContext());
@@ -168,7 +199,8 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setButtonDrawable(R.drawable.selector_radiobutton1);
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
-                    rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
+                    //rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
+                    rdbtn.setHighlightColor(Color.parseColor("#"+Stringcode));
                 } else {
                     rdbtn.setButtonDrawable(R.drawable.deselector_radiobutton1);
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
@@ -271,6 +303,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     @SuppressLint("RestrictedApi")
     private void addRadioButtons() {
         final int number = surveyDetailsModel.getQuestionModel().getQuestionOptions().size();
+    //    String bool =  surveyDetailsModel.getQuestionModel().isRequired();
         for (int row = 0; row < 1; row++) {
             final RadioGroup ll = new RadioGroup(mainActivity);
             ll.setOrientation(LinearLayout.VERTICAL);
@@ -293,7 +326,8 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                 if (SurveyDetailsListFragment.isToDo) {
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
-                    rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
+                    //rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
+                    rdbtn.setHighlightColor(Color.parseColor("#"+Stringcode));
                 } else {
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
                     rdbtn.setSupportButtonTintList(getDeColorList());
@@ -419,13 +453,13 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
         }
     }
 
-
     private ColorStateList getColorList() {
         return new ColorStateList(
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[]{ContextCompat.getColor(mainActivity, R.color.colorPrimary)}
+                //new int[]{ContextCompat.getColor(mainActivity, R.color.colorPrimary)
+                new int[]{Color.parseColor("#"+Stringcode)}
         );
     }
 

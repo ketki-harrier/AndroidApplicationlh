@@ -31,6 +31,8 @@ public class PatientSurveyItem {
     private String scheduleDate;
     @SerializedName("Status")
     private String status;
+    @SerializedName("Requier_E_Signature")
+    private String requireESignature;
 
     public int getPatientSurveyResponseId() {
         return patientSurveyResponseId;
@@ -128,6 +130,14 @@ public class PatientSurveyItem {
         this.status = status;
     }
 
+    public String getRequireESignature() {
+        return requireESignature;
+    }
+
+    public void setRequireESignature(String requireESignature) {
+        this.requireESignature = requireESignature;
+    }
+
     @Override
     public String toString() {
         return "PatientSurveyItem{" +
@@ -143,6 +153,7 @@ public class PatientSurveyItem {
                 ", surveyTypeId='" + surveyTypeId + '\'' +
                 ", scheduleDate='" + scheduleDate + '\'' +
                 ", status='" + status + '\'' +
+                ", requierESignature='" + requireESignature + '\'' +
                 '}';
     }
 }

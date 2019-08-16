@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,10 +13,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
+import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.moxtra.sdk.ChatClient;
 import com.moxtra.sdk.chat.controller.ChatController;
 import com.moxtra.sdk.chat.impl.ChatDetailImpl;
@@ -36,11 +42,11 @@ public class ChatFragment extends BaseFragmentWithOptions {
     private MainActivity mainActivity;
     private static final String KEY_CHAT = "chat";
     private static final String KEY_ACTION = "action";
-    private  final String KEY_TOPIC = "topic";
-    private  final String KEY_UNIQUE_ID_LIST = "uniqueIdList";
+    private final String KEY_TOPIC = "topic";
+    private final String KEY_UNIQUE_ID_LIST = "uniqueIdList";
 
     private static final String ACTION_SHOW = "show";
-    private  final String ACTION_START = "start";
+    private final String ACTION_START = "start";
 
     private static final String TAG = "DEMO_ChatActivity";
 
@@ -50,6 +56,8 @@ public class ChatFragment extends BaseFragmentWithOptions {
     private ChatRepo mChatRepo;
 
     private Chat mChat;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static ChatFragment showChat(Chat chat) {
 
@@ -102,6 +110,32 @@ public class ChatFragment extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
+
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+            /* } else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        }
+
+        ImageView imageView = view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
+        TextView textView = view.findViewById(R.id.toolbar_title);
+        textView.setTextColor(Color.parseColor("#" + Stringcode));
+
+        // }catch (Exception e){e.printStackTrace();}
         Bundle intent = getArguments();
         if (intent == null) {
             Log.e(TAG, "no intent received");
@@ -145,11 +179,11 @@ public class ChatFragment extends BaseFragmentWithOptions {
                 mChat = chat;
 
                 ChatDetail chatDetail;
-                chatDetail =  new ChatDetailImpl(chat);
+                chatDetail = new ChatDetailImpl(chat);
 
                 chatDetail.inviteMembers(orgId, uniqueIdList, new ApiCallback<Void>() {
                     @Override
-                   public void onCompleted(Void result) {
+                    public void onCompleted(Void result) {
                         Log.i(TAG, "Invite members successfully.");
                     }
 

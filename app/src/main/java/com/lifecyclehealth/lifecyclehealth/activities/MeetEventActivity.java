@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -33,6 +36,7 @@ import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.designate.DesignateCallBack;
 import com.lifecyclehealth.lifecyclehealth.dto.SubmitParticipantDto;
 import com.lifecyclehealth.lifecyclehealth.model.CheckProviderResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.InviteUserMeetResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
 import com.lifecyclehealth.lifecyclehealth.services.BackgroundTrackingService;
@@ -97,7 +101,8 @@ public class MeetEventActivity extends BaseActivity {
 
     private NotificationDelegater mDelegater;
     private NotificationLocal mLocal;
-
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static void joinMeet(Context ctx) {
         Intent intent = new Intent(ctx, MeetEventActivity.class);
@@ -126,6 +131,33 @@ public class MeetEventActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
+
+        //try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+
+                /*else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+
+      //  }catch (Exception e){e.printStackTrace();}
+
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
         networkRequestUtil = new NetworkRequestUtil(this);
         mDelegater = NotificationDelegater.getInstance();
@@ -416,6 +448,7 @@ public class MeetEventActivity extends BaseActivity {
         });
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -426,6 +459,8 @@ public class MeetEventActivity extends BaseActivity {
         });
 
         Button btn_invite = (Button) dialog.findViewById(R.id.btn_invite);
+        btn_invite.setBackgroundColor(Color.parseColor("#"+Stringcode));
+
         btn_invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -436,16 +471,35 @@ public class MeetEventActivity extends BaseActivity {
 
             }
         });
+      /*  WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
 
+        params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                LAYOUT_FLAG,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+                dialog.getWindow().setAttributes(params);
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.show();*/
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setAttributes(lp);
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-
+        try {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(dialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setAttributes(lp);
+            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -697,7 +751,6 @@ public class MeetEventActivity extends BaseActivity {
             });
         }
 
-
         /*  For checked*/
         else {
             if (meetList.isDesignate_Exist()) {
@@ -773,8 +826,6 @@ public class MeetEventActivity extends BaseActivity {
                 setAdapterWithEpisode();
             }
         }
-
-
     }
 
     private void setAdapterWithEpisode() {
@@ -920,7 +971,6 @@ public class MeetEventActivity extends BaseActivity {
         }
     }
 
-
     private void callEndMeet(String sessionKey) {
         try {
             //showProgressDialog(true);
@@ -1011,10 +1061,7 @@ public class MeetEventActivity extends BaseActivity {
         dialog1.getWindow().setAttributes(lp);
         dialog1.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog1.show();
-
-
     }
-
 
     @Override
     public void onUserInteraction() {

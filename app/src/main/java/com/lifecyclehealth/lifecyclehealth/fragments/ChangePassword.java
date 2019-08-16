@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.model.ChangePasswordResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
@@ -55,6 +57,8 @@ public class ChangePassword extends BaseFragmentWithOptions {
 
     Button changePassword;
     int password = 0, confirmPasword = 0;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public ChangePassword() {
         // Required empty public constructor
@@ -96,6 +100,27 @@ public class ChangePassword extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
+        //try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
+
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+        /*}
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+       // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("Change Password");
         editTextNewPassword = (EditText) view.findViewById(R.id.editTextNewPassword);
         editConfirmPassword = (EditText) view.findViewById(R.id.editConfirmPassword);
@@ -189,6 +214,7 @@ public class ChangePassword extends BaseFragmentWithOptions {
         });
 
         changePassword = (Button) view.findViewById(R.id.changePassword);
+        changePassword.setBackgroundColor(Color.parseColor("#"+Stringcode));
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,6 +247,7 @@ public class ChangePassword extends BaseFragmentWithOptions {
         });
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +256,7 @@ public class ChangePassword extends BaseFragmentWithOptions {
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

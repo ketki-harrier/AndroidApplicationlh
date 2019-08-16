@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,19 +15,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
 
 public class MoreOptionsFragment extends BaseFragmentWithOptions {
 
-
     MainActivity mainActivity;
     boolean isPatient;
     String messageCount;
+    private ColorCode colorCode;
+    String Stringcode;
 
     @Override
     String getFragmentTag() {
@@ -61,9 +65,57 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
     }
 
     private void initializeView(View view) {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+      //  try {
+            /*String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+             colorCode = new Gson().fromJson(resposne, ColorCode.class);*/
+
+
+
+
+            /*String hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();*/
+
+        String Stringcode = "";
+
+        String hashcode = "";
+
+            if(demo == null){
+                  hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+         /*   }
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+            else if(Stringcode == null){
+                Stringcode = "259b24";
+            }
+        //}catch (Exception e){e.printStackTrace();}
+
         messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
         isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
         RelativeLayout healthLayout = (RelativeLayout) view.findViewById(R.id.healthLayout);
+
+        ImageView logoutImageView = (ImageView) view.findViewById(R.id.logoutImageView);
+        ImageView patientSurveyImageView = (ImageView) view.findViewById(R.id.patientSurveyImageView);
+        ImageView profileImageView = (ImageView) view.findViewById(R.id.profileImageView);
+        ImageView notificationImageView = (ImageView) view.findViewById(R.id.notificationImageView);
+
+        logoutImageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        profileImageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        notificationImageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        patientSurveyImageView.setColorFilter(Color.parseColor("#"+Stringcode));
+
         healthLayout.setOnClickListener(healthClickListener);
         RelativeLayout treatmentLayout = (RelativeLayout) view.findViewById(R.id.treatmentLayout);
         treatmentLayout.setOnClickListener(treatmentLayoutListener);
@@ -88,20 +140,13 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
         profileLayout.setOnClickListener(profileClickListener);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        setupToolbarTitle(toolbar, getString(R.string.more));
-      /*  if (isPatient) {
+        newsetupToolbarTitle(toolbar, getString(R.string.more),colorCode.getVisualBrandingPreferences().getColorPreference());
+        if (isPatient) {
             patientSurveyLayout.setVisibility(View.VISIBLE);
-            patientDiaryLayout.setVisibility(View.GONE);
-            patientToDoLayout.setVisibility(View.GONE);
-            addPatientExpressLayout.setVisibility(View.GONE);
         } else {
             patientSurveyLayout.setVisibility(View.GONE);
-            patientDiaryLayout.setVisibility(View.VISIBLE);
-            patientToDoLayout.setVisibility(View.VISIBLE);
-            addPatientExpressLayout.setVisibility(View.VISIBLE);
-        }*/
-
-        patientSurveyLayout.setVisibility(View.GONE);
+        }
+        //patientSurveyLayout.setVisibility(View.GONE);
         patientDiaryLayout.setVisibility(View.GONE);
         patientToDoLayout.setVisibility(View.GONE);
         addPatientExpressLayout.setVisibility(View.GONE);
@@ -139,7 +184,7 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
         @Override
         public void onClick(View view) {
             //Toast.makeText(getActivity(), "Coming Soon.", Toast.LENGTH_SHORT).show();
-            mainActivity.changeToComingSoon("Patient Summary");
+            mainActivity.changeToComingSoon("Support and Feedback");
         }
     };
     private View.OnClickListener treatmentLayoutListener = new View.OnClickListener() {
@@ -210,7 +255,6 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
             /*ProfileFragment profileFragment = new ProfileFragment();
             replaceFragment(profileFragment);*/
             //mainActivity.changeToComingSoon();
-
         }
     };
 
@@ -230,6 +274,4 @@ public class MoreOptionsFragment extends BaseFragmentWithOptions {
             }
         });
     }
-
-
 }

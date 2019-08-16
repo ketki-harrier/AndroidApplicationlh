@@ -104,9 +104,9 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
         //String text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
         String text;
         if (surveyDetailsModel.getQuestionModel().isRequired()) {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "" + " </font>" + " <font color=#ffcc00>*</font>";
         } else {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "";
         }
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
         if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
@@ -139,7 +139,7 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
             seekBarVertical.setEnabled(false);
         }
 
-        if (surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("10cm Visual Analogue Scale")) {
+        if (surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("10cm Visual Analogue Scale")||surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("VAS Pain Slider With Faces")) {
 
             for (int i = 0; i < surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); i++) {
                 arrayMaxProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_To());

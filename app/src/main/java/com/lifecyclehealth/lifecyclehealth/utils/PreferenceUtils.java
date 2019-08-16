@@ -8,6 +8,8 @@ public class PreferenceUtils {
 
     private final static String PREF = "PREF";
     private final static String UNIQUE_ID = "UNIQUE_ID";
+    private final static String PATIENT_NAME = "PATIENT_NAME";
+   // private final static Boolean E_SIGNATURE = "E_SIGNATURE";
 //    private final static String GCM_REG_ID = "GCM_REG_ID";
 //    private final static String APP_VERSION = "APP_VERSION";
 //    private static final String TAG = "PreferenceUtils";
@@ -36,6 +38,28 @@ public class PreferenceUtils {
         SharedPreferences.Editor ed = sp.edit();
         ed.remove(UNIQUE_ID).apply();
     }
+
+    public static void savePatientName(Context context, String patientName) {
+        SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(PATIENT_NAME, patientName).apply();
+    }
+
+    public static String getPatientName(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        return sp.getString("PATIENT_NAME", null);
+    }
+
+    public static void saveESignature(Context context, Boolean e_signature) {
+        SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("E_SIGNATURE", e_signature).apply();
+    }
+
+    public static Boolean getESignature(Context context) {
+       SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+       return sp.getBoolean("E_SIGNATURE", true);
+   }
 
  /*   public static MoxieUser getUser(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);

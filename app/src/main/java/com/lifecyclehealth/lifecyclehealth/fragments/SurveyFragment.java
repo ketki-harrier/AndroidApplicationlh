@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -21,6 +22,7 @@ import com.lifecyclehealth.lifecyclehealth.adapters.CustomExpandableListAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.SurveyPlanDto;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.segment.analytics.Analytics;
@@ -53,6 +55,8 @@ public class SurveyFragment extends BaseFragmentWithOptions {
     static TextView notificationCountTextViewMessage, countTextViewMessage;
     public static int expandedGroup = 0;
     String messageCount, notificationCount;
+    public ColorCode colorCode;
+    String Stringcode = "";
 
     @Override
     String getFragmentTag() {
@@ -85,13 +89,11 @@ public class SurveyFragment extends BaseFragmentWithOptions {
     @Override
     public void onResume() {
         super.onResume();
-
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     //Toast.makeText(getContext(),"back_arrow key pressed",Toast.LENGTH_SHORT).show();
                     //mainActivity.finish();
@@ -105,12 +107,39 @@ public class SurveyFragment extends BaseFragmentWithOptions {
     }
 
     private void initializeView(View view) {
+        //try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+        /*} catch (Exception e) {
+            e.printStackTrace();
+        }*/
         messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
         notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
 
         Analytics.with(view.getContext()).screen("Survey");
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        setupToolbarTitle(toolbar, getString(R.string.title_survey));
+
+
+        //else {
+            newsetupToolbarTitle(toolbar, getString(R.string.title_survey), colorCode.getVisualBrandingPreferences().getColorPreference());
+        //}
 //        mToolTipFrameLayout = (ToolTipRelativeLayout) view.findViewById(R.id.toolTipFrameLayout);
 
         RelativeLayout notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
@@ -118,29 +147,37 @@ public class SurveyFragment extends BaseFragmentWithOptions {
         countTextViewMessage = (TextView) view.findViewById(R.id.countTextViewMessage);
         notificationCountTextViewMessage = (TextView) view.findViewById(R.id.countTextViewNotificatione);
         imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
+
         imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
 
         if (!messageCount.equals("0")) {
             countTextViewMessage.setText(messageCount);
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
         } else {
             countTextViewMessage.setVisibility(View.GONE);
         }
 
 
         if (mainActivity.chatList.size() > 0) {
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
         } else if (mainActivity.meetListMessage.size() > 0) {
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
-        }else {
-            imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
+        } else {
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
+            //imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+
         }
         if (!notificationCount.equals("0")) {
-            imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
             notificationCountTextViewMessage.setText(notificationCount);
         } else {
             notificationCountTextViewMessage.setVisibility(View.GONE);
-            imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            //imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
         }
 
         //get Notification count
@@ -149,6 +186,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
         notificationHolderLayout.setOnClickListener(onClickListener);
         messageHolderLayout.setOnClickListener(onClickListener);
         expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
+
         // for right indicator work
         DisplayMetrics metrics = new DisplayMetrics();
         mainActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -170,21 +208,54 @@ public class SurveyFragment extends BaseFragmentWithOptions {
 
     public void changeMessageIcon() {
         try {
+
+            //try {
+                String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+                colorCode = new Gson().fromJson(resposne, ColorCode.class);
+                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+                String Stringcode = "";
+                String hashcode = "";
+
+                if(demo == null){
+                    hashcode = "Green";
+                    Stringcode = "259b24";
+                }
+                else if(demo !=null) {
+                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                    hashcode = arr[0].trim();
+                    Stringcode = arr[1].trim();
+              /*  }
+
+                else*/
+                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                        Stringcode = "333333";
+                    }
+                }
+          /*  } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+
             if (mainActivity.chatList.size() > 0) {
-                imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                //imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
             } else if (mainActivity.meetListMessage.size() > 0) {
-                imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                //imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
             } else {
-                imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+                //imageViewMessage.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+                imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
             }
+
             notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
             if (!notificationCount.equals("0")) {
-                imageViewNotification.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                //imageViewNotification.setColorFilter(mainActivity.getResources().getColor(R.color.colorPrimary));
+                imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
                 notificationCountTextViewMessage.setVisibility(View.VISIBLE);
                 notificationCountTextViewMessage.setText(notificationCount);
             } else {
                 notificationCountTextViewMessage.setVisibility(View.GONE);
-                imageViewNotification.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+                //imageViewNotification.setColorFilter(mainActivity.getResources().getColor(R.color.uvv_gray));
+                imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
             }
 
         } catch (Exception e) {
@@ -285,13 +356,13 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                         listConverted = expandableListDetail.get(CONST_SURV_LIST_TODO);
                         data = new Gson().toJson(expandableListDetail.get(CONST_SURV_LIST_TODO));
 
-
                 }
                 printLog("DataSending In fragment:" + data);
                 if (listConverted.size() == 1) {
 
                     if (listConverted.get(0).getPatientSurveyResponseId() != -99) {
                         mainActivity.changeToSurveyDetailsView(data, childPosition, title);
+
                     }
 
                 } else {
@@ -318,6 +389,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                     public void onSuccess(JSONObject response) {
                         showProgressDialog(false);
                         printLog("Response Of Send code:" + response);
+
                         if (response != null) {
                             SurveyPlanDto surveyPlanDto = new Gson().fromJson(response.toString(), SurveyPlanDto.class);
                             if (surveyPlanDto != null) {
@@ -344,12 +416,14 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                                     }
                                     if (surveyPlanDto.getSurveyPlan().getSurveyPlanTodo() == null) {
                                         ArrayList<PatientSurveyItem> surveyItems = new ArrayList<PatientSurveyItem>();
+
                                         PatientSurveyItem patientSurveyItem = new PatientSurveyItem();
                                         patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setName("No item to display");
                                         patientSurveyItem.setScheduleDate("");
                                         patientSurveyItem.setPatientSurveyResponseId(-99);
                                         surveyItems.add(patientSurveyItem);
+
                                         surveyPlanDto.getSurveyPlan().setSurveyPlanTodo(surveyItems);
                                     }
                                     setupList(getHashMapFromService(surveyPlanDto));

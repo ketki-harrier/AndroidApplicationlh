@@ -37,7 +37,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.TOUCH_EMAIL
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
 
 /**
- * Created by satyam on 01/07/2016.
+ * Created 01/07/2016.
  */
 public class MyApplication extends Application {
     public static final String TAG = MyApplication.class.getSimpleName();
@@ -81,7 +81,6 @@ public class MyApplication extends Application {
         } catch (Exception invalidParameter) {
             Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
         }
-
     }
 
     private void initNotification() {
@@ -120,11 +119,9 @@ public class MyApplication extends Application {
         }
     }
 
-
     public static synchronized MyApplication getInstance() {
         return mInstance;
     }
-
 
     public ImageLoader getImageLoader() {
         getRequestQueue();
@@ -164,52 +161,63 @@ public class MyApplication extends Application {
 
 
     public void addIntToSharedPreference(String key, int value) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(key, value).commit();
+        editor.putInt(key, value).apply();
     }
 
     public int getIntFromSharedPreference(String key) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(key, -1);
     }
 
     public void addLongToSharedPreference(String key, Long value) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(key, value).commit();
+        editor.putLong(key, value).apply();
     }
 
     public Long getLongFromSharedPreference(String key) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getLong(key, -1);
     }
 
     public void addToSharedPreference(String key, String value) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value).commit();
+        editor.putString(key, value).apply();
+    }
+
+    public void saveColorCodeJson(String key, String value) {
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value).apply();
+    }
+
+    public String getColorCodeJson(String key) {
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key, null);
     }
 
     public String getFromSharedPreference(String key) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(key, null);
     }
 
     public void addBooleanToSharedPreference(String key, boolean value) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, value).commit();
     }
 
     public boolean getBooleanFromSharedPreference(String key) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         sharedPreferences.getBoolean(key, false);
         return sharedPreferences.getBoolean(key, false);
     }
 
     public void addListToSharedPreference(String key, Set<String> value) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(key, value).commit();
     }
@@ -229,7 +237,7 @@ public class MyApplication extends Application {
 
 
     public Set<String> getListFromSharedPreference(String key) {
-        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getStringSet(key, null);
     }
 

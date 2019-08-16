@@ -2,6 +2,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
+import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyElectronicSubmitResponse;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.segment.analytics.Analytics;
@@ -32,7 +36,8 @@ public class SurveySubmittedProgressResult extends BaseFragmentWithOptions {
     SurveyElectronicSubmitResponse.SubmittedScoreData scoreData;
     private static final String SURVEY_LIST_EXTRAS_HOLDER = "submittedScoreData";
     private static final String SURVEY_ID = "survey_id";
-
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static SurveySubmittedProgressResult newInstance(SurveyElectronicSubmitResponse.SubmittedScoreData submittedScoreData) {
 
@@ -93,9 +98,33 @@ public class SurveySubmittedProgressResult extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
+        //try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+           /* }
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+       // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("ScoreOnSurveySubmit");
         CircularProgressBar mProgress = (CircularProgressBar) view.findViewById(R.id.progressBar1);
+        mProgress.setColor(Color.parseColor("#"+Stringcode));
         TextView txtPrecentProgress = (TextView) view.findViewById(R.id.txtPrecentProgress);
+        txtPrecentProgress.setTextColor(Color.parseColor("#"+Stringcode));
         TextView tx_score_details = (TextView) view.findViewById(R.id.tx_score_details);
         txtPrecentProgress.setText(scoreData.getPatient_total_survey_score());
         tx_score_details.setText("Submitted and e-signed by " + scoreData.getUser() + " on " + scoreData.getSubmission_datetime() + ".");
@@ -107,6 +136,8 @@ public class SurveySubmittedProgressResult extends BaseFragmentWithOptions {
         }
         Analytics.with(getContext()).track("Score On Survey Submit", new Properties().putValue("category", "Mobile").putValue("score",score+""));
         TextView back = (TextView) view.findViewById(R.id.back);
+
+        back.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

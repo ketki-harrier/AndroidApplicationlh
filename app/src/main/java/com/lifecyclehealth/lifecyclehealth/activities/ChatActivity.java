@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -54,6 +55,7 @@ import com.lifecyclehealth.lifecyclehealth.dto.SubmitParticipantDto;
 import com.lifecyclehealth.lifecyclehealth.fragments.ChatBinderDialog;
 import com.lifecyclehealth.lifecyclehealth.model.ChatBinderDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.model.CheckProviderResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.GlobalCheckProviderResponse;
 import com.lifecyclehealth.lifecyclehealth.model.InviteUserMeetResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
@@ -117,7 +119,6 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
-
     private static final String KEY_CHAT = "chat";
     private static final String KEY_ACTION = "action";
     private static final String KEY_TOPIC = "topic";
@@ -138,6 +139,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private Chat mChat;
     TextView TextViewTitle;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static void showChat(Context ctx, Chat chat) {
         Intent intent = new Intent(ctx, ChatActivity.class);
@@ -159,6 +162,28 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_chat);
+      //  try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
+
+        if(demo == null){
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
+        else if(demo !=null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+      /*  }
+         else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        }
+      //  }catch (Exception e){e.printStackTrace();}
         networkRequestUtil = new NetworkRequestUtil(this);
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
         start();
@@ -185,21 +210,23 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             finishInMainThread();
         }
 
-
         TextViewTitle = (TextView) findViewById(R.id.toolbar_title);
+        TextViewTitle.setTextColor(Color.parseColor("#"+Stringcode));
         ImageView imageView = (ImageView) findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(this);
         TextViewTitle.setOnClickListener(this);
 
         TextViewTitle.setText(mChat.getTopic());
 
         ImageView overFlowIcon = (ImageView) findViewById(R.id.overFlowIcon);
+        overFlowIcon.setColorFilter(Color.parseColor("#"+Stringcode));
         ImageView search = (ImageView) findViewById(R.id.search);
+        search.setColorFilter(Color.parseColor("#"+Stringcode));
         overFlowIcon.setOnClickListener(this);
         search.setOnClickListener(this);
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -383,7 +410,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-
     private void getPatientEpisodeName(final Activity activity) {
         context = activity.getApplicationContext();
         showProgressDialog(true);
@@ -491,6 +517,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         alertDialogShowData = builder.create();
 
         Button Invite = dialogView.findViewById(R.id.Invite);
+
         Button cancel = dialogView.findViewById(R.id.cancel);
         TextView topic = dialogView.findViewById(R.id.topic);
         TextView title = dialogView.findViewById(R.id.title);
@@ -677,8 +704,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     android.support.v7.app.AlertDialog dialog;
 
     private void showDialogInviteesForPatient(final Activity activity) {
-
-
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View dialogView = layoutInflater.inflate(R.layout.invite_participants_for_chat_patient, null);
@@ -738,13 +763,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                             setAdapterWithEpisode(item, Type, pos);
                         }
                     });
-
                     recyclerViewDialog.setAdapter(adapter);
                 }
             }
         });
 
         Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -755,18 +780,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         });
 
         Button done = (Button) dialogView.findViewById(R.id.done);
+        done.setBackgroundColor(Color.parseColor("#"+Stringcode));
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 alertDialogShowData.dismiss();
-
                 if (MeetInviteParticipantsAdapter.selectedParticipant.size() > 0) {
                     UserIDs = MeetInviteParticipantsAdapter.selectedParticipant;
                     submitInviteList(activity);
-
                 }
-
             }
         });
 
@@ -783,16 +805,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         dialog.show();
 
     }
-
-
-
     /*Global Start*/
-
     private void setAdapterWithEpisode(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
 
-
         MeetInviteParticipantsAdapter.selectedParticipant = new ArrayList();
-
         for (int i = 0; i < meetInviteParticipantsModel.getEpisodeParticipantList().size(); i++) {
             String role = TextUtils.join(",", meetInviteParticipantsModel.getEpisodeParticipantList().get(i).getRoleName());
             if (UserIDs != null) {
@@ -1032,12 +1048,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure() {
-
                 }
 
                 @Override
                 public void onError(int error) {
-
                 }
             });
         }

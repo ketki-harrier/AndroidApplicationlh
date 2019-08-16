@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.NotificationFilterDto;
 import com.lifecyclehealth.lifecyclehealth.dto.SurveyPlanDto;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.InviteUserMeetResponse;
 import com.lifecyclehealth.lifecyclehealth.model.NotificationDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
@@ -59,6 +61,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.notificatio
  * A simple {@link Fragment} subclass.
  */
 public class NotificationFragment extends BaseFragmentWithOptions {
+
     private MainActivity mainActivity;
     boolean isPatient;
     RecyclerView notificationRecycler;
@@ -70,6 +73,8 @@ public class NotificationFragment extends BaseFragmentWithOptions {
     NotificationDialogResponse notificationDialogResponse;
     LinearLayout linearEpisodeLevel;
     //PlayersDataAdapter mAdapter;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -97,7 +102,26 @@ public class NotificationFragment extends BaseFragmentWithOptions {
 
 
     private void initializeView(View view) {
-
+      //  try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String Stringcode = "";
+            String hashcode = "";
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+            /*}
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+       // }catch (Exception e){e.printStackTrace();}
         messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
         notificationCount1 = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
         linearEpisodeLevel = (LinearLayout) view.findViewById(R.id.linearEpisodeLevel);
@@ -145,7 +169,8 @@ public class NotificationFragment extends BaseFragmentWithOptions {
 
         if (!notificationCount1.equals("0")) {
             notificationCountTextViewMessage.setText(notificationCount1);
-            imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewNotification.setColorFilter(Color.parseColor("#"+Stringcode));
         } else {
             notificationCountTextViewMessage.setVisibility(View.GONE);
             imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
@@ -153,7 +178,9 @@ public class NotificationFragment extends BaseFragmentWithOptions {
         notificationHolderLayout.setOnClickListener(onClickListener);
 
         ImageView backArrowBtn = (ImageView) view.findViewById(R.id.backArrowBtn);
+        backArrowBtn.setColorFilter(Color.parseColor("#"+Stringcode));
         TextView back = (TextView) view.findViewById(R.id.back);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(onClickListener);
         backArrowBtn.setOnClickListener(onClickListener);
         back.setText("Notification");
@@ -337,7 +364,7 @@ public class NotificationFragment extends BaseFragmentWithOptions {
     //Check survey available or not
     private void CheckSurveyAvailabilityNotification(final NotificationDialogResponse.AlertList alertList, final String data, final int position, final String title) {
         showProgressDialog(true);
-        if (isConnectedToNetwork(mainActivity)) {
+        if (isConnectedToNetwork(mainActivity)){
             try {
                 final JSONObject requestJson = new JSONObject(new Gson().toJson(alertList));
                 mainActivity.networkRequestUtil.putDataSecure(BASE_URL + URL_SURVEY_CHECK_AVAILABILITY_NOTIFICATION, requestJson, new VolleyCallback() {
@@ -366,14 +393,12 @@ public class NotificationFragment extends BaseFragmentWithOptions {
                 });
             } catch (Exception e) {
                 showProgressDialog(false);
-
             }
         } else {
             showProgressDialog(false);
             showNoNetworkMessage();
         }
     }
-
 
     /*Filter notification*/
     private void filterNotification() {

@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,9 +25,12 @@ import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.ProfileCaregiverAdapter;
 import com.lifecyclehealth.lifecyclehealth.adapters.ProfileCaregiverForAdapter;
+import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.ProfileCaregiverForResponse;
 import com.lifecyclehealth.lifecyclehealth.model.ProfileCaregiverResponse;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import org.json.JSONObject;
 
@@ -45,6 +49,8 @@ public class ProfileCaregiverFor  extends BaseFragmentWithOptions implements Sea
     private RelativeLayout caregiver_for_relative;
     private TextView caregiver_for ;
     ProfileCaregiverForAdapter profileCaregiverAdapter;
+    String Stringcode;
+    private ColorCode colorCode;
 
     @Override
     String getFragmentTag() {
@@ -99,7 +105,28 @@ public class ProfileCaregiverFor  extends BaseFragmentWithOptions implements Sea
     }
 
     private void initializeView(View view) {
+     //   try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
 
+        if(demo == null){
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
+        else if(demo !=null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+       /* }
+           else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        }
+       // }catch (Exception e){e.printStackTrace();}
         caregiver_for_relative= (RelativeLayout) view.findViewById(R.id.caregiver_for_relative);
         caregiver_for= (TextView) view.findViewById(R.id.caregiver_for);
         searchCaregiverFor= (SearchView) view.findViewById(R.id.searchCaregiverFor);
@@ -108,6 +135,7 @@ public class ProfileCaregiverFor  extends BaseFragmentWithOptions implements Sea
         recyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +144,9 @@ public class ProfileCaregiverFor  extends BaseFragmentWithOptions implements Sea
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
+        TextView text_title = (TextView) view.findViewById(R.id.text_title);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
+        text_title.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

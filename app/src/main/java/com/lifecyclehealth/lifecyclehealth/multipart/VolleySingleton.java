@@ -11,9 +11,6 @@ import com.android.volley.toolbox.Volley;
 import com.lifecyclehealth.lifecyclehealth.utils.LruBitmapCache;
 
 
-/**
- * Created by vaibhavi on 07-09-2017.
- */
 
 public class VolleySingleton { private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;

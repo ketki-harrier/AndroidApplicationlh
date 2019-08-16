@@ -1,36 +1,17 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
-import android.widget.VideoView;
 
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
-import com.lifecyclehealth.lifecyclehealth.utils.Config;
-import com.lifecyclehealth.lifecyclehealth.utils.GalleryUtil;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class TreatmentFragment extends BaseFragmentWithOptions {
     private static final String STARTING_TEXT = "Four Buttons Bottom Navigation";
@@ -42,19 +23,19 @@ public class TreatmentFragment extends BaseFragmentWithOptions {
     private Uri fileUri;
 
 
-    public static SampleFragment newInstance() {
+    public static SupportFragment newInstance() {
         //  Bundle args = new Bundle();
         // args.putString(STARTING_TEXT, text);
 
-        SampleFragment sampleFragment = new SampleFragment();
-        //sampleFragment.setArguments(args);
+        SupportFragment supportFragment = new SupportFragment();
+        //supportFragment.setArguments(args);
 
-        return sampleFragment;
+        return supportFragment;
     }
 
     @Override
     String getFragmentTag() {
-        return "SampleFragment";
+        return "SupportFragment";
     }
 
     @Nullable
@@ -114,7 +95,7 @@ public class TreatmentFragment extends BaseFragmentWithOptions {
                     //Toast.makeText(getContext(),"back_arrow key pressed",Toast.LENGTH_SHORT).show();
                     FragmentManager fm = getActivity()
                             .getSupportFragmentManager();
-                    fm.popBackStack("SampleFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    fm.popBackStack("SupportFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     return true;
 
                 }

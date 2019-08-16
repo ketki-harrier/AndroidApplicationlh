@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -26,6 +28,7 @@ import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.SurveyReportsAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyReportResponse;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
@@ -51,6 +54,8 @@ public class SurveyReports extends BaseFragmentWithOptions {
     boolean isPatient;
     RecyclerView recyclerView;
     TextView survey_title, survey_name, patient_name, submitted_by, submitted_on, score_survey;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static SurveyReports newInstance(String data) {
         SurveyReports holderFragment = new SurveyReports();
@@ -81,9 +86,31 @@ public class SurveyReports extends BaseFragmentWithOptions {
     }
 
     private void initializeView(View view) {
+       // try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
 
+        if(demo == null){
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
+        else if(demo !=null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        }
+       // }catch (Exception e){e.printStackTrace();}
         patientSurveyResponseId = getArguments().get(PATIENT_SURVEY_ID).toString();
         survey_title = (TextView) view.findViewById(R.id.survey_title);
+        ImageView backArrowBtn = (ImageView) view.findViewById(R.id.backArrowBtn);
+        backArrowBtn.setColorFilter(Color.parseColor("#"+Stringcode));
         survey_name = (TextView) view.findViewById(R.id.survey_name);
         patient_name = (TextView) view.findViewById(R.id.patient_name);
         submitted_by = (TextView) view.findViewById(R.id.submitted_by);

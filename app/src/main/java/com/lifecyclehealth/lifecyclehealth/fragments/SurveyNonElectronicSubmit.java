@@ -32,7 +32,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
-import com.lifecyclehealth.lifecyclehealth.activities.LoginActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
@@ -61,7 +60,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements View.OnClickListener,
+public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implements View.OnClickListener,
         FingerPrintCallback, FingerPrintUtil.NextActivityCallback {
 
     MainActivity mainActivity;
@@ -70,8 +69,8 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     private String ResponseId;
     private String surveyId;
     private String RequierESignature;
-    EditText password;
-    private static final String PASSWORD = "password";
+    //EditText password;
+  //  private static final String PASSWORD = "password";
     Button submit;
     private KeyBoardHandler keyBoardHandler;
     private RelativeLayout rootLayout;
@@ -81,9 +80,9 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     private ColorCode colorCode;
     String Stringcode;
 
-    public static SurveyElectronicSubmit newInstance(String data, String surveyId) {
+    public static SurveyNonElectronicSubmit newInstance(String data, String surveyId) {
 
-        SurveyElectronicSubmit holderFragment = new SurveyElectronicSubmit();
+        SurveyNonElectronicSubmit holderFragment = new SurveyNonElectronicSubmit();
         Bundle bundle = new Bundle();
         bundle.putString(SURVEY_LIST_EXTRAS_HOLDER, data);
         bundle.putString(SURVEY_ID, surveyId);
@@ -112,7 +111,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_survey_electronic_submit, container, false);
+        return inflater.inflate(R.layout.fragment_survey_non_electronic_submit, container, false);
     }
 
     @Override
@@ -126,27 +125,26 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     }
 
     private void initView(View view) {
-      //  try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
-            String hashcode = "";
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+    /*}
+           else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
-            else if(demo !=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
-          /*  }
-            else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
-            }
+        }
        // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("Survey Submit");
         rootLayout = (RelativeLayout) view.findViewById(R.id.rootLayout);
@@ -163,14 +161,14 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
         }catch (Exception e){e.printStackTrace();}
 
         submit.setOnClickListener(this);
-        password = (EditText) view.findViewById(R.id.passwordEditText);
-        TextViewErrorPassword = (TextView) view.findViewById(R.id.errorViewPasswordTv);
-        showError(PASSWORD, false);
+       // password = (EditText) view.findViewById(R.id.passwordEditText);
+       // TextViewErrorPassword = (TextView) view.findViewById(R.id.errorViewPasswordTv);
+        //showError(PASSWORD, false);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
-        TextView text_electronic_sig = (TextView) view.findViewById(R.id.text_electronic_sig);
+        TextView text_non_electronic_sig = (TextView) view.findViewById(R.id.text_electronic_sig);
         imageView.setColorFilter(Color.parseColor("#"+Stringcode));
-        text_electronic_sig.setTextColor(Color.parseColor("#"+Stringcode));
+        text_non_electronic_sig.setTextColor(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +198,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
             e.printStackTrace();
         }
 
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+   /*     password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView TextView, int i, KeyEvent keyEvent) {
 
@@ -212,10 +210,10 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                 }
                 return false;
             }
-        });
+        });*/
 
 
-        password.setOnTouchListener(new View.OnTouchListener() {
+        /*password.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -236,7 +234,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                 }
                 return false;
             }
-        });
+        });*/
 
 
     }
@@ -275,12 +273,12 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     }
 
 
-    private boolean isUserNameTypedByUser() {
+    /*private boolean isUserNameTypedByUser() {
         return !password.getText().toString().trim().isEmpty();
-    }
+    }*/
 
 
-    private void showError(String filed, boolean show) {
+   /* private void showError(String filed, boolean show) {
         switch (filed) {
 
             case PASSWORD:
@@ -288,7 +286,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                 else TextViewErrorPassword.setVisibility(View.INVISIBLE);
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onResume() {
@@ -322,21 +320,21 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit: {
-                if (password.getText().toString().trim().isEmpty()) {
+             /*   if (password.getText().toString().trim().isEmpty()) {
                     showError(PASSWORD, true);
                     return;
                 } else {
                     showError(PASSWORD, false);
-                }
+                }*/
                 Analytics.with(getContext()).track("Submit Survey with submit Button", new Properties().putValue("category", "Mobile"));
-                submitSurveyWithElectronicPassword();
+                submitSurveyWithNonElectronicPassword();
                 break;
             }
         }
     }
 
 
-    private void submitSurveyWithElectronicPassword() {
+    private void submitSurveyWithNonElectronicPassword() {
         showProgressDialog(true);
         String url;
         if (isPatient) {
@@ -350,7 +348,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                 params.put("SurveyId", surveyId);
                 params.put("ResponseId", ResponseId);
                 params.put("Requier_E_Signature", PreferenceUtils.getESignature(getContext()));
-                params.put("Password", password.getText().toString().trim());
+                params.put("Password", " ");
 
                 HashMap<String, HashMap<String, Object>> hashMapRequest = new HashMap<>();
                 hashMapRequest.put("SurveyDetails", params);
@@ -438,7 +436,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                     @Override
                     public void onSuccess(JSONObject response) {
                         showProgressDialog(false);
-                        printLog("Response suubmit survey:" + response);
+                        printLog("Response submit survey:" + response);
                         if (response != null) {
                             final SurveyElectronicSubmitResponse submitResponse = new Gson().fromJson(response.toString(), SurveyElectronicSubmitResponse.class);
                             if (submitResponse.getStatus().equals(STATUS_SUCCESS)) {
@@ -506,7 +504,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
 
     private void defaultOperation() {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(password, InputMethodManager.SHOW_IMPLICIT);
+      //  inputMethodManager.showSoftInput(password, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +16,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.LoginActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 /**
@@ -28,6 +31,8 @@ public class LogOutFragment extends BaseFragmentWithOptions {
 
 
     MainActivity mainActivity;
+    private ColorCode colorCode;
+    String Stringcode;
 
     public static LogOutFragment newInstance() {
 
@@ -68,8 +73,30 @@ public class LogOutFragment extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
+      //  try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String Stringcode = "";
+            String hashcode = "";
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+                /*   } else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
 
+       /* } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +105,7 @@ public class LogOutFragment extends BaseFragmentWithOptions {
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,14 +113,14 @@ public class LogOutFragment extends BaseFragmentWithOptions {
             }
         });
 
-        Button cancel= (Button) view.findViewById(R.id.btnCancel);
+        Button cancel = (Button) view.findViewById(R.id.btnCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backPage();
             }
         });
-        Button btnLogOut= (Button) view.findViewById(R.id.btnLogOut);
+        Button btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

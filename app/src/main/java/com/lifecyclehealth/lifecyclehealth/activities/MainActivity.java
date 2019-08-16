@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,16 +12,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lifecyclehealth.lifecyclehealth.R;
-import com.lifecyclehealth.lifecyclehealth.adapters.MeetInviteParticipantsWithEpisodeAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
-import com.lifecyclehealth.lifecyclehealth.custome.Session;
 import com.lifecyclehealth.lifecyclehealth.dto.MeetListDTO;
 import com.lifecyclehealth.lifecyclehealth.fragments.LogOutFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.MeetDetailsForPatientFragment;
@@ -28,17 +26,16 @@ import com.lifecyclehealth.lifecyclehealth.fragments.MeetDetailsForProviderFragm
 import com.lifecyclehealth.lifecyclehealth.fragments.MeetFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.MessageFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.MoreOptionsFragment;
-import com.lifecyclehealth.lifecyclehealth.fragments.NotificationFragment;
-import com.lifecyclehealth.lifecyclehealth.fragments.PatientDiaryFragment;
-import com.lifecyclehealth.lifecyclehealth.fragments.SampleFragment;
+import com.lifecyclehealth.lifecyclehealth.fragments.SupportFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.ScheduleMeet;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyDetailsListFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyElectronicSubmit;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyFragment;
+import com.lifecyclehealth.lifecyclehealth.fragments.SurveyNonElectronicSubmit;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyReports;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveySubmittedProgressResult;
-import com.lifecyclehealth.lifecyclehealth.fragments.TreatmentFragment;
 import com.lifecyclehealth.lifecyclehealth.gcm.GcmRegistrationService;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.MeetUser;
 import com.lifecyclehealth.lifecyclehealth.model.MessageDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MessageMeetModel;
@@ -58,13 +55,10 @@ import com.moxtra.sdk.client.ChatClientDelegate;
 import com.moxtra.sdk.common.ApiCallback;
 import com.moxtra.sdk.common.BaseRepo;
 import com.moxtra.sdk.meet.model.Meet;
-import com.moxtra.sdk.meet.model.MeetDetail;
 import com.moxtra.sdk.meet.repo.MeetRepo;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
-import com.segment.analytics.Analytics;
-import com.segment.analytics.Properties;
 
 import org.json.JSONObject;
 
@@ -77,13 +71,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
-import zemin.notification.NotificationBuilder;
-import zemin.notification.NotificationDelegater;
-import zemin.notification.NotificationLocal;
-import zemin.notification.NotificationRemote;
-import zemin.notification.NotificationView;
-import zemin.notification.NotificationViewCallback;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
@@ -106,7 +93,7 @@ public class MainActivity extends BaseActivity {
     private static MainActivity mInstance;
     final String moxtra_access_token = MyApplication.getInstance().getFromSharedPreference(AppConstants.Moxtra_Access_Token);
     //moxtra for prodution
-    //String BASE_DOMAIN = "www.moxtra.com";
+     //String BASE_DOMAIN = "www.moxtra.com";
     //moxtra for test
     String BASE_DOMAIN = "sandbox.moxtra.com";
     boolean isPatient;
@@ -122,8 +109,8 @@ public class MainActivity extends BaseActivity {
     public static BottomBar bottomBar, bottomBarCaregiver;
     public static boolean meetPushNotification = false;
 
-
     String value = "0";
+    public ColorCode colorCode;
 
     @Override
     String getTag() {
@@ -140,6 +127,10 @@ public class MainActivity extends BaseActivity {
 
     private void initialiseData() {
         mInstance = this;
+       /* try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        }catch (Exception e){e.printStackTrace();}*/
 
         networkRequestUtil = new NetworkRequestUtil(this);
         multipartRequest = new MultipartRequest(this);
@@ -159,7 +150,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    class InitThread extends Thread{
+    class InitThread extends Thread {
         @Override
         public void run() {
             super.run();
@@ -175,7 +166,6 @@ public class MainActivity extends BaseActivity {
     public void callMessageCountService() {
         getMessageCountForMessage();
     }
-
 
     private void getMessageCountForMessage() {
 
@@ -228,11 +218,9 @@ public class MainActivity extends BaseActivity {
                 setupBottomBar();
             }
         } else {
-
             //showNoNetworkMessage();
         }
         getNotificationCount();
-
     }
 
     @Override
@@ -263,7 +251,6 @@ public class MainActivity extends BaseActivity {
                             }
                             //showProgressDialog(false);
                             new asyncCreateText().execute();
-
                             PreferenceUtils.saveUser(getApplicationContext(), moxtra_access_token);
                             // startChatListActivity();
                         }
@@ -276,12 +263,14 @@ public class MainActivity extends BaseActivity {
                             // showProgress(false);
                         }
                     });
+
+
         } catch (Exception e) {
             e.getMessage();
         }
 
-    }
 
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -385,16 +374,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     private static boolean isEnded(Meet meet) {
         boolean meetStatus;
         meetStatus = !meet.isInProgress() && !(meet.getScheduleStartTime() > 0 && System.currentTimeMillis() < meet.getScheduleEndTime());
         return meetStatus;
     }
 
-
     private void sortData() {
-
         Collections.sort(chatList, new Comparator<Chat>() {
 
             @Override
@@ -416,13 +402,10 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
     private void getAllMeetData() {
         // showProgressDialog(true);
-
         if (isConnectedToNetwork(this)) {
             try {
-
                 TimeZone tz = TimeZone.getDefault();
                 Date now = new Date();
                 int offsetFromUtc = (tz.getOffset(now.getTime()) / 1000) * (-1);
@@ -481,12 +464,38 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
     /* Set up bottom Navigation Bar*/
     private void setupBottomBar() {
         isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBarCaregiver = (BottomBar) findViewById(R.id.bottomBar_Caregiver);
+
+        //  try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
+
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+        //}/*
+              if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                  Stringcode = "333333";
+              }
+        }
+       else if(demo == "Black#333") {
+            Stringcode = "333333";
+        }
+        bottomBar.setActiveTabColor(Color.parseColor("#" + Stringcode));
+        bottomBarCaregiver.setActiveTabColor(Color.parseColor("#" + Stringcode));
+        // }catch (Exception e){e.printStackTrace();}
+
 
         if (isPatient) {
             bottomBar.setVisibility(View.VISIBLE);
@@ -538,8 +547,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
-
    /*// Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -572,18 +579,12 @@ public class MainActivity extends BaseActivity {
                 break;*/
         }
         if (fragment != null)
-
             replaceFragment(fragment);
-
     }
 
-
     /*get message count*/
-
     private void getMessageCount() {
-
         MyApplication.getInstance().addToSharedPreference(messageCount, "0");
-
         if (isConnectedToNetwork(this)) {
             try {
                 networkRequestUtil.getDataSecure(BASE_URL + URL_MESSAGE_GET_CONVERSATION, new VolleyCallback() {
@@ -671,7 +672,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     /* gives survey details view is showing or not*/
     private boolean isDetailsViewVisible() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("com.lifecyclehealth.lifecyclehealth.fragments.SurveyDetailsListFragment");
@@ -694,7 +694,6 @@ public class MainActivity extends BaseActivity {
                 .commit();
     }
 
-
     protected void replaceFragmentNotificationMessage(Fragment fragment) {
         MeetFragment.selectedDate = null;
         String fragmentTag = fragment.getClass().getName();
@@ -704,7 +703,6 @@ public class MainActivity extends BaseActivity {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
-
 
     /* Change fragment for survey Details view*/
     public void changeToSurveyDetailsView(String data, int position, String title) {
@@ -744,7 +742,21 @@ public class MainActivity extends BaseActivity {
     }
 
     public void changeToSurveyElectronicSubmit(String data, String surveyId) {
+
         Fragment fragment = SurveyElectronicSubmit.newInstance(data, surveyId);
+        String fragmentTag = fragment.getClass().getName();
+        printLog("tag" + fragmentTag);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left)
+                .replace(R.id.content_main, fragment, fragmentTag)
+                .addToBackStack("SurveyElectronicSubmit")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
+    }
+
+    public void changeToSurveyNonElectronicSubmit(String data, String surveyId) {
+
+        Fragment fragment = SurveyNonElectronicSubmit.newInstance(data, surveyId);
         String fragmentTag = fragment.getClass().getName();
         printLog("tag" + fragmentTag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -781,17 +793,16 @@ public class MainActivity extends BaseActivity {
 
     /* Change fragment for coming soon view*/
     public void changeToComingSoon(String heading) {
-        Fragment fragment = SampleFragment.newInstance(heading);
+        Fragment fragment = SupportFragment.newInstance(heading);
         String fragmentTag = fragment.getClass().getName();
         printLog("tag" + fragmentTag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left)
                 .replace(R.id.content_main, fragment, fragmentTag)
-                .addToBackStack("SampleFragment")
+                .addToBackStack("SupportFragment")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
-
 
     public void changeToScheduleMeet() {
         Fragment fragment = ScheduleMeet.newInstance();
@@ -805,7 +816,6 @@ public class MainActivity extends BaseActivity {
                 .commit();
     }
 
-
     public void moreLogout() {
         Fragment fragment = LogOutFragment.newInstance();
         String fragmentTag = fragment.getClass().getName();
@@ -817,7 +827,6 @@ public class MainActivity extends BaseActivity {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
-
 
     /* Change fragment for survey report view*/
     public void changeToSurveyReport(String data) {
@@ -832,7 +841,6 @@ public class MainActivity extends BaseActivity {
                 .commit();
     }
 
-
     /******************************HELPER Method Creation*********************************/
     public List<PatientSurveyItem> getListConverted(String data) {
 
@@ -846,7 +854,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**********************************************DUMMY DATA CREATION ENDS****************************************************/
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -854,7 +861,6 @@ public class MainActivity extends BaseActivity {
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
         startService(new Intent(this, Time_out_services.class));
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -902,6 +908,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         //BaseActivity.active=false;
         super.onDestroy();
+
         stop();
     }
 
@@ -930,7 +937,6 @@ public class MainActivity extends BaseActivity {
         myHandler.removeCallbacks(myRunnable);
         myHandler.postDelayed(myRunnable, TIME_TO_WAIT);
     }
-
 
     /*Check for fragment alive or not*/
     public void checkAliveFragment() {

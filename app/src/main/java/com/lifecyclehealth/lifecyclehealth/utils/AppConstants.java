@@ -1,10 +1,11 @@
 package com.lifecyclehealth.lifecyclehealth.utils;
 
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
+
 /**
- * Created by satyam on 01/07/2016.
+ * Created by 01/07/2016.
  */
 public class AppConstants {
-
 
     public static final String STATUS_SUCCESS = "0";
     //public static final String IsPatient = "isPatient";
@@ -19,7 +20,6 @@ public class AppConstants {
     public static final String messageCount = "messageCount";
 
     /* Moxtra variables*/
-
     public static final String Moxtra_ORG_ID = "Moxtra_ORG_ID";
     public static final String Moxtra_uniqueId = "uniqueId";
     public static final String Moxtra_Access_Token = "Moxtra_Access_Token";
@@ -36,12 +36,11 @@ public class AppConstants {
     /*2) Test Url*/
     public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
 
-
     /*3) Production*/
-    //public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
+   // public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
 
     /* URLS*/
-
+    public static final String URL_SUPPORT = "secure/support";
     public static final String URL_TERM_N_CONDITION = "http://www.lifecyclehealth.com/terms";
     public static final String URL_CHECK_USERNAME = "user/checkUsername/";
     public static final String URL_CHECK_IS_USER_TOUCH_ACCEPT = "user/touchEnable/";
@@ -78,6 +77,9 @@ public class AppConstants {
     public static final String URL_LOGIN_AS_CAREGIVERNAME = "secure/caregiver/login";
     public static final String URL_LOGIN_AS_SELF = "secure/self/login";
 
+    /*get color */
+    public static final String URL_VISUAL_PREFERENCE = "secure/visual/preferences";
+
     /* Meet */
     public static final String URL_MEET_LIST = "secure/meet";
     public static final String URL_MEET_LIST_DETAILS = "secure/meet/details/";
@@ -85,7 +87,6 @@ public class AppConstants {
     public static final String URL_MEET_END = "secure/meet/update/ends/";
     public static final String URL_MEET_INVITE_PARTICIPANT = "secure/meet/member/";
     public static final String URL_MEET_INVITE_PARTICIPANT_TO_MEET = "secure/meet/invite";
-
 
     /*Notification*/
     public static final String URL_DELETE_NOTIFICATION = "secure/alert/markedRead/";
@@ -114,12 +115,11 @@ public class AppConstants {
     public static final String IS_MAINACTIVITY_ALIVE = "IS_MAINACTIVITY_ALIVE";
     public static final String IS_LOGINACTIVITY_ALIVE = "IS_LOGINACTIVITY_ALIVE";
     public static final String IS_IN_MEET_FRAGMENT = "IS_IN_MEET_FRAGMENT";
-
+    public static final String SET_COLOR_CODE = "visualBrandingPreferences";
 
 
     public static final String SERVER_DB_TOUCH = "SERVER_DB_TOUCH";
     public static final String LOCAL_DB_TOUCH = "LOCAL_DB_TOUCH";
-
 
     //public static byte[] AES_Key;
 

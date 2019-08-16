@@ -3,7 +3,7 @@ package com.lifecyclehealth.lifecyclehealth.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by vaibhavi on 04-09-2017.
+ * Created on 04-09-2017.
  */
 
 public class ProfileGetResponse {
@@ -12,6 +12,7 @@ public class ProfileGetResponse {
     }
 
     public void setStatus(String status) {
+
         this.status = status;
     }
 

@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,7 +20,9 @@ import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.designate.DesignateCallBack;
 import com.lifecyclehealth.lifecyclehealth.fragments.ScheduleMeet;
 import com.lifecyclehealth.lifecyclehealth.model.CheckProviderResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkAdapter;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkRequestUtil;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -162,13 +165,37 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
 
         public MyViewHolder(View itemView) {
             super(itemView);
+         //   try {
+                String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+                ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+                String Stringcode = "";
+                String hashcode = "";
+
+                if(demo == null){
+                    hashcode = "Green";
+                    Stringcode = "259b24";
+                }
+                else if(demo !=null) {
+                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                    hashcode = arr[0].trim();
+                    Stringcode = arr[1].trim();
+               /* }
+                else*/
+                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                        Stringcode = "333333";
+                    }
+                }
+
             name = (TextView) itemView.findViewById(R.id.name);
             provider = (TextView) itemView.findViewById(R.id.provider);
             designate = (TextView) itemView.findViewById(R.id.designate);
             addParticipant = (ImageView) itemView.findViewById(R.id.addParticipant);
+            addParticipant.setColorFilter(Color.parseColor("#"+Stringcode));
             designate_image = (ImageView) itemView.findViewById(R.id.designate_image);
             linear = (LinearLayout) itemView.findViewById(R.id.linear);
             imageView = (CircularImageView) itemView.findViewById(R.id.imageView2);
+         //   }catch (Exception e){e.printStackTrace();}
         }
 
         public void bind(final MeetInviteParticipantsModel.EpisodeParticipantList item, final MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener listener, final String pos) {

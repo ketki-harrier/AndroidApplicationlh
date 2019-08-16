@@ -18,8 +18,7 @@ import android.content.Context;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class MyPrintDocumentAdapter extends PrintDocumentAdapter
-{
+public class MyPrintDocumentAdapter extends PrintDocumentAdapter {
     Context context;
 
     public MyPrintDocumentAdapter(Context context)

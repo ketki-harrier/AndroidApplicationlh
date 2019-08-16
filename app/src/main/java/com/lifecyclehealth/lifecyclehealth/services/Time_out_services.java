@@ -117,10 +117,13 @@ public class Time_out_services extends Service implements SensorEventListener {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
-        unregisterListener();
-        mWakeLock.release();
-        stopForeground(true);
+        try {
+            unregisterReceiver(mReceiver);
+            unregisterListener();
+            mWakeLock.release();
+            stopForeground(true);
+        }catch (Exception e){e.printStackTrace();}
+
     }
 
     @Override
@@ -131,11 +134,9 @@ public class Time_out_services extends Service implements SensorEventListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-
         //startForeground(Process.myPid(), new Notification());
         registerListener();
         mWakeLock.acquire();
-
         return START_STICKY;
     }
 

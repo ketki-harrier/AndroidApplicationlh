@@ -34,6 +34,7 @@ import com.lifecyclehealth.lifecyclehealth.model.SurveyElectronicSubmitResponse;
 import com.lifecyclehealth.lifecyclehealth.model.SurveySection;
 import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
 import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListenerPager;
+import com.lifecyclehealth.lifecyclehealth.utils.PreferenceUtils;
 
 import org.json.JSONObject;
 
@@ -66,7 +67,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     //scroll viewpager
     private static final float thresholdOffset = 0.1f;
     private static final int thresholdOffsetPixels = 1;
-    private boolean scrollStarted, checkDirection;
+    public static boolean scrollStarted, checkDirection;
 
 
     public static SurveyDetailsItemFragment newInstance(String data) {
@@ -145,8 +146,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         final SurveyPagerAdapter pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
         viewPager.setAdapter(pagerAdapter);
 
-
-        viewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
@@ -154,9 +154,9 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
                 printLog("Total arraysize" + arrayKey.size());
 
+
                 int status = 0;
                 if (checkDirection) {
-
                     if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
                         //for completed
                         if (SurveyDetailsListFragment.isCompleted) {
@@ -174,49 +174,59 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                             printLog("Total arraysize" + arrayKey.size());
                             printLog("currentPage" + currentPage);
                             String s = arrayKey.get(currentPage);
+                            boolean a = hashmapOfKey.get(s);
+
                             if (hashmapOfKey.get(s)) {
                                 viewPager.disableScroll(false);
                                 status = 0;
                             } else {
-                                viewPager.disableScroll(true);
-                                status = 1;
                                 selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                viewPager.disableScroll(true);
+                               // viewPager.beginFakeDrag();
+                                status = 1;
+                                //selectSurveyDialog(hashmapOfKeyTitle.get(s));
                             }
                             if (status == 0) {
                                 SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
-                                if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1) {
+                                if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(true))) {
                                     mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                } else if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(false))) {
+                                    mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         printLog("left");
                         if (SurveyDetailsListFragment.isCompleted) {
                             if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                 showScore(getListFormattedForViewCreation(surveySection).get(0));
                             }
                         }  //*if (SurveyDetailsListFragment.isSchedule) {
-                            if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
-                                //showScore(getListFormattedForViewCreation(surveySection).get(0));
-                            }
-                         //*else if (SurveyDetailsListFragment.isToDo) {
-                            int currentPage = viewPager.getCurrentItem();
-                            printLog("Total arraysize" + arrayKey.size());
-                            printLog("currentPage" + currentPage);
-                            String s = arrayKey.get(currentPage);
-                            if (hashmapOfKey.get(s)) {
-                                viewPager.disableScroll(false);
-                                status = 0;
-                            } else {
-                                viewPager.disableScroll(true);
-                                status = 1;
-//                                selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                            }
+                        if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                            //showScore(getListFormattedForViewCreation(surveySection).get(0));
+                        }
+                        //*else if (SurveyDetailsListFragment.isToDo) {
+                        int currentPage = viewPager.getCurrentItem();
+                        printLog("Total arraysize" + arrayKey.size());
+                        printLog("currentPage" + currentPage);
+                        String s = arrayKey.get(currentPage);
+                        if (hashmapOfKey.get(s)) {
+                            viewPager.disableScroll(false);
+                            status = 0;
+                        } else {
+                            selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                            viewPager.getCurrentItem();
+                            //viewPager.beginFakeDrag();
+                          //  viewPager.disableScroll(true);
+                            status = 1;
+                            // selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                        }
 
-                            if (status == 0) {
-                                final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
-                                if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1) {
+                        //String net = PreferenceUtils.getESignature(getContext());
+                        if (status == 0) {
+                            final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                            if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
+                                if (PreferenceUtils.getESignature(getContext()).equals(true)) {
                                     mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                   /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
@@ -230,13 +240,15 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
                                     });*/
+                                } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
+                                    mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                 }
                             }
                         }
-
                     }
-                    checkDirection = false;
                 }
+                checkDirection = false;
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -253,6 +265,10 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 }
             }
         });
+    }
+
+    public static void scrollViewPager1() {
+        checkDirection = false;
     }
 
     public static void scrollViewPager() {
@@ -326,7 +342,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                             SurveyDetailsQuestionDto questionDto = new Gson().fromJson(response.toString(), SurveyDetailsQuestionDto.class);
                             if (questionDto != null) {
                                 // printLog("QuestionDto" + questionDto);
-
                                 if (questionDto.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     int id = questionDto.getSurveyQuestion().getSurveyDetails().getSurveyId();
                                     List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
@@ -383,7 +398,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         }
     }
 
-
     private void selectSurveyDialog(String title) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -394,11 +408,14 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         builder.setMessage("Please answer all mandatory question marked with asterisk(*)")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                     }
                 })
                 .setTitle(title);
         final AlertDialog dialog = builder.create();
         dialog.show();
+
+        viewPager.setOffscreenPageLimit(1);
 
         final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();

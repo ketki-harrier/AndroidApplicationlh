@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,8 +37,11 @@ import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.ProfileCaregiverAdapter;
+import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.ProfileCaregiverResponse;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 
 import org.json.JSONObject;
@@ -51,7 +55,8 @@ public class ProfileCaregiver extends BaseFragmentWithOptions {
 
     private MainActivity mainActivity;
     private RecyclerView recyclerView;
-
+    private ColorCode colorCode;
+    String Stringcode;
 
     @Override
     String getFragmentTag() {
@@ -106,12 +111,34 @@ public class ProfileCaregiver extends BaseFragmentWithOptions {
     }
 
     private void initializeView(View view) {
+      //  try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
 
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo !=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+           /* }
+           else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+       // }catch (Exception e){e.printStackTrace();}
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +147,9 @@ public class ProfileCaregiver extends BaseFragmentWithOptions {
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
+        TextView text_title_caregiver = (TextView) view.findViewById(R.id.text_title_caregiver);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
+        text_title_caregiver.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

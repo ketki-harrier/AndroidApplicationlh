@@ -32,11 +32,13 @@ public class NetworkRequestUtil {
     private String TAG;
     private static NetworkRequestUtil mInstance;
     LifecycleDatabase lifecycleDatabase;
+   // Boolean sign;
 
     public NetworkRequestUtil(Context context) {
         this.context = context;
         lifecycleDatabase=new LifecycleDatabase(context);
         mInstance = this;
+       // sign=PreferenceUtils.getESignature(context);
     }
 
     public NetworkRequestUtil(Context context, String TAG) {
@@ -326,12 +328,16 @@ public class NetworkRequestUtil {
                     }
             )
 
+
             {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Accept","application/json");
+                    /*headers.put("Content-Type","application/json");*/
                     headers.put("Content-Type", "application/json");
                     headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
+                  //  headers.put("Requier_E_Signature",sign);
                     return headers;
                 }
             };
@@ -343,7 +349,6 @@ public class NetworkRequestUtil {
 
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-
             // Cancelling request
             MyApplication.getInstance().getRequestQueue().cancelAll(TAG);
         }

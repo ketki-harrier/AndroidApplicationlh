@@ -4,6 +4,7 @@ package com.lifecyclehealth.lifecyclehealth.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,8 +38,10 @@ import com.lifecyclehealth.lifecyclehealth.adapters.MeetInviteesAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.MeetListDTO;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.MeetDetailsForProviderResponse;
 import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
+import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import org.json.JSONObject;
 
@@ -66,6 +69,8 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
     private TextView txt_episode_name, txt_patient_name;
     private Button btnInvitees;
     private  MeetDetailsForProviderResponse meetListDTO;
+    private ColorCode colorCode;
+    String Stringcode;
 
 
     public static MeetDetailsForProviderFragment newInstance(String data) {
@@ -112,6 +117,28 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
     }
 
     private void initialiseView(View view) {
+       // try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
+
+        if(demo == null){
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
+        else if(demo !=null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+       /* }
+            else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        }
+        //}catch (Exception e){e.printStackTrace();}
 
         provider_to_provider = (AppCompatRadioButton) view.findViewById(R.id.provider_to_provider);
         patient_related_episode = (AppCompatRadioButton) view.findViewById(R.id.patient_related_episode);
@@ -125,12 +152,14 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
         txt_episode_name = (TextView) view.findViewById(R.id.txt_episode_name);
         txt_patient_name = (TextView) view.findViewById(R.id.txt_patient_name);
         btnInvitees = (Button) view.findViewById(R.id.btnInvitees);
+        btnInvitees.setBackgroundColor(Color.parseColor("#"+Stringcode));
         patient_name.setVisibility(View.GONE);
         episode_name.setVisibility(View.GONE);
         txt_episode_name.setVisibility(View.GONE);
         txt_patient_name.setVisibility(View.GONE);
         btnInvitees.setOnClickListener(this);
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +168,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +281,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[]{ContextCompat.getColor(mainActivity, R.color.colorPrimary)}
+                new int[]{Color.parseColor("#"+Stringcode)}
         );
     }
 
@@ -333,6 +363,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
 
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

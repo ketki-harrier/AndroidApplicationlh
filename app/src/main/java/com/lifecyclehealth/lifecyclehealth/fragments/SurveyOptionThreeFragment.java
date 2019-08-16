@@ -152,9 +152,9 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
         //String text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
         String text;
         if (surveyDetailsModel.getQuestionModel().isRequired()) {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "" + " </font>" + " <font color=#ffcc00>*</font>";
         } else {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "";
         }
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
         if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {

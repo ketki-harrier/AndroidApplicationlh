@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -26,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -97,6 +99,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewPager mProfilesViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_FOUR_TYPE), SurveyDetailsModel.class);
         setupView(view);
     }
@@ -114,9 +117,9 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
         //String text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
         String text;
         if (surveyDetailsModel.getQuestionModel().isRequired()) {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "" + " </font>" + " <font color=#ffcc00>*</font>";
         } else {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "";
         }
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
         if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
@@ -152,7 +155,6 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
             before = Integer.parseInt(surveyDetailsModel.getQuestionModel().getBox_Before_Deliminater());
         }
 
-
         for (int position = 1; position <= number; position++) {
 
             final EditText editText = new EditText(mainActivity);
@@ -185,6 +187,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                     editText.setSelection(editText.getText().length());
                 }
             }
+
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLengthofEditText)});
             if (SurveyDetailsListFragment.isToDo) {
@@ -213,6 +216,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
             TextWatcher textWatcher = new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    int a = charSequence.length();
                     editText.setSelection(editText.getText().length());
                 }
 
@@ -220,8 +224,20 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if (isRequiredEditText) {
                         SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
-                        SurveyDetailsItemFragment.scrollViewPager();
+                        //SurveyDetailsItemFragment.scrollViewPager();
+                        //editText.setSelection(editText.getText().length());
                     }
+
+
+                    /*if (isRequiredEditText) {
+                        if (editText.getText().toString().trim().length() > 0) {
+                            SurveyDetailsItemFragment.disableScrollViewPager();
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
+                        } else {
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                        }
+                    }*/
+
                     EditText text = (EditText) getActivity().getCurrentFocus();
                     progress = 0;
                  /*   if (charSequence.length() == 0) {
@@ -230,8 +246,6 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                         printLog("position size : " + dataArray.size());
                         if (back != null)
                             back.requestFocus();
-
-
                     }*/
                     if (charSequence.length() == 1) {
                         progress = 0;
@@ -247,17 +261,15 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-
                 }
             };
             editText.addTextChangedListener(textWatcher);
-
 
             editText.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
-                 /*   if (keyCode == KeyEvent.KEYCODE_DEL) {
+                 /* if (keyCode == KeyEvent.KEYCODE_DEL) {
                         EditText text = (EditText) getActivity().getCurrentFocus();
                         if (editText.getText().toString().length() == 0) {
                             View back = text.focusSearch(View.FOCUS_LEFT); // or FOCUS_FORWARD
@@ -291,8 +303,6 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                 }
             });
 
-
-
             if (position == before) {
                 final TextView textView = new TextView(mainActivity);
                 LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
@@ -325,23 +335,28 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                             }
                         }
                         if (progress != 1)
-                            submitSurveyAnswer(answer);
+                        SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                        SurveyDetailsItemFragment.scrollViewPager();
+                        submitSurveyAnswer(answer);
                         printLog("on focus");
                     }
                 } else {
                     if (progress == 0) {
                         //showDialogWithOkButton("Enter complete information");
                         SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
-                        SurveyDetailsItemFragment.scrollViewPager();
+                        //SurveyDetailsItemFragment.scrollViewPager();
+                        progress = 2;
+                    }else {
+                        SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
+                        //SurveyDetailsItemFragment.scrollViewPager();
                         progress = 2;
                     }
-
                 }
                 return false;
             }
         });
-
     }
+
 
 
     private void submitSurveyAnswer(String request) {
@@ -370,6 +385,17 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
 
                             SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                             SurveyDetailsItemFragment.scrollViewPager();
+                           /* if (response != null) {
+                                if (surveySubmitted.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
+                                    SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                                    SurveyDetailsItemFragment.scrollViewPager();
+                                } else {
+                                    //status = 1;
+                                    showDialogWithOkButton(surveySubmitted.getMessage());
+                                    SurveyDetailsItemFragment.disableScrollViewPager();
+                                }
+                            }*/
+
 
                            /* ChangePasswordResponse surveySubmitted = new Gson().fromJson(response.toString(), ChangePasswordResponse.class);
                             if (surveySubmitted != null) {

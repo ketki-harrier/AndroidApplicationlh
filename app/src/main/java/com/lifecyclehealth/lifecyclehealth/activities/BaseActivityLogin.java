@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,12 +21,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.OnOkClick;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import zemin.notification.NotificationBuilder;
@@ -153,6 +157,8 @@ public abstract class BaseActivityLogin extends AppCompatActivity {
     private void setProgressDialog() {
         progressDialog = ProgressDialog.show(this, null, null);
         progressDialog.setContentView(R.layout.layout_progress_bar);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+
         if (progressDialog.getWindow() != null)
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         progressDialog.setIndeterminateDrawable(ContextCompat.getDrawable(this, R.drawable.progress_indeterminate));
@@ -166,15 +172,18 @@ public abstract class BaseActivityLogin extends AppCompatActivity {
     }
 
     public void showProgressDialog(boolean flag) {
-        if (flag) {
-            if (!progressDialog.isShowing()) {
-                progressDialog.show();
+        try {
+            if (flag) {
+                if (!progressDialog.isShowing()) {
+                    progressDialog.show();
+                }
+            } else {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
             }
-        } else {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-        }
+        }catch (Exception e){e.printStackTrace();}
+
     }
 
     public void showDialogWithOkButton(String message, final OnOkClick onOkClick) {

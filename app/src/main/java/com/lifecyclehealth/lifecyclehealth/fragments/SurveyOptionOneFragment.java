@@ -110,9 +110,9 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
         // String text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
         String text;
         if (surveyDetailsModel.getQuestionModel().isRequired()) {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?" + " </font>" + " <font color=#ffcc00>*</font>";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "" + " </font>" + " <font color=#ffcc00>*</font>";
         } else {
-            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "?";
+            text = "<font color=#000000>" + surveyDetailsModel.getPagePosition() + ". " + surveyDetailsModel.getQuestionModel().getDescription() + "";
         }
 
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
@@ -203,8 +203,8 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
                 } else if (isRequiredEditText) {
                     SurveyDetailsItemFragment.disableScrollViewPager();
                     SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
-
                 }
+
                 printLog("on focus mainListener");
                 return false;
             }

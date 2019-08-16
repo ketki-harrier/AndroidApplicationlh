@@ -13,6 +13,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -37,6 +38,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +56,7 @@ import com.lifecyclehealth.lifecyclehealth.fingerprint.FingerPrintUtil;
 import com.lifecyclehealth.lifecyclehealth.image.ChoosePhoto;
 import com.lifecyclehealth.lifecyclehealth.image.FileUtil;
 import com.lifecyclehealth.lifecyclehealth.model.ChangePasswordResponse;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.ProfileGetImageResponse;
 import com.lifecyclehealth.lifecyclehealth.model.ProfileGetResponse;
 import com.lifecyclehealth.lifecyclehealth.model.SurveySubmitResponse;
@@ -105,7 +108,8 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
     private static String SHARED_PROVIDER_AUTHORITY;
     private FingerPrintUtil fingerPrintUtil;
     // private static final String SHARED_PROVIDER_AUTHORITY =AchievementsDetails.this.getApplicationContext().getPackageName() + "."
-
+    private ColorCode colorCode;
+    String Stringcode;
 
     @Override
     String getFragmentTag() {
@@ -166,6 +170,31 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
     }
 
     private void initializeView(View view) {
+       // try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            //String[] arr  = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            String Stringcode = "";
+            String hashcode = "";
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+
+            if(demo == null){
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+            else if(demo!=null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+           /* }
+            else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+      //  }catch (Exception e){e.printStackTrace();}
+
         Analytics.with(getContext()).screen("My Personal Profile ");
         fingerPrintUtil = new FingerPrintUtil(getActivity(), this, this);
         isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
@@ -179,8 +208,11 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
         editTextTitle = (EditText) view.findViewById(R.id.editTextTitle);
         switch1 = (Switch) view.findViewById(R.id.switch1);
         changePassword = (Button) view.findViewById(R.id.changePassword);
+        changePassword.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCaregiver = (Button) view.findViewById(R.id.btnCaregiver);
+        btnCaregiver.setBackgroundColor(Color.parseColor("#"+Stringcode));
         btnCaregiverFor = (Button) view.findViewById(R.id.btnCaregiverFor);
+        btnCaregiverFor.setBackgroundColor(Color.parseColor("#"+Stringcode));
         changePassword.setOnClickListener(changePasswordClickListener);
         btnCaregiver.setOnClickListener(caregiverClickListener);
         btnCaregiverFor.setOnClickListener(caregiverForClickListener);
@@ -206,9 +238,12 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
             btnCaregiver.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
             // imageButton.setVisibility(View.GONE);
-
         }
+
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
+        RelativeLayout profileImageLayout = (RelativeLayout) view.findViewById(R.id.profileImageLayout);
+        profileImageLayout.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,6 +251,7 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
             }
         });
         TextView back = (TextView) view.findViewById(R.id.back);
+        back.setTextColor(Color.parseColor("#"+Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -34,6 +34,7 @@ import com.lifecyclehealth.lifecyclehealth.adapters.MeetAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.MeetListDTO;
+import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.MeetUser;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.PreferenceUtils;
@@ -69,20 +70,22 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MEET_LI
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MEET_START;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.notificationCount;
 
+public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnClickListener*/ {
 
-public class MeetFragment extends BaseFragmentWithOptions implements View.OnClickListener {
-    private MainActivity mainActivity;
+    private static MainActivity mainActivity;
     private HorizontalCalendar horizontalCalendar;
     private RecyclerView recyclerView;
     private TextView dateDisplayTextView, emptyViewTv;
     public static String selectedDate = null;
     Button btnScheduleMeet;
     String messageCount, notificationCount;
-    private ImageView imageViewMessage,imageViewNotification;
-    TextView countTextViewMessage, notificationCountTextViewMessage;
+    private static ImageView imageViewMessage, imageViewNotification;
+    static TextView countTextViewMessage, notificationCountTextViewMessage;
     private boolean isPatient;
     static View view1;
-
+    private ColorCode colorCode;
+    String Stringcode = "";
+    RelativeLayout notificationHolderLayout, messageHolderLayout;
 
     @Override
     String getFragmentTag() {
@@ -92,9 +95,12 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ChatClient.initialize(mainActivity.getApplication());
+        try {
+            ChatClient.initialize(mainActivity.getApplication());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 
     public static MeetFragment newInstance() {
         MeetFragment meetFragment = new MeetFragment();
@@ -116,7 +122,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
         return inflater.inflate(R.layout.fragment_meet, parent, false);
-
     }
 
     // This event is triggered soon after onCreateView().
@@ -125,40 +130,68 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         initializeView(view);
-
     }
 
-
     private void initializeView(View view) {
-        try{
+        try {
+            // try {
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcode = "";
+            String hashcode = "";
+
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+               /* }
+                else*/
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
+                }
+            }
+            // }catch (Exception e){e.printStackTrace();}
+
             MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET_FRAGMENT, true);
             messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
             notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
             Analytics.with(getContext()).screen("Calendar Meet");
 
             Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-            setupToolbarTitle(toolbar, getString(R.string.title_meet));
+            newsetupToolbarTitle(toolbar, getString(R.string.title_meet), colorCode.getVisualBrandingPreferences().getColorPreference());
 
             isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
-            RelativeLayout notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
-            RelativeLayout messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
+            notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
+            messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
             countTextViewMessage = (TextView) view.findViewById(R.id.countTextViewMessage);
             notificationCountTextViewMessage = (TextView) view.findViewById(R.id.countTextViewNotificatione);
             imageViewMessage = (ImageView) view.findViewById(R.id.imageViewMessage);
             imageViewNotification = (ImageView) view.findViewById(R.id.imageViewNotification);
+
+            notificationHolderLayout.setOnClickListener(onClickListener);
+
+            messageHolderLayout.setOnClickListener(onClickListener);
             //get Notification count
 
             new MeetThread().run();
+           /* notificationHolderLayout.setOnClickListener(onClickListener);
 
-            notificationHolderLayout.setOnClickListener(this);
-            messageHolderLayout.setOnClickListener(this);
+            messageHolderLayout.setOnClickListener(onClickListener);*/
+
 
             dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
             emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
             recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
             recyclerView.hasFixedSize();
             btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
-            btnScheduleMeet.setOnClickListener(this);
+            btnScheduleMeet.setOnClickListener(onClickListener);
+            btnScheduleMeet.setBackgroundColor(Color.parseColor("#" + Stringcode));
+           // btnScheduleMeet.setOnClickListener(onClickListener);
+
             if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
                 btnScheduleMeet.setVisibility(View.GONE);
             } else {
@@ -166,14 +199,12 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
             }
             view1 = view;
             setupCalendar(view);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-
-    class MeetThread extends Thread{
+    class MeetThread extends Thread {
         @Override
         public void run() {
             super.run();
@@ -182,7 +213,7 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         }
     }
 
-    public void changeMessageIcon(){
+    public void changeMessageIcon() {
         if (!messageCount.equals("0")) {
             countTextViewMessage.setText(messageCount);
         } else {
@@ -195,16 +226,21 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         }
 
         if (mainActivity.chatList.size() > 0) {
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
         } else if (mainActivity.meetListMessage.size() > 0) {
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
         } else {
-            imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            //imageViewMessage.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            imageViewMessage.setColorFilter(Color.parseColor("#" + Stringcode));
         }
         if (!notificationCount.equals("0")) {
-            imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            //imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
         } else {
-            imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            //imageViewNotification.setColorFilter(getContext().getResources().getColor(R.color.uvv_gray));
+            imageViewNotification.setColorFilter(Color.parseColor("#" + Stringcode));
         }
     }
 
@@ -229,7 +265,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         Message message = mHandler.obtainMessage(0);
         message.sendToTarget();
     }
-
 
     private void getAllMeetData(String selectedDate) {
         showProgressDialog(true);
@@ -306,7 +341,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
                             MyApplication.getInstance().addToSharedPreference(SESSION_KEY, meetList.getSession_key());
                             Analytics.with(getContext()).track("Join eVisit", new Properties().putValue("category", "Mobile")
                                     .putValue("meetId", meetList.getSession_key()));
-
                             MeetEventActivity.joinMeet(mainActivity);
 
                         } else if (meetList.getStatus().equals("SESSION_SCHEDULED") && meetList.isSelf_hosted() == true) {
@@ -315,7 +349,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
                             //userList.addAll(chat.getMembers());
                             Analytics.with(getContext()).track("Start eVisit", new Properties().putValue("category", "Mobile")
                                     .putValue("meetId", meetList.getSession_key()));
-
                             String topic = meetList.getTopic();
                             MeetEventActivity.startMeet(mainActivity, topic, userList);
                         }
@@ -358,7 +391,7 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
                     }
                 });
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         } else {
             showProgressDialog(false);
@@ -405,9 +438,7 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         startDate.set(currentCalendar.DAY_OF_MONTH, -30);
-
         //printLog("Start" + startDate.get(Calendar.MONTH) + startDate.get(Calendar.DAY_OF_MONTH));
         /**
          * end after 1 month from now
@@ -415,7 +446,6 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         Calendar endDate = Calendar.getInstance();
         endDate.setTime(startDate.getTime());
         endDate.add(currentCalendar.DATE, 60);
-
         // Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //setupToolbarTitle(toolbar, getString(R.string.title_message));
         horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
@@ -430,7 +460,8 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
                 .showMonthName(false)
                 .textColor(Color.LTGRAY, Color.BLACK)
                 .selectedCalendarDate(currentCalendar)
-                .selectorColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary))
+                //.selectorColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary))
+                .selectorColor(Color.parseColor("#" + Stringcode))
                 .build();
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
@@ -480,20 +511,28 @@ public class MeetFragment extends BaseFragmentWithOptions implements View.OnClic
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET_FRAGMENT, false);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnScheduleMeet: {
-                mainActivity.changeToScheduleMeet();
-                break;
-            }
-            case R.id.notificationHolder:
-                getDialogSetup(mainActivity, LEFT, notificationCountTextViewMessage);
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btnScheduleMeet:
+                    mainActivity.changeToScheduleMeet();
+                    break;
 
-                break;
-            case R.id.messageHolder:
-                getDialogSetup(mainActivity, RIGHT, countTextViewMessage);
-                break;
+                //  case R.id.notificationHolder:
+                case R.id.notificationHolder:
+                    getDialogSetup(mainActivity, LEFT, notificationCountTextViewMessage);
+
+                    break;
+
+                case R.id.messageHolder:
+                    //  case R.id.imageViewMessage:{
+
+                    getDialogSetup(mainActivity, RIGHT, countTextViewMessage);
+                    break;
+
+            }
         }
-    }
+
+    };
 }
