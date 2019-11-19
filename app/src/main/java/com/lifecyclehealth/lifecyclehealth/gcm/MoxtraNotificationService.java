@@ -60,12 +60,12 @@ public class MoxtraNotificationService extends BasePushIntentService {
     private void sendNotification(String msg, Uri uri, Intent intent) {
         Intent notificationIntent;
 
-            notificationIntent = new Intent(this, LoginActivity.class);
+        notificationIntent = new Intent(this, LoginActivity.class);
         if (intent != null) {
             notificationIntent.putExtras(intent);
         }
         PendingIntent contentIntent =
-                PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT |  PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

@@ -23,15 +23,14 @@
             android:textColor="@color/black" />
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/text2"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/text1"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginStart="@dimen/margin_large"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_extra_large"
+            android:layout_marginEnd="@dimen/margin_large"
             android:background="#FD8F00"
             android:gravity="right"
             android:textAlignment="gravity"

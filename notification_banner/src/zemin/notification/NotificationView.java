@@ -310,12 +310,14 @@ public class NotificationView extends FrameLayout
      * Pause. Any notification delivered here will be suspended.
      */
     public void pause() {
-        if (hasState(TICKING) && !hasState(PAUSED)) {
-            if (DBG) Log.v(TAG, "pause. " + mEntries.size());
-            mContentView.animate().cancel();
-            addState(PAUSED);
-            cancel(-1);
-        }
+        try {
+            if (hasState(TICKING) && !hasState(PAUSED)) {
+                if (DBG) Log.v(TAG, "pause. " + mEntries.size());
+                mContentView.animate().cancel();
+                addState(PAUSED);
+                cancel(-1);
+            }
+        }catch (Exception e){e.printStackTrace();}
     }
 
     /**
@@ -1449,11 +1451,9 @@ public class NotificationView extends FrameLayout
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         if (!hasState(ENABLED)) {
             return false;
         }
-
         boolean handled = mGestureDetector.onTouchEvent(event);
         switch (event.getAction()) {
         case MotionEvent.ACTION_UP:
@@ -1574,14 +1574,15 @@ public class NotificationView extends FrameLayout
             }
 
             final float x = mContentView.getTranslationX() - distanceX;
-            float alpha = Utils.getAlphaForOffset(
-                1.0f, 0.0f, 0.0f, mDismissOnDragDistanceFarEnough, Math.abs(x));
-            if (alpha < 0.0f) {
-                alpha = 0.0f;
-            }
-
-            setContentViewTranslationX(x);
-            setContentViewAlpha(alpha);
+            try {
+                float alpha = Utils.getAlphaForOffset(
+                        1.0f, 0.0f, 0.0f, mDismissOnDragDistanceFarEnough, Math.abs(x));
+                if (alpha < 0.0f) {
+                    alpha = 0.0f;
+                }
+                setContentViewTranslationX(x);
+                setContentViewAlpha(alpha);
+            }catch (Exception e){e.printStackTrace();}
             return true;
         }
         return false;

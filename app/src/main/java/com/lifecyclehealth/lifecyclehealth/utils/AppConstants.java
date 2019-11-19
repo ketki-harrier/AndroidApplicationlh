@@ -25,19 +25,20 @@ public class AppConstants {
     public static final String Moxtra_Access_Token = "Moxtra_Access_Token";
     public static final String SESSION_KEY = "SESSION_KEY";
     public static final String GCM_token = "GCM_token";
+    public static final String Patient_Name = "Patient";
 
     /* X -Token*/
     public static final String USER_TOKEN = "user_token";
 
     /*Base Url*/
     /*1) Pooja Mam*/
-    //public static final String BASE_URL = "http://192.168.0.125:3004/api/v1/";
+   // public static final String BASE_URL = "http://192.168.0.132:3004/api/v1/";
 
     /*2) Test Url*/
     public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
 
     /*3) Production*/
-   // public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
+ //   public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
 
     /* URLS*/
     public static final String URL_SUPPORT = "secure/support";
@@ -95,6 +96,10 @@ public class AppConstants {
     public static final String URL_FILTER_NOTIFICATION = "secure/alert/list";
     public static final String URL_FILTER_REPORT = "secure/patient/ActivitySurvey/Question/";
 
+    /*Carousal*/
+    public static final String URL_CAROUSAL = "secure/mobile/carousal/";
+
+
     /*More change password*/
     public static final String URL_CHANGEPASSWORD = "user/changePassword";
 
@@ -104,6 +109,8 @@ public class AppConstants {
     public static final String AES_Key = "AES_Key";
     public static final String EMAIL_ID = "emailId";
     public static final String LOGIN_NAME = "loginName";
+    public static final String selected_role = "Role";
+    public static final String selected_value = "newvalue";
     //public static final String IS_TOUCH_ACCESS = "IS_TOUCH_ACCESS";
     public static final int TIME_TO_WAIT = 10 * 60 * 1000;
     public static long TOUCH_TIME = 0;
@@ -155,7 +162,8 @@ public class AppConstants {
     public static final String REQUEST_KEY_VERIFY_MOB_VERY = "Mobile_Verification_Code";
 
     /* Forgot password Screen*/
-    public static final String REQUEST_KEY_EMAIL = "Email";
+    public static final String REQUEST_KEY_USERNAME = "Email";
+    public static final String REQUEST_KEY_EMAIL = "UserName";
     public static final String REQUEST_KEY_AUTH_ID = "id";
     public static final String REQUEST_KEY_AUTH_OTP = "OTP";
     public static final String REQUEST_KEY_PASSWORD = "password";

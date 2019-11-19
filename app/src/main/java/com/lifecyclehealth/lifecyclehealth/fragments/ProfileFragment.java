@@ -85,6 +85,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.LOCAL_DB_TO
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.LOGIN_NAME;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.LOGIN_NAMECAREGIVER;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.Patient_Name;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.STATUS_SUCCESS;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.TOUCH_EMAIL_ID;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_CHANGE_TOUCH_STATE;
@@ -93,6 +94,8 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_PROFILE
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_PROFILE_GETIMAGE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_PROFILE_SETIMAGE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.selected_role;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.selected_value;
 
 public class ProfileFragment extends BaseFragmentWithOptions implements FingerPrintCallback, FingerPrintUtil.NextActivityCallback {
 
@@ -100,7 +103,7 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
     private CircularImageView imageView2;
     EditText editTextPreferredName, editTextFirstName, editTextLastName, editTextEmail, editTextMobileNo, editTextTitle, editTextSuffix;
     Switch switch1;
-    Button changePassword, btnCaregiver,btnCaregiverFor;
+    Button changePassword, btnCaregiver, btnCaregiverFor;
     ImageView imageButton;
     TextView categiverHeading;
     String name, fileType;
@@ -110,6 +113,7 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
     // private static final String SHARED_PROVIDER_AUTHORITY =AchievementsDetails.this.getApplicationContext().getPackageName() + "."
     private ColorCode colorCode;
     String Stringcode;
+
 
     @Override
     String getFragmentTag() {
@@ -170,30 +174,29 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
     }
 
     private void initializeView(View view) {
-       // try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            //String[] arr  = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-            String Stringcode = "";
-            String hashcode = "";
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        //String[] arr  = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+        String Stringcodes = "";
+        String hashcode = "";
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-            else if(demo!=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
 
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
            /* }
             else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
-      //  }catch (Exception e){e.printStackTrace();}
+        }
+        //  }catch (Exception e){e.printStackTrace();}
 
         Analytics.with(getContext()).screen("My Personal Profile ");
         fingerPrintUtil = new FingerPrintUtil(getActivity(), this, this);
@@ -208,11 +211,11 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
         editTextTitle = (EditText) view.findViewById(R.id.editTextTitle);
         switch1 = (Switch) view.findViewById(R.id.switch1);
         changePassword = (Button) view.findViewById(R.id.changePassword);
-        changePassword.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        changePassword.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCaregiver = (Button) view.findViewById(R.id.btnCaregiver);
-        btnCaregiver.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCaregiver.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCaregiverFor = (Button) view.findViewById(R.id.btnCaregiverFor);
-        btnCaregiverFor.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCaregiverFor.setBackgroundColor(Color.parseColor("#" + Stringcode));
         changePassword.setOnClickListener(changePasswordClickListener);
         btnCaregiver.setOnClickListener(caregiverClickListener);
         btnCaregiverFor.setOnClickListener(caregiverForClickListener);
@@ -220,17 +223,34 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
         imageButton.setOnClickListener(editImage);
         categiverHeading = (TextView) view.findViewById(R.id.categiverHeading);
         //checkIsUserTouchScreen();
-        if (MyApplication.getInstance().getBooleanFromSharedPreference(LOGIN_NAMECAREGIVER)) {
-            categiverHeading.setVisibility(View.VISIBLE);
-            try {
-                categiverHeading.setText("You are logged in as Caregiver for [" + AESHelper.decrypt(seedValue, MyApplication.getInstance().getFromSharedPreference(LOGIN_NAME)) + "]");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
+
+        String caregiver =MyApplication.getInstance().getFromSharedPreference(selected_role);
+        String caregiver_new =MyApplication.getInstance().getFromSharedPreference(selected_value);
+        //
+            if (caregiver.equals("caregiver") || caregiver == null) {
+                if (caregiver_new != null) {
+                    if (MyApplication.getInstance().getBooleanFromSharedPreference(LOGIN_NAMECAREGIVER) && isPatient) {
+                        categiverHeading.setVisibility(View.VISIBLE);
+                        try {
+                            //     categiverHeading.setText("You are logged in as Caregiver for [" + AESHelper.decrypt(seedValue, MyApplication.getInstance().getFromSharedPreference(Patient_Name)) + "]");
+                            categiverHeading.setText("You are logged in as Caregiver for [" + MyApplication.getInstance().getFromSharedPreference(Patient_Name) + "]");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    categiverHeading.setVisibility(View.GONE);
+                }
+         //   }
+        }else {
+            //   categiverHeading.setVisibility(View.GONE);
+            //categiverHeading.setText("caregiver");
             categiverHeading.setVisibility(View.GONE);
         }
-        if (isPatient) {
+
+        /*if (isPatient) {
+            //    categiverHeading.setVisibility(View.GONE);
+            categiverHeading.setText("patient");
             btnCaregiver.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.GONE);
 
@@ -238,12 +258,12 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
             btnCaregiver.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
             // imageButton.setVisibility(View.GONE);
-        }
+        }*/
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
         RelativeLayout profileImageLayout = (RelativeLayout) view.findViewById(R.id.profileImageLayout);
-        profileImageLayout.setBackgroundColor(Color.parseColor("#"+Stringcode));
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        profileImageLayout.setBackgroundColor(Color.parseColor("#" + Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +271,7 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
             }
         });
         TextView back = (TextView) view.findViewById(R.id.back);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,23 +286,23 @@ public class ProfileFragment extends BaseFragmentWithOptions implements FingerPr
             @Override
             public void onClick(View v) {
 
-                    if (switch1.isChecked()) {
-                        switch1.setChecked(false);
-                        TouchIDFragment touchIDFragment = new TouchIDFragment();
-                        replaceFragment(touchIDFragment);
+                if (switch1.isChecked()) {
+                    switch1.setChecked(false);
+                    TouchIDFragment touchIDFragment = new TouchIDFragment();
+                    replaceFragment(touchIDFragment);
 
-                        Fragment fragment = new TouchIDFragment();
-                        String fragmentTag = fragment.getClass().getName();
-                        printLog("tag" + fragmentTag);
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left)
-                                .replace(R.id.content_main, fragment, fragmentTag)
-                                .addToBackStack("TouchIDFragment")
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .commit();
-                    } else {
-                        changeTouchEnable("false");
-                    }
+                    Fragment fragment = new TouchIDFragment();
+                    String fragmentTag = fragment.getClass().getName();
+                    printLog("tag" + fragmentTag);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left)
+                            .replace(R.id.content_main, fragment, fragmentTag)
+                            .addToBackStack("TouchIDFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit();
+                } else {
+                    changeTouchEnable("false");
+                }
               /*  } else {
                     if (switch1.isChecked()) {
                         switch1.setChecked(false);

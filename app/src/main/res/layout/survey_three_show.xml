@@ -19,6 +19,11 @@
             app:uvv_autoRotation="true"
             app:uvv_fitXY="false" />
 
+     <!--   <VideoView
+            android:id="@+id/surfaceview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>-->
+
         <com.lifecyclehealth.lifecyclehealth.universal_video.UniversalMediaController
             android:id="@+id/media_controller"
             android:layout_width="fill_parent"

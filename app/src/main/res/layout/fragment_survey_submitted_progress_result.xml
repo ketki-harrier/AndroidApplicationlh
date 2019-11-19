@@ -16,7 +16,6 @@
         app:contentInsetStart="0dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,11 +49,9 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary" />
 
-
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -80,8 +77,6 @@
                 app:background_progressbar_width="8dp"
                 app:progressbar_color="@color/life_cycle_color"
                 app:progressbar_width="8dp" />
-
-
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/txtPrecentProgress"
@@ -102,12 +97,10 @@
             android:layout_marginLeft="@dimen/margin_extra__extra_large"
             android:layout_marginRight="@dimen/margin_extra__extra_large"
             android:layout_marginTop="@dimen/margin_extra_large"
-
             android:text="@string/score"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/size_18p" />
-
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
             fontPath="fonts/Roboto-Regular.ttf"
@@ -121,9 +114,5 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/size_18p" />
-
-
     </LinearLayout>
-
-
 </RelativeLayout>

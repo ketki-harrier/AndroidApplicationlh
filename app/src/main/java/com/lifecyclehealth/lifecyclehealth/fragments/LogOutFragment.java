@@ -73,24 +73,24 @@ public class LogOutFragment extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
-      //  try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String Stringcode = "";
-            String hashcode = "";
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            if (demo == null) {
-                hashcode = "Green";
-                Stringcode = "259b24";
-            } else if (demo != null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
-                /*   } else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+        //  try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String Stringcode = "";
+        String hashcode = "";
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+            /*   } else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
+        }
 
        /* } catch (Exception e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_radio_button_checked_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_clear_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="checked_radio_button" />
-                            <entry key="sourceFile" value="C:\Users\yash" />
+                            <entry key="outputName" value="chat_feed_file_cancel" />
+                            <entry key="sourceFile" value="C:\Users\ketki" />
                           </map>
                         </option>
                       </PersistentState>

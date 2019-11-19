@@ -137,6 +137,7 @@
                 android:layout_toLeftOf="@+id/cancelMeet"
                 android:background="@drawable/selector_message_btn"
                 android:text="@string/Accept"
+                android:visibility="gone"
                 android:textColor="@drawable/selector_text_login_btn"
                 fontPath="fonts/Roboto-Regular.ttf" />
 
@@ -146,9 +147,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/margin"
-
                 android:scaleType="fitXY"
-                android:src="@drawable/chat_feed_file_cancel" />
+                />
+
+            <!--android:src="@drawable/chat_feed_file_cancel"-->
 
 
         </RelativeLayout>

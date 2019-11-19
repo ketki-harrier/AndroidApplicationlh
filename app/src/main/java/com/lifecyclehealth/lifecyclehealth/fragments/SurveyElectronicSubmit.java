@@ -126,41 +126,42 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
     }
 
     private void initView(View view) {
-      //  try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
-            String hashcode = "";
+        //  try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-            else if(demo !=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
           /*  }
             else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
-       // }catch (Exception e){e.printStackTrace();}
+        }
+        // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("Survey Submit");
         rootLayout = (RelativeLayout) view.findViewById(R.id.rootLayout);
         keyBoardHandler = new KeyBoardHandler(mainActivity, rootLayout);
         submit = (Button) view.findViewById(R.id.submit);
-        submit.setTextColor(Color.parseColor("#"+Stringcode));
+        submit.setTextColor(Color.parseColor("#" + Stringcode));
         try {
             ShapeDrawable shapedrawable = new ShapeDrawable();
             shapedrawable.setShape(new RectShape());
-            shapedrawable.getPaint().setColor(Color.parseColor("#"+Stringcode));
+            shapedrawable.getPaint().setColor(Color.parseColor("#" + Stringcode));
             shapedrawable.getPaint().setStrokeWidth(10f);
             shapedrawable.getPaint().setStyle(Paint.Style.STROKE);
             submit.setBackground(shapedrawable);
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         submit.setOnClickListener(this);
         password = (EditText) view.findViewById(R.id.passwordEditText);
@@ -169,8 +170,8 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
         TextView text_electronic_sig = (TextView) view.findViewById(R.id.text_electronic_sig);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
-        text_electronic_sig.setTextColor(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
+        text_electronic_sig.setTextColor(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +180,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -335,7 +336,6 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
         }
     }
 
-
     private void submitSurveyWithElectronicPassword() {
         showProgressDialog(true);
         String url;
@@ -375,7 +375,20 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // continue with delete
-                                                mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                                                View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog_view, null);
+                                                Button dialogButton = layoutView.findViewById(R.id.buttonOk);
+                                                dialogBuilder.setView(layoutView);
+                                                final AlertDialog alertDialog = dialogBuilder.create();
+                                                alertDialog.show();
+                                                dialogButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        // alertDialog.dismiss();
+                                                        mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                        alertDialog.dismiss();
+                                                    }
+                                                });
                                             }
                                         });
 
@@ -453,7 +466,20 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // continue with delete
-                                                mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                                                View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog_view, null);
+                                                Button dialogButton = layoutView.findViewById(R.id.buttonOk);
+                                                dialogBuilder.setView(layoutView);
+                                                final AlertDialog alertDialog = dialogBuilder.create();
+                                                alertDialog.show();
+                                                dialogButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        // alertDialog.dismiss();
+                                                        mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                        alertDialog.dismiss();
+                                                    }
+                                                });
                                             }
                                         });
 

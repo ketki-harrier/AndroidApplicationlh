@@ -209,8 +209,6 @@
                     android:layout_marginRight="@dimen/margin_extra_large"
                     android:layout_marginTop="@dimen/margin_large"
                     android:layout_weight="1"
-
-
                     android:textColor="@color/black"
                     fontPath="fonts/Roboto-Regular.ttf" />
             </LinearLayout>

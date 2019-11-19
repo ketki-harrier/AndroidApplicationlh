@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -130,6 +131,7 @@ public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnCl
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         initializeView(view);
+        //setupCalendar(view);
     }
 
     private void initializeView(View view) {
@@ -138,7 +140,7 @@ public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnCl
             String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
             colorCode = new Gson().fromJson(resposne, ColorCode.class);
             String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
+            String Stringcoden = "";
             String hashcode = "";
 
             if (demo == null) {
@@ -154,16 +156,21 @@ public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnCl
                     Stringcode = "333333";
                 }
             }
+
             // }catch (Exception e){e.printStackTrace();}
 
             MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_IN_MEET_FRAGMENT, true);
             messageCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.messageCount);
             notificationCount = MyApplication.getInstance().getFromSharedPreference(AppConstants.notificationCount);
             Analytics.with(getContext()).screen("Calendar Meet");
+ //           setupCalendar(view);
 
             Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-            newsetupToolbarTitle(toolbar, getString(R.string.title_meet), colorCode.getVisualBrandingPreferences().getColorPreference());
 
+            newsetupToolbarTitle(toolbar, getString(R.string.title_meet), colorCode.getVisualBrandingPreferences().getColorPreference());
+            btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
+            btnScheduleMeet.setBackgroundColor(Color.parseColor("#" + Stringcode));
+            btnScheduleMeet.setOnClickListener(onClickListener);
             isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
             notificationHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.notificationHolder);
             messageHolderLayout = (RelativeLayout) toolbar.findViewById(R.id.messageHolder);
@@ -182,22 +189,22 @@ public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnCl
 
             messageHolderLayout.setOnClickListener(onClickListener);*/
 
-
             dateDisplayTextView = (TextView) view.findViewById(R.id.selectedDateTv);
             emptyViewTv = (TextView) view.findViewById(R.id.emptyViewTv);
             recyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
             recyclerView.hasFixedSize();
-            btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
-            btnScheduleMeet.setOnClickListener(onClickListener);
-            btnScheduleMeet.setBackgroundColor(Color.parseColor("#" + Stringcode));
-           // btnScheduleMeet.setOnClickListener(onClickListener);
+            /*btnScheduleMeet = (Button) view.findViewById(R.id.btnScheduleMeet);
+            btnScheduleMeet.setOnClickListener(onClickListener);*/
+          //  btnScheduleMeet.setBackgroundColor(Color.parseColor("#" + Stringcode));
+            // btnScheduleMeet.setOnClickListener(onClickListener);
 
             if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
                 btnScheduleMeet.setVisibility(View.GONE);
             } else {
                 btnScheduleMeet.setVisibility(View.VISIBLE);
             }
-            view1 = view;
+
+           // view1 = view;
             setupCalendar(view);
         } catch (Exception e) {
             e.printStackTrace();
@@ -518,6 +525,14 @@ public class MeetFragment extends BaseFragmentWithOptions /*implements View.OnCl
                 case R.id.btnScheduleMeet:
                     mainActivity.changeToScheduleMeet();
                     break;
+                // mainActivity.moreLogout();
+                   /* Fragment fragment2 = new Fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(android.R.id.content, fragment2);
+                    fragmentTransaction.commit();
+                    break;*/
+
 
                 //  case R.id.notificationHolder:
                 case R.id.notificationHolder:

@@ -32,13 +32,14 @@ public class NetworkRequestUtil {
     private String TAG;
     private static NetworkRequestUtil mInstance;
     LifecycleDatabase lifecycleDatabase;
-   // Boolean sign;
+    String token;
+    // Boolean sign;
 
     public NetworkRequestUtil(Context context) {
         this.context = context;
-        lifecycleDatabase=new LifecycleDatabase(context);
+        lifecycleDatabase = new LifecycleDatabase(context);
         mInstance = this;
-       // sign=PreferenceUtils.getESignature(context);
+        // sign=PreferenceUtils.getESignature(context);
     }
 
     public NetworkRequestUtil(Context context, String TAG) {
@@ -76,9 +77,7 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
@@ -86,7 +85,7 @@ public class NetworkRequestUtil {
                     // headers.put("Content-Type", "application/json; charset=UTF-8");
                     // headers.put("Content-Type", "application/json");
                     //headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
-                    headers.put("lh-user-agent","LifecycleHealth Android");
+                    headers.put("lh-user-agent", "LifecycleHealth Android");
                     return headers;
                 }
 
@@ -136,15 +135,13 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
                     // headers.put("Content-Type", "application/json; charset=us-ascii");
                     // headers.put("Content-Type", "application/json; charset=UTF-8");
-                     headers.put("Content-Type", "application/json");
+                    headers.put("Content-Type", "application/json");
                     headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
                     return headers;
                 }
@@ -188,9 +185,7 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
@@ -233,16 +228,14 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
                     headers.put("Content-Type", "application/json");
                     //headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
                     //headers.put("X-Access-Token", LoginActivity.loginToken);
-                    String token=lifecycleDatabase.retrieveToken();
+                    token = lifecycleDatabase.retrieveToken();
                     headers.put("X-Access-Token", token);
                     return headers;
                 }
@@ -282,9 +275,7 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
@@ -326,18 +317,15 @@ public class NetworkRequestUtil {
                             callback.onError(error);
                         }
                     }
-            )
-
-
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Accept","application/json");
+                    headers.put("Accept", "application/json");
                     /*headers.put("Content-Type","application/json");*/
                     headers.put("Content-Type", "application/json");
                     headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
-                  //  headers.put("Requier_E_Signature",sign);
+                    //  headers.put("Requier_E_Signature",sign);
                     return headers;
                 }
             };

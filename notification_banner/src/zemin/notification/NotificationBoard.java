@@ -1553,7 +1553,10 @@ public class NotificationBoard extends FrameLayout
                     mScrolling = true;
                     mOpened = y == 0.0f;
                     setBoardTranslationY(y);
-                    dimAt(Utils.getAlphaForOffset(mDimAlpha, 0.0f, 0.0f, -mContentView.getMeasuredHeight(), y));
+                    try {
+                        dimAt(Utils.getAlphaForOffset(mDimAlpha, 0.0f, 0.0f, -mContentView.getMeasuredHeight(), y));
+                    }catch (Exception e){e.printStackTrace();}
+
                     return true;
                 }
             }
@@ -1936,12 +1939,14 @@ public class NotificationBoard extends FrameLayout
                 if (mDismissOnDragDistanceFarEnough == 0) {
                     mDismissOnDragDistanceFarEnough = getMeasuredWidth() * DISMISS_DRAG_DISTANCE_FACTOR;
                 }
-                float alpha = Utils.getAlphaForOffset(
-                    1.0f, 0.0f, 0.0f, mDismissOnDragDistanceFarEnough, Math.abs(offset));
-                if (alpha < 0.0f) {
-                    alpha = 0.0f;
-                }
-                setAlpha(alpha);
+                try {
+                    float alpha = Utils.getAlphaForOffset(
+                            1.0f, 0.0f, 0.0f, mDismissOnDragDistanceFarEnough, Math.abs(offset));
+                    if (alpha < 0.0f) {
+                        alpha = 0.0f;
+                    }
+                    setAlpha(alpha);
+                }catch (Exception e){e.printStackTrace();}
             }
         }
 

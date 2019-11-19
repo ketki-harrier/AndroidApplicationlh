@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 public class CustomViewPager extends ViewPager {
     private Boolean disable = false;
     float mStartDragX;
+    private boolean enabled;
     public CustomViewPager(Context context) {
         super(context);
     }
@@ -35,6 +36,10 @@ public class CustomViewPager extends ViewPager {
     public void disableScroll(Boolean disable) {
         //When disable = true not work the scroll and when disble = false work the scroll
         this.disable = disable;
+    }
+
+    public void setPagingEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 

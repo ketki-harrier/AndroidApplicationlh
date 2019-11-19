@@ -97,18 +97,17 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
 
 
     private void initViewFragment(View view) {
-       // try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
         String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
         String Stringcode = "";
         String hashcode = "";
 
-        if(demo == null){
+        if (demo == null) {
             hashcode = "Green";
             Stringcode = "259b24";
-        }
-        else if(demo !=null) {
+        } else if (demo != null) {
             String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
             hashcode = arr[0].trim();
             Stringcode = arr[1].trim();
@@ -118,17 +117,17 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
                 Stringcode = "333333";
             }
         }
-       // }catch (Exception e){e.printStackTrace();}
+        // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("Survey Questions");
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         setupToolbarTitle(toolbar, titleOfSurvey);
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(onClickListener);
         // ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         CustomViewPager viewPager = (CustomViewPager) view.findViewById(R.id.viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabsLayout);
-        tabLayout.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        tabLayout.setBackgroundColor(Color.parseColor("#" + Stringcode));
         //tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#"+Stringcode));
 
         String surveyTitle = null;
@@ -154,11 +153,11 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
         } else {
             isToDo = false;
             isCompleted = false;
-            isSchedule=true;
+            isSchedule = true;
             surveyTitle = titleOfSurvey;
         }
 
-        newsetupToolbarTitle(toolbar, surveyTitle,colorCode.getVisualBrandingPreferences().getColorPreference());
+        newsetupToolbarTitle(toolbar, surveyTitle, colorCode.getVisualBrandingPreferences().getColorPreference());
 
         for (int position = 0; position < modelList.size(); position++) {
 
@@ -173,11 +172,11 @@ public class SurveyDetailsListFragment extends BaseFragmentWithOptions {
 
         if (modelList.size() > 0) {
             Boolean checkESign = Boolean.valueOf(modelList.get(positionOfSurvey).getRequireESignature());
-            PreferenceUtils.saveESignature(getContext(),checkESign);
+            PreferenceUtils.saveESignature(getContext(), checkESign);
             String data = new Gson().toJson(modelList.get(positionOfSurvey));
             printLog("Tab selected data" + data);
             Analytics.with(getContext()).track("Patient Survey Question", new Properties().putValue("category", "Mobile"));
-            tabLayout.post(new Runnable(){
+            tabLayout.post(new Runnable() {
                 @Override
                 public void run() {
                     //tabLayout.getTabAt(positionOfSurvey).select();

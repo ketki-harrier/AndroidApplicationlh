@@ -62,7 +62,7 @@ public class MeetDetailsForPatientFragment extends BaseFragmentWithOptions imple
     TextView txt_patient_name;
     private MeetDetailsForProviderResponse meetListDTO;
     private ColorCode colorCode;
-    String  Stringcode;
+    String Stringcode;
 
     public static MeetDetailsForPatientFragment newInstance(String data) {
         MeetDetailsForPatientFragment holderFragment = new MeetDetailsForPatientFragment();
@@ -108,18 +108,17 @@ public class MeetDetailsForPatientFragment extends BaseFragmentWithOptions imple
     }
 
     private void initialiseView(View view) {
-     //   try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        //   try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
         String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
         String Stringcode = "";
         String hashcode = "";
 
-        if(demo == null){
+        if (demo == null) {
             hashcode = "Green";
             Stringcode = "259b24";
-        }
-        else if(demo !=null) {
+        } else if (demo != null) {
             String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
             hashcode = arr[0].trim();
             Stringcode = arr[1].trim();
@@ -137,13 +136,13 @@ public class MeetDetailsForPatientFragment extends BaseFragmentWithOptions imple
         patient_name = (EditText) view.findViewById(R.id.patient_name);
         episode_name = (EditText) view.findViewById(R.id.episode_name);
         btnInvitees = (Button) view.findViewById(R.id.btnInvitees);
-        btnInvitees.setBackgroundColor(Color.parseColor("#"+Stringcode));
-        txt_patient_name= (TextView) view.findViewById(R.id.txt_patient_name);
+        btnInvitees.setBackgroundColor(Color.parseColor("#" + Stringcode));
+        txt_patient_name = (TextView) view.findViewById(R.id.txt_patient_name);
         episode_name.setVisibility(View.GONE);
         txt_patient_name.setVisibility(View.GONE);
         btnInvitees.setOnClickListener(this);
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +151,7 @@ public class MeetDetailsForPatientFragment extends BaseFragmentWithOptions imple
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,7 +308,7 @@ public class MeetDetailsForPatientFragment extends BaseFragmentWithOptions imple
         recyclerView.setAdapter(adapter);
         //recyclerView.setAdapter(adapter);
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

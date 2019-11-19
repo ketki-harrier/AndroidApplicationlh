@@ -49,6 +49,7 @@
 
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+               android:id="@+id/text_schedule_meet"
                 fontPath="fonts/Roboto-Regular.ttf"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
@@ -198,6 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_extra_large"
                         android:layout_marginLeft="@dimen/primaryButtonMinHeight"
+
                         android:paddingBottom="@dimen/size_15dp"
                         android:paddingTop="@dimen/size_15dp"
                         android:textColor="@color/black" />

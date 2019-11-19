@@ -40,17 +40,16 @@
                 <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                     android:id="@+id/toolbar_title"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    fontPath="fonts/Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin"
                     android:layout_marginStart="@dimen/margin"
-                    android:layout_toLeftOf="@+id/search"
+                    android:layout_marginLeft="@dimen/margin"
                     android:layout_toRightOf="@+id/backArrowBtn"
                     android:paddingRight="@dimen/margin_extra__extra_large"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimary"
-                    fontPath="fonts/Roboto-Regular.ttf" />
+                    android:textColor="@color/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/search"
@@ -60,8 +59,9 @@
                     android:layout_marginRight="@dimen/margin_extra_large"
                     android:layout_toLeftOf="@+id/overFlowIcon"
                     android:paddingRight="@dimen/margin_extra__extra_large"
-                    android:src="@drawable/icon_search"
                     android:tint="@color/colorPrimary" />
+
+              <!--  android:src="@drawable/icon_search"-->
 
                 <ImageView
                     android:id="@+id/overFlowIcon"

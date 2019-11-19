@@ -197,7 +197,7 @@ public class MeetEventActivity extends BaseActivity {
     }
 
     private void finishInMainThread() {
-        mHandler.post(new Runnable() {
+        mHandler.post(  new Runnable() {
             @Override
             public void run() {
                 finish();

@@ -1,8 +1,10 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -57,6 +59,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
     String messageCount, notificationCount;
     public ColorCode colorCode;
     String Stringcode = "";
+    // ProgressDialog pDialog;
 
     @Override
     String getFragmentTag() {
@@ -108,25 +111,25 @@ public class SurveyFragment extends BaseFragmentWithOptions {
 
     private void initializeView(View view) {
         //try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
-            String hashcode = "";
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcode = "";
+        String hashcode = "";
+        // pDialog = new ProgressDialog(getActivity());
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-            else if(demo !=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
 
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
+        }
         /*} catch (Exception e) {
             e.printStackTrace();
         }*/
@@ -138,7 +141,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
 
 
         //else {
-            newsetupToolbarTitle(toolbar, getString(R.string.title_survey), colorCode.getVisualBrandingPreferences().getColorPreference());
+        newsetupToolbarTitle(toolbar, getString(R.string.title_survey), colorCode.getVisualBrandingPreferences().getColorPreference());
         //}
 //        mToolTipFrameLayout = (ToolTipRelativeLayout) view.findViewById(R.id.toolTipFrameLayout);
 
@@ -210,27 +213,26 @@ public class SurveyFragment extends BaseFragmentWithOptions {
         try {
 
             //try {
-                String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-                colorCode = new Gson().fromJson(resposne, ColorCode.class);
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-                String Stringcode = "";
-                String hashcode = "";
+            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcodes = "";
+            String hashcode = "";
 
-                if(demo == null){
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                }
-                else if(demo !=null) {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
               /*  }
 
                 else*/
-                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                        Stringcode = "333333";
-                    }
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "333333";
                 }
+            }
           /*  } catch (Exception e) {
                 e.printStackTrace();
             }*/
@@ -375,6 +377,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
     }
 
     private void getSurveyList() {
+        //pDialog.show();
         showProgressDialog(true);
         String url;
         if (isPatient) {
@@ -387,6 +390,7 @@ public class SurveyFragment extends BaseFragmentWithOptions {
                 mainActivity.networkRequestUtil.getDataSecure(url, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
+                        // pDialog.dismiss();
                         showProgressDialog(false);
                         printLog("Response Of Send code:" + response);
 

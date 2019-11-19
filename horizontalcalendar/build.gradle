@@ -29,7 +29,6 @@ version = libraryVersion
 
 android {
     compileSdkVersion project.maxVersion.toInteger()
-    buildToolsVersion "${buildToolVersion}"
 
     lintOptions {
         abortOnError false

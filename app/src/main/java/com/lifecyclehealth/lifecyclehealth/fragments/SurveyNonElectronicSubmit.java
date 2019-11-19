@@ -70,7 +70,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
     private String surveyId;
     private String RequierESignature;
     //EditText password;
-  //  private static final String PASSWORD = "password";
+    //  private static final String PASSWORD = "password";
     Button submit;
     private KeyBoardHandler keyBoardHandler;
     private RelativeLayout rootLayout;
@@ -79,6 +79,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
     private FingerPrintUtil fingerPrintUtil;
     private ColorCode colorCode;
     String Stringcode;
+    View v1;
 
     public static SurveyNonElectronicSubmit newInstance(String data, String surveyId) {
 
@@ -145,30 +146,32 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                 Stringcode = "333333";
             }
         }
-       // }catch (Exception e){e.printStackTrace();}
+        // }catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("Survey Submit");
         rootLayout = (RelativeLayout) view.findViewById(R.id.rootLayout);
         keyBoardHandler = new KeyBoardHandler(mainActivity, rootLayout);
         submit = (Button) view.findViewById(R.id.submit);
-        submit.setTextColor(Color.parseColor("#"+Stringcode));
+        submit.setTextColor(Color.parseColor("#" + Stringcode));
         try {
             ShapeDrawable shapedrawable = new ShapeDrawable();
             shapedrawable.setShape(new RectShape());
-            shapedrawable.getPaint().setColor(Color.parseColor("#"+Stringcode));
+            shapedrawable.getPaint().setColor(Color.parseColor("#" + Stringcode));
             shapedrawable.getPaint().setStrokeWidth(10f);
             shapedrawable.getPaint().setStyle(Paint.Style.STROKE);
             submit.setBackground(shapedrawable);
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         submit.setOnClickListener(this);
-       // password = (EditText) view.findViewById(R.id.passwordEditText);
-       // TextViewErrorPassword = (TextView) view.findViewById(R.id.errorViewPasswordTv);
+        // password = (EditText) view.findViewById(R.id.passwordEditText);
+        // TextViewErrorPassword = (TextView) view.findViewById(R.id.errorViewPasswordTv);
         //showError(PASSWORD, false);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
         TextView text_non_electronic_sig = (TextView) view.findViewById(R.id.text_electronic_sig);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
-        text_non_electronic_sig.setTextColor(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
+        text_non_electronic_sig.setTextColor(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +180,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,18 +376,26 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // continue with delete
-                                                mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                                                View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog_view, null);
+                                                Button dialogButton = layoutView.findViewById(R.id.buttonOk);
+                                                dialogBuilder.setView(layoutView);
+                                                final AlertDialog alertDialog = dialogBuilder.create();
+                                                alertDialog.show();
+                                                dialogButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        // alertDialog.dismiss();
+                                                        mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                        alertDialog.dismiss();
+                                                    }
+                                                });
+
                                             }
                                         });
 
                                 final AlertDialog dialog = builder.create();
                                 dialog.show();
-
-                                final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                                LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                                positiveButtonLL.gravity = Gravity.CENTER;
-                                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
-                                positiveButton.setLayoutParams(positiveButtonLL);
 
                             } else showDialogWithOkButton(submitResponse.getMessage());
 
@@ -451,18 +462,30 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // continue with delete
-                                                mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                // mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+
+                                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                                                View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog_view, null);
+                                                Button dialogButton = layoutView.findViewById(R.id.buttonOk);
+                                                dialogBuilder.setView(layoutView);
+                                                final AlertDialog alertDialog = dialogBuilder.create();
+                                                alertDialog.show();
+                                                dialogButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        // alertDialog.dismiss();
+                                                        mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                                        alertDialog.dismiss();
+                                                    }
+                                                });
+
+
                                             }
                                         });
-
                                 final AlertDialog dialog = builder.create();
                                 dialog.show();
 
-                                final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                                LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                                positiveButtonLL.gravity = Gravity.CENTER;
-                                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
-                                positiveButton.setLayoutParams(positiveButtonLL);
+
 
                             } else showDialogWithOkButton(submitResponse.getMessage());
 
@@ -482,6 +505,24 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
             showProgressDialog(false);
             showNoNetworkMessage();
         }
+    }
+
+    private void showAlertDialog(int layout){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        View layoutView = getLayoutInflater().inflate(layout, null);
+        Button dialogButton = layoutView.findViewById(R.id.buttonOk);
+        dialogBuilder.setView(layoutView);
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // alertDialog.dismiss();
+             //   mainActivity.SurveySubmittedProgressResult(respons);
+            }
+        });
+
     }
 
     @Override
@@ -504,7 +545,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
 
     private void defaultOperation() {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-      //  inputMethodManager.showSoftInput(password, InputMethodManager.SHOW_IMPLICIT);
+        //  inputMethodManager.showSoftInput(password, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override

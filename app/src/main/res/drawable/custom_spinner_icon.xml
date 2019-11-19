@@ -14,7 +14,6 @@
             </item>
             <item>
                 <bitmap android:gravity="right"
-
                     android:src="@drawable/group_4" />
             </item>
         </layer-list>

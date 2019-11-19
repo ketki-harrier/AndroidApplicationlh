@@ -68,7 +68,11 @@ import com.segment.analytics.Properties;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,7 +100,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
 public class ScheduleMeet extends BaseFragmentWithOptions {
 
 
-    String Name, Patient_UserID, PatientID, Title, Episode_Care_PlanID, Episode_Care_Plan_Name;
+    String Name, Patient_UserID, PatientID, Title, Episode_Care_PlanID, Episode_Care_Plan_Name , Timezone;
     ArrayList<String> UserIDs = new ArrayList<>();
     private Button btnInvitees, btnCancel, startMeet;
     private EditText meetingTitle;
@@ -127,6 +131,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     MainActivity mainActivity;
     private ColorCode colorCode;
     String Stringcode;
+    Date date_new;
 
     public ScheduleMeet() {
         // Required empty public constructor
@@ -176,35 +181,34 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     }
 
     private void initView(View view) {
-      //  try {
+        //  try {
 
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
-            String hashcode = "";
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcoden = "";
+        String hashcode = "";
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-            else if(demo !=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
            /* }
             else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
+        }
         //}catch (Exception e){e.printStackTrace();}
         Analytics.with(getContext()).screen("ScheduleMeet");
 
         context = getContext();
 
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,8 +218,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
         TextView back = (TextView) view.findViewById(R.id.back);
         TextView text_schedule_meet = (TextView) view.findViewById(R.id.text_schedule_meet);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
-        text_schedule_meet.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
+        text_schedule_meet.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,9 +230,9 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         start_date = (TextView) view.findViewById(R.id.start_date);
         start_time = (TextView) view.findViewById(R.id.start_time);
         btnInvitees = (Button) view.findViewById(R.id.btnInvitees);
-        btnInvitees.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnInvitees.setBackgroundColor(Color.parseColor("#" + Stringcode));
         startMeet = (Button) view.findViewById(R.id.startMeet);
-        startMeet.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        startMeet.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
         meetingTitle = (EditText) view.findViewById(R.id.meetingTitle);
         spinner_no_episode_PatientName = (Spinner) view.findViewById(R.id.spinner_no_episode_PatientName);
@@ -379,7 +383,14 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         dataAdapterDuration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         duration.setAdapter(dataAdapterDuration);
 
-        start_date.setText(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+
+        start_date.setText(new SimpleDateFormat("EEE MMM d yyyy").format(Calendar.getInstance().getTime()));
+
+        //   start_date.setText(DateFormat.getTimeInstance(DateFormat.LONG).format(Calendar.getInstance().getTime()));
         start_time.setText(new SimpleDateFormat("h:mm a").format(Calendar.getInstance().getTime()));
     }
 
@@ -615,6 +626,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                     meetDetails.setMeeting_Type(type);
                     meetDetails.setPatientID(PatientID);
                     meetDetails.setPatient_UserID(Patient_UserID);
+                    meetDetails.setTimeZone(String.valueOf(tz.getID()));
 
                     ScheduleMeetDetailsDto scheduleMeetDetailsDto = new ScheduleMeetDetailsDto();
                     scheduleMeetDetailsDto.setMeetDetails(meetDetails);
@@ -681,8 +693,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-                            start_date.setText(year + "-"
-                                    + (monthOfYear + 1) + "-" + dayOfMonth);
+                            //  start_date.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            start_date.setText(monthOfYear + 1 + " " + (dayOfMonth) + " " + year);
 
                         }
                     }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
@@ -698,7 +710,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
                 //new int[]{ContextCompat.getColor(getContext(), R.color.colorPrimary)}
-                new int[]{Color.parseColor("#"+Stringcode)}
+                new int[]{Color.parseColor("#" + Stringcode)}
         );
     }
 
@@ -1075,7 +1087,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1086,7 +1098,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialogView.findViewById(R.id.btn_start_message);
-        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btn_start_message.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btn_start_message.setText("DONE");
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1307,7 +1319,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                     } else {
 
-                        if (response.getDesignateList().size()>0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
                             String name = null;
                             for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
@@ -1369,7 +1381,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         }
 
 
-      /*  For checked*/
+        /*  For checked*/
         else {
             if (meetList.isDesignate_Exist()) {
 
@@ -1692,7 +1704,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         });
 
         Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1702,7 +1714,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         });
 
         Button btn_start_message = (Button) dialogView.findViewById(R.id.btn_start_message);
-        btn_start_message.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btn_start_message.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btn_start_message.setText("DONE");
         btn_start_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1857,10 +1869,10 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                                                 String designate_id = meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getDesignate_Id();
 
-                                                 r = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.indexOf(designate_id);
+                                                r = MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.indexOf(designate_id);
                                                 if (r >= 0)
                                                     MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.remove(r);
-                                                 user = UserIDs.indexOf(designate_id);
+                                                user = UserIDs.indexOf(designate_id);
                                                 if (user >= 0) {
                                                     UserIDs.remove(user);
                                                 }
@@ -1903,7 +1915,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         }
                     } else {
 
-                        if (response.getDesignateList().size()>0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
+                        if (response.getDesignateList().size() > 0 && MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.contains(response.getDesignateList().get(0).getProvider_UserID())) {
 
 
                             String name = null;

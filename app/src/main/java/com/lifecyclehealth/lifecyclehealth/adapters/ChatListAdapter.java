@@ -259,7 +259,11 @@ public class ChatListAdapter extends RecyclerView.Adapter {
                                             MainActivity.meetLists.remove(i);
                                         }
                                     }
-                                    ChatListAdapter.this.notify();
+
+                                    try {
+                                        //  ChatListAdapter.this.notify();
+                                        ChatListAdapter.this.notifyDataSetChanged();
+                                    }catch (IllegalMonitorStateException e){}
                                 }
 
                                 @Override

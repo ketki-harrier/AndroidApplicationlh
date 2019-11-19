@@ -348,11 +348,12 @@ public class NotificationRootView extends FrameLayout
                         mView.setContentViewVisibility(VISIBLE);
                     }
                 }
+                try {
+                    float alpha = Utils.getAlphaForOffset(1.0f, 0.0f, 0.0f, -90.0f, destR);
+                    mView.setContentViewRotationX(destR);
+                    mView.setContentViewAlpha(alpha);
+                }catch (Exception e){e.printStackTrace();}
 
-                float alpha = Utils.getAlphaForOffset(1.0f, 0.0f, 0.0f, -90.0f, destR);
-
-                mView.setContentViewRotationX(destR);
-                mView.setContentViewAlpha(alpha);
             }
         }
     }

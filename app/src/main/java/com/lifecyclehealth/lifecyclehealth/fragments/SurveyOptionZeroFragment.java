@@ -1,12 +1,16 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -17,11 +21,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -34,6 +43,8 @@ import com.lifecyclehealth.lifecyclehealth.application.TinyDB;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
+import com.lifecyclehealth.lifecyclehealth.universal_video.UniversalMediaController;
+import com.lifecyclehealth.lifecyclehealth.universal_video.UniversalVideoView;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import org.json.JSONObject;
@@ -60,9 +71,18 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     int id;
     HashMap<String, String> requestParameter = new HashMap<String, String>();
     final ArrayList<Integer> arrayList = new ArrayList<>();
-//    TinyDB tinydb;
+    //    TinyDB tinydb;
     private ColorCode colorCode;
     String Stringcode;
+    View mVideoLayout;
+    UniversalVideoView mVideoView;
+    //  VideoView video;
+    UniversalMediaController mMediaController;
+    private int cachedHeight;
+    String new_video;
+    String uriPath;
+    MediaController mediaControls;
+
 
     public static SurveyOptionZeroFragment newInstance(String data, int position) {
         SurveyOptionZeroFragment zeroFragment = new SurveyOptionZeroFragment();
@@ -108,31 +128,30 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     }
 
     private void setupView(View view) {
-      //  try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcoden = "";
-            String hashcode = "";
+        //  try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcoden = "";
+        String hashcode = "";
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-            else if(demo !=null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
           /*  }
             else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
-   //     }catch (Exception e){e.printStackTrace();}
+        }
+        //     }catch (Exception e){e.printStackTrace();}
         TextView TextViewName = (TextView) view.findViewById(R.id.surveyName);
         TextView TextViewQuestion = (TextView) view.findViewById(R.id.questionTv);
-        TextViewName.setTextColor(Color.parseColor("#"+Stringcode));
+        TextViewName.setTextColor(Color.parseColor("#" + Stringcode));
 
         imageView = (ImageView) view.findViewById(R.id.imageView);
         String text;
@@ -150,6 +169,9 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             }
         }*/
 
+        new_video = String.valueOf(surveyDetailsModel.getQuestionModel().getVideo_Url());
+
+
         TextView TextViewForName = (TextView) view.findViewById(R.id.surveyForName);
         if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
             TextViewForName.setVisibility(View.GONE);
@@ -165,11 +187,184 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
             imageView.setVisibility(View.GONE);
         }
 
-        if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
-            addCheckBoxes();
-        } else {
-            addRadioButtons();
+        //   showVideo();
+        new_video = surveyDetailsModel.getQuestionModel().getVideo_Url();
+      //      try {
+
+        if(new_video == null){
+            if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
+                addCheckBoxes();
+            } else {
+                addRadioButtons();
+            }
         }
+       else if (new_video.equalsIgnoreCase("") || new_video.equalsIgnoreCase("null") ||  new_video == "null" || new_video.equalsIgnoreCase(null)) {
+      /*  if (surveyDetailsModel.getQuestionModel().getVideo_Url() != null) {
+            showVideo();
+        } else if(surveyDetailsModel.getQuestionModel().getVideo_Url() == null){*/
+            if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
+                addCheckBoxes();
+            } else {
+                addRadioButtons();
+            }
+        }
+        else if(new_video.equalsIgnoreCase(null)){
+            if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
+                addCheckBoxes();
+            } else {
+                addRadioButtons();
+            }
+        }
+        else {
+
+            if (surveyDetailsModel.getQuestionModel().getTypeOfAnswer() == 5) {
+                addCheckBoxes();
+                showVideo();
+            } else {
+                addRadioButtons();
+                showVideo();
+            }
+        }
+     //    }
+      //    catch (NullPointerException e){e.printStackTrace();}
+        // }
+
+
+    }
+
+    private void showVideo() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.survey_three_show);
+
+        //  video = (VideoView) dialog.findViewById(R.id.surfaceview);
+
+        mVideoView = (UniversalVideoView) dialog.findViewById(R.id.videoView);
+
+        mMediaController = (UniversalMediaController) dialog.findViewById(R.id.media_controller);
+        mVideoLayout = dialog.findViewById(R.id.video_layout);
+        mVideoView.setMediaController(mMediaController);
+        //     mVideoView.start();
+        mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
+            @Override
+            public void onScaleChange(boolean isFullscreen) {
+
+            }
+
+            @Override
+            public void onPause(MediaPlayer mediaPlayer) {
+
+            }
+
+            @Override
+            public void onStart(MediaPlayer mediaPlayer) {
+
+            }
+
+            @Override
+            public void onBufferingStart(MediaPlayer mediaPlayer) {
+
+            }
+
+            @Override
+            public void onBufferingEnd(MediaPlayer mediaPlayer) {
+
+            }
+        });
+        //   video.setMediaController(mediaControls);
+        setVideoAreaSize();
+        //  video.setVideoURI(Uri.parse(surveyDetailsModel.getQuestionModel().getVideo_Url()));
+        // start a video
+        //  video.start();
+
+        if (mediaControls == null) {
+            // create an object of media controller class
+            mediaControls = new MediaController(getActivity());
+            mediaControls.setAnchorView(mVideoView);
+        }
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                printLog("onCompletion");
+            }
+        });
+
+      /*  mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Toast.makeText(getActivity(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG).show(); // display a toast when an error is occured while playing an video
+                return false;
+            }
+        });*/
+
+     /*   mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
+            @Override
+            public void onScaleChange(boolean isFull) {*/
+            /*    isFullscreen = isFull;
+                if (isFullscreen) {
+                    try {
+                        ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
+                        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                        mVideoLayout.setLayoutParams(layoutParams);
+                        //GONE the unconcerned views to leave room for video and controller
+                        mBottomLayout.setVisibility(View.GONE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
+                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    layoutParams.height = cachedHeight;
+                    mVideoLayout.setLayoutParams(layoutParams);
+                    mBottomLayout.setVisibility(View.VISIBLE);
+                }*/
+           /* }
+
+            @Override
+            public void onPause(MediaPlayer mediaPlayer) { // Video pause
+                printLog("onPause UniversalVideoView callback");
+            }
+
+            @Override
+            public void onStart(MediaPlayer mediaPlayer) { // Video start/resume to play
+                printLog("onStart UniversalVideoView callback");
+            }
+
+            @Override
+            public void onBufferingStart(MediaPlayer mediaPlayer) {// steam start loading
+                printLog("onBufferingStart UniversalVideoView callback");
+            }
+
+            @Override
+            public void onBufferingEnd(MediaPlayer mediaPlayer) {// steam end loading
+                printLog("onBufferingEnd UniversalVideoView callback");
+            }
+
+        });*/
+        dialog.show();
+    }
+
+    private void setVideoAreaSize() {
+        mVideoLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = mVideoLayout.getWidth();
+                cachedHeight = (int) (width * 405f / 720f);
+//                cachedHeight = (int) (width * 3f / 4f);
+//                cachedHeight = (int) (width * 9f / 16f);
+                ViewGroup.LayoutParams videoLayoutParams = mVideoLayout.getLayoutParams();
+                videoLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                videoLayoutParams.height = cachedHeight;
+                mVideoLayout.setLayoutParams(videoLayoutParams);
+                mVideoView.setVideoPath(surveyDetailsModel.getQuestionModel().getVideo_Url(), getContext());
+                mVideoView.requestFocus();
+                mVideoView.start();
+            }
+        });
     }
 
     @SuppressLint("RestrictedApi")
@@ -200,7 +395,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
                     //rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
-                    rdbtn.setHighlightColor(Color.parseColor("#"+Stringcode));
+                    rdbtn.setHighlightColor(Color.parseColor("#" + Stringcode));
                 } else {
                     rdbtn.setButtonDrawable(R.drawable.deselector_radiobutton1);
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
@@ -215,10 +410,10 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).isSelected()) {
                         rdbtn.setChecked(true);
                         SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
-                        arrayList.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).getOptionId());
-                    }else{
+                        arrayList.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getOptionId());
+                    } else {
                         rdbtn.setChecked(false);
-                        arrayList.remove(arrayList.indexOf(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i-1).getOptionId()));
+                        arrayList.remove(arrayList.indexOf(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i - 1).getOptionId()));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -247,7 +442,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                                 submitMultipleSelectedAnswerOfSurvey(requestParameter, arrayList);
                             }
                         } else {
-                           id = buttonView.getId();
+                            id = buttonView.getId();
 
                             for (int loop = 1; loop <= surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); loop++) {
                                 if (surveyDetailsModel.getQuestionModel().getQuestionOptions().get(loop - 1).getOptionId() == id) {
@@ -259,16 +454,16 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                                 }
                             }
 
-                            if(arrayList.size() > 0){
+                            if (arrayList.size() > 0) {
                                 SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                                 SurveyDetailsItemFragment.scrollViewPager();
-                            }else{
+                            } else {
                                 SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
                                 SurveyDetailsItemFragment.scrollViewPager();
                             }
                             status = 1;
                             if (SurveyDetailsListFragment.isToDo) {
-                                submitMultipleSelectedAnswerOfSurvey(requestParameter,arrayList);
+                                submitMultipleSelectedAnswerOfSurvey(requestParameter, arrayList);
                             }
                         }
                     }
@@ -303,7 +498,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
     @SuppressLint("RestrictedApi")
     private void addRadioButtons() {
         final int number = surveyDetailsModel.getQuestionModel().getQuestionOptions().size();
-    //    String bool =  surveyDetailsModel.getQuestionModel().isRequired();
+        //    String bool =  surveyDetailsModel.getQuestionModel().isRequired();
         for (int row = 0; row < 1; row++) {
             final RadioGroup ll = new RadioGroup(mainActivity);
             ll.setOrientation(LinearLayout.VERTICAL);
@@ -327,7 +522,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                     rdbtn.setBackgroundResource(R.drawable.selector_radiobutton);
                     rdbtn.setSupportButtonTintList(getColorList());
                     //rdbtn.setHighlightColor(ContextCompat.getColor(mainActivity, R.color.colorPrimary));
-                    rdbtn.setHighlightColor(Color.parseColor("#"+Stringcode));
+                    rdbtn.setHighlightColor(Color.parseColor("#" + Stringcode));
                 } else {
                     rdbtn.setBackgroundResource(R.drawable.deselector_radiobutton);
                     rdbtn.setSupportButtonTintList(getDeColorList());
@@ -459,7 +654,7 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
                 //new int[]{ContextCompat.getColor(mainActivity, R.color.colorPrimary)
-                new int[]{Color.parseColor("#"+Stringcode)}
+                new int[]{Color.parseColor("#" + Stringcode)}
         );
     }
 

@@ -10,7 +10,6 @@
     android:orientation="horizontal"
     android:paddingBottom="@dimen/margin_extra_large"
     android:paddingEnd="0dp"
-
     android:paddingLeft="@dimen/margin_extra__extra_large"
     android:paddingRight="0dp"
     android:paddingStart="@dimen/margin_large">

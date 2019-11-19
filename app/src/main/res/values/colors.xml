@@ -8,6 +8,8 @@
     <color name="controlNormal">#A53ABD</color>
     <color name="controlActivated">#FF8881</color>
 
+    <color name="background">#272727</color>
+
     <color name="white_alpha_50">#4DFFFFFF</color>
     <color name="white">@android:color/white</color>
     <color name="off_white">#59dddddd</color>
@@ -30,7 +32,10 @@
 
     <color name="grey">#D3D3D3</color>
     <color name="orange">#F88800</color>
-
+    <!--progress color-->
+    <color name="bule_one">#375cb4</color>
+    <color name="black_one">#333333</color>
+    <color name="skyblue_one">#189AD3</color>
 
     <color name="view_background">#e8ecfa</color>
     <color name="btn_bg">#277bec</color>

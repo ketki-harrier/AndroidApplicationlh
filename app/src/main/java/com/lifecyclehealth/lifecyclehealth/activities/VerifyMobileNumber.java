@@ -107,7 +107,7 @@ public class VerifyMobileNumber extends BaseActivity {
         buttonSendCode.setOnClickListener(onClickListener);
         /*Visibility*/
         buttonSendAndUpdate.setVisibility(View.GONE);
-          /* set values*/
+        /* set values*/
         editTextCountryCode.setText(getIntent().getStringExtra(EXTRA_LOGIN_COUNTRY_CODE));
         editTextMobileNumber.setText(getMobileNumber(0, getIntent().getStringExtra(EXTRA_LOGIN_MOBILE_NUMBER)));
         /*Control*/
@@ -176,7 +176,7 @@ public class VerifyMobileNumber extends BaseActivity {
     }
 
     private void setupEditTextFunction() {
-      /* for mobile number*/
+        /* for mobile number*/
         editTextMobileNumber.addTextChangedListener(new TextWatcher() {
             int len = 0;
 
@@ -203,7 +203,7 @@ public class VerifyMobileNumber extends BaseActivity {
                 }
             }
         });
-           /*for country code */
+        /*for country code */
 
         editTextCountryCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -230,7 +230,7 @@ public class VerifyMobileNumber extends BaseActivity {
                 }
             }
         });
-                         /* for receive code  */
+        /* for receive code  */
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

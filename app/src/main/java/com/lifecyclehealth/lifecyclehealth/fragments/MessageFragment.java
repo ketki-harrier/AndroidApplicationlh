@@ -162,7 +162,7 @@ public class MessageFragment extends BaseFragmentWithOptions {
             String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
             colorCode = new Gson().fromJson(resposne, ColorCode.class);
             String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            final String nStringcode = "";
+            String nStringcode = "";
             String hashcode = "";
 
             if(demo == null){
@@ -421,6 +421,8 @@ public class MessageFragment extends BaseFragmentWithOptions {
 
     private void setAdapterUpdate() {
         if (mainActivity.meetPushNotification) {
+
+            /* changes 071119*/
             new asyncMeetList().execute();
         } else {
             messageMeetModel = new ArrayList<>();

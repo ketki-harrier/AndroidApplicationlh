@@ -106,6 +106,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_VISUAL_
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.USER_ROLE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.USER_TOKEN;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.selected_role;
 
 
 /**
@@ -243,7 +244,7 @@ public class LoginActivity extends BaseActivityLogin implements
         touchSwitch.setChecked(MyApplication.getInstance().getBooleanFromSharedPreference(LOCAL_DB_TOUCH));
         /*Initialise touchId*/
         initFingerPrintElements();
-            /* hide*/
+        /* hide*/
         showTermNConditionLayout(false);
         /* keyboard*/
         keyBoardHandler = new KeyBoardHandler(LoginActivity.this, rootLayout);
@@ -328,7 +329,7 @@ public class LoginActivity extends BaseActivityLogin implements
             }
         }
 
-        if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGOUT) == false){
+        if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGOUT) == false) {
             if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_TIMEOUT)) {
                 MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_TIMEOUT, false);
                 MainActivity instance = MainActivity.getInstance();
@@ -340,7 +341,8 @@ public class LoginActivity extends BaseActivityLogin implements
                         finish();
                     }
                 }
-            }}
+            }
+        }
 
     }
 
@@ -838,14 +840,17 @@ public class LoginActivity extends BaseActivityLogin implements
             if (user.getUser().getRole().size() > 0) {
                 for (int i = 0; i < user.getUser().getRole().size(); i++) {
                     if (user.getUser().getRole().get(i).equals("Caregiver")) {
+                      //  String caregiver_new = String.valueOf(user.getUser().getRole());
                         isCareGiver = true;
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.Is_Care_Giver, true);
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.PREF_IS_PATIENT, false);
+                        MyApplication.getInstance().addToSharedPreference(selected_role, "caregiver");
                     }
                     if (user.getUser().getRole().get(i).equals("Patient")) {
                         isUserPatient = true;
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.PREF_IS_PATIENT, true);
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.Is_Care_Giver, false);
+                        MyApplication.getInstance().addToSharedPreference(selected_role, "patient");
                     }
                 }
             }
@@ -862,6 +867,7 @@ public class LoginActivity extends BaseActivityLogin implements
     /* For diverting to homeScreen*/
     private void divertToHomeScreen() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+      //  Intent intent = new Intent(LoginActivity.this, Carousal.class);
         intent.putExtra("from_notification", "2");
         startActivity(intent);
         //startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -870,7 +876,8 @@ public class LoginActivity extends BaseActivityLogin implements
 
     private void divertToCareGiverScreen() {
         startActivity(new Intent(LoginActivity.this, CareGiverActivity.class));
-       // startActivity(new Intent(LoginActivity.this, CareGiverNew.class));
+       // startActivity(new Intent(LoginActivity.this, Carousal.class));
+        // startActivity(new Intent(LoginActivity.this, CareGiverNew.class));
         finish();
     }
 
@@ -883,7 +890,7 @@ public class LoginActivity extends BaseActivityLogin implements
                 public void onSuccess(JSONObject response) {
                     showProgressDialog(false);
                     printLog("ResponseColoCode" + response);
-                    MyApplication.getInstance().saveColorCodeJson(AppConstants.SET_COLOR_CODE,response.toString());
+                    MyApplication.getInstance().saveColorCodeJson(AppConstants.SET_COLOR_CODE, response.toString());
                     ColorCode colorCode = new Gson().fromJson(response.toString(), ColorCode.class);
                     if (colorCode != null) {
                         if (colorCode.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
@@ -965,7 +972,6 @@ public class LoginActivity extends BaseActivityLogin implements
 
         if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO))
             permissionsNeeded.add("Record Audio");
-
         if (!addPermission(permissionsList, Manifest.permission.CAMERA))
             permissionsNeeded.add("CAMERA");
         if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))

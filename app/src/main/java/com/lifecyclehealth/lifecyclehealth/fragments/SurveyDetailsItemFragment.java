@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
@@ -32,8 +32,8 @@ import com.lifecyclehealth.lifecyclehealth.model.QuestionModel;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyElectronicSubmitResponse;
 import com.lifecyclehealth.lifecyclehealth.model.SurveySection;
-import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
-import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListenerPager;
+//import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
+//import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListenerPager;
 import com.lifecyclehealth.lifecyclehealth.utils.PreferenceUtils;
 
 import org.json.JSONObject;
@@ -68,6 +68,8 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     private static final float thresholdOffset = 0.1f;
     private static final int thresholdOffsetPixels = 1;
     public static boolean scrollStarted, checkDirection;
+    Boolean e_submit;
+
 
 
     public static SurveyDetailsItemFragment newInstance(String data) {
@@ -126,6 +128,9 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         getSurveyList(surveyItem.getPatientSurveyResponseId());
     }
 
+
+
+
     /* Set view pager with values*/
     private void setViewPager(final List<SurveySection> surveySection) {
         arrayKey = new ArrayList<String>();
@@ -154,6 +159,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
                 printLog("Total arraysize" + arrayKey.size());
 
+                e_submit  = PreferenceUtils.getESignature(getContext()).equals(true);
 
                 int status = 0;
                 if (checkDirection) {
@@ -178,10 +184,16 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
                             if (hashmapOfKey.get(s)) {
                                 viewPager.disableScroll(false);
+
+                                /* changes 08/11/19*/
+                                viewPager.setOffscreenPageLimit(0);
                                 status = 0;
                             } else {
                                 selectSurveyDialog(hashmapOfKeyTitle.get(s));
                                 viewPager.disableScroll(true);
+                                viewPager.beginFakeDrag();
+                                //viewPager.disableScroll(true);
+                                viewPager.setPagingEnabled(false);
                                // viewPager.beginFakeDrag();
                                 status = 1;
                                 //selectSurveyDialog(hashmapOfKeyTitle.get(s));
@@ -216,8 +228,10 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         } else {
                             selectSurveyDialog(hashmapOfKeyTitle.get(s));
                             viewPager.getCurrentItem();
-                            //viewPager.beginFakeDrag();
-                          //  viewPager.disableScroll(true);
+                            viewPager.setOffscreenPageLimit(1);
+                            viewPager.beginFakeDrag();
+                            viewPager.disableScroll(true);
+                            viewPager.setPagingEnabled(false);
                             status = 1;
                             // selectSurveyDialog(hashmapOfKeyTitle.get(s));
                         }
@@ -282,6 +296,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     private void showScore(SurveyDetailsModel surveyDetailsModel1) {
         viewPager.disableScroll(false);
         int currentItem = viewPager.getCurrentItem();
+
         printLog("current page" + currentItem);
         SurveyDetailsModel surveyDetailsModel = surveyDetailsModel1;
 

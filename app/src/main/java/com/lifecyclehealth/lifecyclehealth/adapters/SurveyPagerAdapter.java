@@ -41,6 +41,7 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
         switch (typeOfSurvey) {
             case 0:
                 Log.e("call", "0");
+                //return SurveyOptionThreeFragment.newInstance(data, position);
                 return SurveyOptionZeroFragment.newInstance(data, position);
             case 1:
                 Log.e("call", "1");
@@ -50,6 +51,7 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                 return SurveyOptionTwoFragment.newInstance(data, position);
             case 3:
                 Log.e("call", "3");
+                //return SurveyOptionZeroFragment.newInstance(data, position);
                 return SurveyOptionThreeFragment.newInstance(data, position);
             case 4:
                 Log.e("call", "4");

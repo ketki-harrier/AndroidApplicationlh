@@ -16,8 +16,10 @@
 
 package com.lifecyclehealth.lifecyclehealth.gcm;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -30,7 +32,9 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GcmListenerService;
+/*import com.google.android.gms.gcm.GcmListenerService;*/
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.BaseActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.BaseActivityLogin;
@@ -39,6 +43,7 @@ import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.activities.MeetEventActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.fragments.MeetFragment;
+import com.moxtra.binder.ui.app.ApplicationDelegate;
 import com.moxtra.sdk.ChatClient;
 import com.moxtra.sdk.chat.model.Chat;
 import com.moxtra.sdk.common.ApiCallback;
@@ -47,16 +52,18 @@ import com.moxtra.sdk.notification.NotificationHelper;
 import com.moxtra.sdk.notification.NotificationManager;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.IS_IN_MEET_FRAGMENT;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.IS_LOGINACTIVITY_ALIVE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.IS_MAINACTIVITY_ALIVE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.IS_USERNAME_EDITABLE;
 
-public class GcmNotificationService extends GcmListenerService {
+public class GcmNotificationService extends FirebaseMessagingService {
     private static final String TAG = "DEMO_GcmIntentService";
     public int NOTIFICATION_ID;
     private android.app.NotificationManager mNotificationManager;
+    String title;
 
     public GcmNotificationService() {
         super();
@@ -70,14 +77,30 @@ public class GcmNotificationService extends GcmListenerService {
         mNotificationManager = (android.app.NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
+
     @Override
-    public void onMessageReceived(String s, Bundle bundle) {
-        super.onMessageReceived(s, bundle);
+    //   public void onMessageReceived(String s, Bundle bundle) {
+    public void onMessageReceived(RemoteMessage message) {
+        /* super.onMessageReceived(s, bundle);*/
+        super.onMessageReceived(message);
+
+        String from = message.getFrom();
+        // Map data = message.getData();
         Log.i("GcmNotificationService", "message received ");
         Intent intent = new Intent();
-        intent.putExtras(bundle);
+        // intent.putExtras((Intent) data);
+        Map<String, String> datanew = message.getData();
+        for (String key : datanew.keySet()) {
+            intent.putExtra(key, datanew.get(key));
+        }
+
+        if (message.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + message.getData());
+        }
+
+
         try {
-            if (bundle != null && !bundle.isEmpty()) {
+            if (datanew != null && !datanew.isEmpty()) {
             /*    NotificationManager notificationManager = ChatClient.getClientDelegate().getNotificationManager();
                 if (notificationManager.isValidRemoteNotification(intent)) {
                     int type = notificationManager.getValidNotificationType(intent);
@@ -88,7 +111,23 @@ public class GcmNotificationService extends GcmListenerService {
 
                 if (notificationHelper.isValidRemoteNotification(intent)) {
                     int type = notificationHelper.getValidNotificationType(intent);
-                    final String title = notificationHelper.getNotificationMessageText(this, intent);
+                    //final String title = notificationHelper.getNotificationMessageText(this, intent);
+
+                   /* final  String title = message.getNotification().getTitle();
+                    String body = message.getNotification().getBody();*/
+
+                    boolean handled = NotificationHelper.isValidRemoteNotification(intent);
+                    if (handled) {
+                        // This is a chat sdk message and it will be handled by chat sdk
+                        title = NotificationHelper.getNotificationMessageText(this, intent);
+                        sendChatSDKNotification(title, null, intent);
+                    } else {
+                        // Not a chat sdk message and app should handle it.
+                        Log.i(TAG, "App should handle it.");
+                    }
+                    Log.i(TAG, "Received: " + intent.getExtras().toString());
+
+
                     Log.i(TAG, "Here comes a notification: type=" + type + ", title=" + title);
 
 
@@ -180,6 +219,33 @@ public class GcmNotificationService extends GcmListenerService {
 
     }
 
+    private void sendChatSDKNotification(String msg, Uri uri, Intent intent) {
+        Log.d(TAG, "Got notification: msg = " + msg + ", uri = " + uri);
+        // NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent notificationIntent = new Intent(this, LoginActivity.class);
+        if (intent != null) {
+            notificationIntent.putExtras(intent);
+        }
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, ApplicationDelegate.getInstance().getNotificationChannelID())
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getString(getApplicationInfo().labelRes))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setContentText(msg)
+                        .setAutoCancel(true)
+                        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
+
+        if (uri != null) {
+            builder.setSound(uri);
+        }
+
+        builder.setContentIntent(contentIntent);
+        mNotificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
 
     private void callMainActivityNotification(String msg) {
         Intent notificationIntent;
@@ -190,6 +256,8 @@ public class GcmNotificationService extends GcmListenerService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        String channelId = getString(R.string.default_notification_channel_id);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -213,6 +281,8 @@ public class GcmNotificationService extends GcmListenerService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        String channelId = getString(R.string.default_notification_channel_id);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -223,6 +293,16 @@ public class GcmNotificationService extends GcmListenerService {
                         .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
 
         mBuilder.setContentIntent(contentIntent);
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    mNotificationManager.IMPORTANCE_DEFAULT);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
@@ -239,8 +319,7 @@ public class GcmNotificationService extends GcmListenerService {
         } else {
             if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_MAINACTIVITY_ALIVE)) {
                 BaseActivity.getInstance().showLocalNotification(msg);
-            }
-           else if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGINACTIVITY_ALIVE)) {
+            } else if (MyApplication.getInstance().getBooleanFromSharedPreference(IS_LOGINACTIVITY_ALIVE)) {
                 BaseActivityLogin.getInstance().showLocalNotification(msg);
             } else {
                 callMainActivityNotification(msg);

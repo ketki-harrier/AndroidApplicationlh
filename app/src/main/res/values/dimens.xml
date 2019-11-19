@@ -14,6 +14,7 @@
     <dimen name="toolbar_bottom_line">1dp</dimen>
     <dimen name="message_count_tv_padding">2dp</dimen>
     <dimen name="message_count_tv_min_size">20dp</dimen>
+    <dimen name="center_button_height">55dp</dimen>
 
     <dimen name="corner_round">20dp</dimen>
     <dimen name="image_size">80dp</dimen>

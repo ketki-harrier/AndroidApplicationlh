@@ -6,7 +6,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <ExpandableListView
         android:background="@color/white"
@@ -17,7 +17,7 @@
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp"
         android:gravity="start"
-        android:groupIndicator="@drawable/selector_survey_list"
+        android:groupIndicator="@null"
         android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight"
         android:indicatorEnd="?android:attr/expandableListPreferredItemIndicatorRight"
         />

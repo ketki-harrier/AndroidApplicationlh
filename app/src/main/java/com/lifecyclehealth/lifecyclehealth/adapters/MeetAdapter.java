@@ -35,6 +35,7 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MyViewHolder> 
     private List<MeetListDTO.MeetList> meetResponseList;
     private OnItemClickListener listener;
     Context context;
+    String Stringcode = "";
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,7 +56,7 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MyViewHolder> 
         String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
         ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
         String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-        String Stringcode = "";
+        String Stringcoden = "";
         String hashcode = "";
 
         if (demo == null) {

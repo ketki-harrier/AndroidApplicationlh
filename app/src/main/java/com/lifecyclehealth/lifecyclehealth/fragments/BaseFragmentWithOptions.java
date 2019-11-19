@@ -91,6 +91,7 @@ public abstract class BaseFragmentWithOptions extends Fragment {
     public Button view_all_btn;
     static TextView textViewCount;
     MainActivity activity;
+    String Stringcode = "";
 
     abstract String getFragmentTag();
 
@@ -174,18 +175,20 @@ public abstract class BaseFragmentWithOptions extends Fragment {
         screenTitleTextView.setText(title);
     }
 
-    public void newsetupToolbarTitle(Toolbar toolbar, String title,String hashCode) {
+    public void newsetupToolbarTitle(Toolbar toolbar, String title, String hashCode) {
         try {
             screenTitleTextView = (TextView) toolbar.findViewById(R.id.toolbar_title);
             screenTitleTextView.setText(title);
-            String[] arr  = hashCode.split("#");
+            String[] arr = hashCode.split("#");
             String hashcode = arr[0].trim();
-            String Stringcode = arr[1].trim();
-            if (hashcode.equals("Black") && Stringcode.length() < 6){
+            Stringcode = arr[1].trim();
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
                 Stringcode = "333333";
             }
-            screenTitleTextView.setTextColor(Color.parseColor("#"+Stringcode));
-        }catch (Exception e){e.printStackTrace();}
+            screenTitleTextView.setTextColor(Color.parseColor("#" + Stringcode));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public TextView getScreenTitleTextView() {
@@ -449,49 +452,45 @@ public abstract class BaseFragmentWithOptions extends Fragment {
     }
 
     public void setProgressDialog() {
-        String Stringcode = "";
+        String Stringcodes = "";
         //String Stringcode;
         String hashcode = "";
         String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
         ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            if (resposne != null) {
-               // ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        if (resposne != null) {
+            // ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
 
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
 
-                if(demo == null){
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                }
-                else {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
-                }
-                }
-            else if(colorCode.getVisualBrandingPreferences().getColorPreference().equals(null)){
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
+            }
+        } else if (colorCode.getVisualBrandingPreferences().getColorPreference().equals(null)) {
             hashcode = "Green";
             Stringcode = "259b24";
         }
 /*else if () {
                 Toast.makeText(activity, "Response Null", Toast.LENGTH_SHORT).show();
             }*/
-            else{
-                hashcode = "Green";
-                Stringcode = "259b24";
-            }
-
-
+        else {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
 
 
         progressDialog = ProgressDialog.show(getActivity(), null, null);
-        if(hashcode.equals("Blue")){
+        if (hashcode.equals("Blue")) {
             progressDialog.setContentView(R.layout.progress_blue);
-        }else if (hashcode.equals("Black")){
+        } else if (hashcode.equals("Black")) {
             progressDialog.setContentView(R.layout.progress_black);
-        }else if (hashcode.equals("SkyBlue")){
+        } else if (hashcode.equals("SkyBlue")) {
             progressDialog.setContentView(R.layout.progress_skyblue);
-        }else {
+        } else {
             progressDialog.setContentView(R.layout.layout_progress_bar);
         }
         //progressDialog.setContentView(R.layout.layout_progress_bar);

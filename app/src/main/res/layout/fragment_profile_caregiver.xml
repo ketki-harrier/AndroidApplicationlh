@@ -46,6 +46,7 @@
 
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                android:id="@+id/text_title_caregiver"
                 fontPath="fonts/Roboto-Regular.ttf"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"

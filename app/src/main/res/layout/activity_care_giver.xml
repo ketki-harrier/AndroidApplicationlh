@@ -69,19 +69,28 @@
                     android:textColor="@color/white"
                     fontPath="fonts/Roboto-Regular.ttf" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left">
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="left"
                     android:layout_margin="@dimen/margin_large"
                     android:clickable="true"
                     android:focusable="true"
+                    android:layout_marginLeft="10dp"
                     android:layoutDirection="rtl"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/margin_large"
-                    android:textAlignment="textStart"></RadioGroup>
+                    android:textAlignment="textStart">
+                </RadioGroup>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -129,6 +138,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top" />
-
-
 </RelativeLayout>

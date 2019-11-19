@@ -68,7 +68,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
     private EditText meetingTitle, startDate, endDate, patient_name, episode_name;
     private TextView txt_episode_name, txt_patient_name;
     private Button btnInvitees;
-    private  MeetDetailsForProviderResponse meetListDTO;
+    private MeetDetailsForProviderResponse meetListDTO;
     private ColorCode colorCode;
     String Stringcode;
 
@@ -117,18 +117,17 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
     }
 
     private void initialiseView(View view) {
-       // try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
         String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-        String Stringcode = "";
+        String Stringcodes = "";
         String hashcode = "";
 
-        if(demo == null){
+        if (demo == null) {
             hashcode = "Green";
             Stringcode = "259b24";
-        }
-        else if(demo !=null) {
+        } else if (demo != null) {
             String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
             hashcode = arr[0].trim();
             Stringcode = arr[1].trim();
@@ -152,14 +151,14 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
         txt_episode_name = (TextView) view.findViewById(R.id.txt_episode_name);
         txt_patient_name = (TextView) view.findViewById(R.id.txt_patient_name);
         btnInvitees = (Button) view.findViewById(R.id.btnInvitees);
-        btnInvitees.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnInvitees.setBackgroundColor(Color.parseColor("#" + Stringcode));
         patient_name.setVisibility(View.GONE);
         episode_name.setVisibility(View.GONE);
         txt_episode_name.setVisibility(View.GONE);
         txt_patient_name.setVisibility(View.GONE);
         btnInvitees.setOnClickListener(this);
         ImageView imageView = (ImageView) view.findViewById(R.id.backArrowBtn);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +167,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
         });
 
         TextView back = (TextView) view.findViewById(R.id.back);
-        back.setTextColor(Color.parseColor("#"+Stringcode));
+        back.setTextColor(Color.parseColor("#" + Stringcode));
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +280,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[]{Color.parseColor("#"+Stringcode)}
+                new int[]{Color.parseColor("#" + Stringcode)}
         );
     }
 
@@ -350,7 +349,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        MeetInviteesAdapter adapter=new MeetInviteesAdapter(meetListDTO.getMeetDetails().getInvitees(), getContext(), new MeetInviteesAdapter.OnItemClickListener() {
+        MeetInviteesAdapter adapter = new MeetInviteesAdapter(meetListDTO.getMeetDetails().getInvitees(), getContext(), new MeetInviteesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MeetDetailsForProviderResponse.Invitees item, String Type, String pos) {
 
@@ -363,7 +362,7 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
 
 
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -371,7 +370,6 @@ public class MeetDetailsForProviderFragment extends BaseFragmentWithOptions impl
                 dialog.cancel();
             }
         });
-
 
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

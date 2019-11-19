@@ -7,8 +7,7 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.moxtra.sdk.ChatClient;
 import com.moxtra.sdk.client.ChatClientDelegate;
@@ -19,6 +18,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.GCM_token;
 public class GcmRegistrationService extends IntentService {
     private static final String TAG = "DEMO_Registration";
     private static final String SENDER_ID = "1081672402648";
+    String token;
 
     public GcmRegistrationService() {
         super("GcmRegistrationService");
@@ -31,8 +31,9 @@ public class GcmRegistrationService extends IntentService {
             return;
         }
         try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            // InstanceID instanceID = InstanceID.getInstance(this);
+            //String token = instanceID.getToken(SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            token = FirebaseInstanceId.getInstance().getToken();
             if (token != null)
                 MyApplication.getInstance().addToSharedPreference(GCM_token, token);
             Log.d(TAG, "GCM Registration token:" + token);

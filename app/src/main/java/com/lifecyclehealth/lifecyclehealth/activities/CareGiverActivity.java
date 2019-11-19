@@ -52,6 +52,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.LOGIN_NAMEC
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.Moxtra_Access_Token;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.Moxtra_ORG_ID;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.Moxtra_uniqueId;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.Patient_Name;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.STATUS_SUCCESS;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.TIME_TO_WAIT;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.TOUCH_TIME;
@@ -61,6 +62,8 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_LOGIN_A
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_VISUAL_PREFERENCE;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.USER_TOKEN;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.selected_role;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.selected_value;
 
 public class CareGiverActivity extends BaseActivity implements View.OnClickListener {
 
@@ -73,10 +76,12 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
     private NotificationDelegater mDelegater;
     private NotificationLocal mLocal;
     Button btnContinue;
-   // RadioGroup ll;
+    // RadioGroup ll;
     String Stringcode = "42b039";
     ViewGroup v;
-     AppCompatRadioButton rdbtn;
+    AppCompatRadioButton rdbtn;
+    String patient_name;
+    String getcolor;
 
     @Override
     String getTag() {
@@ -107,50 +112,53 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
-       // try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            if (resposne != null) {
-                ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-                String Stringcode = "";
-                String hashcode = "";
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        if (resposne != null) {
+            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcodes = "";
+            String hashcode = "";
 
-                if (demo == null) {
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                } else if (demo != null) {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
              /*   }
                else*/
-                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                        Stringcode = "#333333";
-                    }
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    //Stringcode = "#333333";
+                    Stringcode = "333333";
                 }
             }
+        }
 
 
-            lifecycleDatabase = new LifecycleDatabase(getApplicationContext());
-           // ll = (RadioGroup) findViewById(R.id.radioGroup);
-            v = (ViewGroup) findViewById(R.id.radioGroup);
+        lifecycleDatabase = new LifecycleDatabase(getApplicationContext());
+        // ll = (RadioGroup) findViewById(R.id.radioGroup);
+        v = (ViewGroup) findViewById(R.id.radioGroup);
 
-            btnContinue = (Button) findViewById(R.id.btnContinue);
-            Button btnCancel = (Button) findViewById(R.id.btnCancel);
-            TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-            toolbar_title.setText("Login As");
+        btnContinue = (Button) findViewById(R.id.btnContinue);
+        Button btnCancel = (Button) findViewById(R.id.btnCancel);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Login As");
 
-            mDelegater = NotificationDelegater.getInstance();
-            mLocal = mDelegater.local();
-            mLocal.setView((NotificationView) findViewById(R.id.nv));
-            btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
-            btnContinue.setOnClickListener(this);
-            btnCancel.setOnClickListener(this);
+        mDelegater = NotificationDelegater.getInstance();
+        mLocal = mDelegater.local();
+        mLocal.setView((NotificationView) findViewById(R.id.nv));
+        // btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
+        getcolor = Stringcode;
+        btnContinue.setBackgroundColor(Color.parseColor("#" + Stringcode));
+        btnContinue.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
        /* } catch (Exception e) {
             e.printStackTrace();
         }*/
         //getColorCode();
-      //  checkUserName();
+        //  checkUserName();
     }
 
     @Override
@@ -171,9 +179,10 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
         showProgressDialog(true);
 
         if (isConnectedToNetwork(this)) {
-           final String temp = "hi";
+            final String temp = "hi";
             networkRequestUtil.getDataSecure(BASE_URL + URL_GET_CAREGIVERNAME, new VolleyCallback() {
                 String test = temp;
+
                 @Override
                 public void onSuccess(JSONObject response) {
                     String testString = String.valueOf(response);
@@ -181,11 +190,11 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
                     String test1 = temp;
                     careGiverUsersList = new Gson().fromJson(testString, CareGiverUsersList.class);
 
-               //     setNameList();
-             //       String newone = String.valueOf(careGiverUsersList.getStatus().equalsIgnoreCase(STATUS_SUCCESS));
+                    //     setNameList();
+                    //       String newone = String.valueOf(careGiverUsersList.getStatus().equalsIgnoreCase(STATUS_SUCCESS));
                     showProgressDialog(false);
                     printLog("ResponseCareGiverData" + response);
-                  //  careGiverUsersList = new Gson().fromJson(response.toString(), CareGiverUsersList.class);
+                    //  careGiverUsersList = new Gson().fromJson(response.toString(), CareGiverUsersList.class);
                     if (careGiverUsersList != null) {
                         if (careGiverUsersList.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                             setNameList();
@@ -201,7 +210,7 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
                 public void onError(VolleyError error) {
                     showProgressDialog(false);
                 }
-             });
+            });
         } else {
             showProgressDialog(false);
             showDialogWithOkButton(getString(R.string.error_no_network));
@@ -221,30 +230,30 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
         shape.setCornerRadius(15);*//*
     }*/
 
-    public void addColor(){
-       // try {
+    public void addColor() {
+        // try {
 
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            if (resposne != null) {
-                ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-                String Stringcode = "";
-                String hashcode = "";
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        if (resposne != null) {
+            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcodes = "";
+            String hashcode = "";
 
-                if (demo == null) {
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                } else if (demo != null) {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
 
-                    btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
-                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                        Stringcode = "#333333";
-                    }
+                btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "#333333";
                 }
             }
+        }
         /*} catch (Exception e) {
             e.printStackTrace();
         }*/
@@ -252,42 +261,44 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
 
     @SuppressLint("RestrictedApi")
     private void setNameList() {
-       // try {
+        // try {
 
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            if (resposne != null) {
-                ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-                String Stringcode = "";
-                String hashcode = "";
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        if (resposne != null) {
+            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+            String Stringcodes = "";
+            String hashcode = "";
 
-                if (demo == null) {
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                } else if (demo != null) {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
+            if (demo == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
 
-                    btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
-                    if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                        Stringcode = "#333333";
-                    }
+                //   btnContinue.setBackgroundColor(Color.parseColor("#42b039" /*+ Stringcode*/));
+
+                if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                    Stringcode = "#333333";
                 }
+
+                //   btnContinue.setBackgroundColor(Color.parseColor(/*"#"+*/Stringcode));
             }
+        }
        /* } catch (Exception e) {
             e.printStackTrace();
         }*/
-       // addColor();
+        // addColor();
 
         final int number = careGiverUsersList.getPatientList().size();
 
         //ll = new RadioGroup(CareGiverActivity.this);
-       // ll.setOrientation(LinearLayout.VERTICAL);
+        // ll.setOrientation(LinearLayout.VERTICAL);
 
 
-
-        for ( int row = 0; row <= number; row++) {
+        for (int row = 0; row <= number; row++) {
 
             rdbtn = new AppCompatRadioButton(CareGiverActivity.this);
             RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(
@@ -331,16 +342,16 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
                             login = 1;
                         }
                         selectedUser = buttonView.getId();
+                        MyApplication.getInstance().addToSharedPreference(selected_value, String.valueOf(selectedUser));
                     }
                 }
             });
 
 
+            v.addView(rdbtn);
+            //   String getrole = rdbtn.getText().toString();
 
-
-           v.addView(rdbtn);
-
-           //((ViewGroup) findViewById(R.id.radioGroup)).addView(rdbtn);
+            //((ViewGroup) findViewById(R.id.radioGroup)).addView(rdbtn);
         }
         //v.addView(rdbtn);
 
@@ -352,7 +363,8 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[]{Color.parseColor("#42b039" /*+ Stringcode*/)}
+                // new int[]{Color.parseColor("#42b039" /*+ Stringcode*/)}
+                new int[]{Color.parseColor("#" + getcolor)}
         );
     }
 
@@ -369,6 +381,10 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
                 requestJson = null;
             } else {
                 CareGiverUsersList.PatientList patientList = careGiverUsersList.setPatient_Details(careGiverUsersList.getPatientList().get(selectedUser - 1));
+                patient_name = careGiverUsersList.getPatientList().get(selectedUser - 1).getPatient_FirstName();
+                MyApplication.getInstance().addToSharedPreference(Patient_Name, patient_name);
+
+
                 hashMap.put("Patient_Details", patientList);
                 url = BASE_URL + URL_LOGIN_AS_CAREGIVERNAME;
                 requestJson = new JSONObject(new Gson().toJson(hashMap));
@@ -508,8 +524,6 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
         myHandler.removeCallbacks(myRunnable);
         myHandler.postDelayed(myRunnable, TIME_TO_WAIT);
     }
-
-
 
 
 }

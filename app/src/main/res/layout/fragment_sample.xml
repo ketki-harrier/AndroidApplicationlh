@@ -57,7 +57,232 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:background="@drawable/coming_soon"></RelativeLayout>
-    </LinearLayout>
+            android:layout_below="@+id/toolbar">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/profileImageLayout"
+                android:layout_centerHorizontal="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profileImageLayout"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="7dp"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:id="@+id/categiverHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_extra_large"
+                        android:background="#FD8F00"
+                        android:textAlignment="gravity"
+                        android:visibility="gone"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="#F7E8D4" />
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin_extra_large"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <!--FIRST NAME -->
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_weight="1"
+                            android:textColorHint="@android:color/black">
+
+                            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                                fontPath="fonts/Roboto-Regular.ttf"
+                                android:focusable="false"
+                                android:id="@+id/editTextFirstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:cursorVisible="false"
+                                android:background="@drawable/sign_up_edittext_selector_gray"
+                                android:hint="First Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName|textCapWords"
+                                android:maxLength="50"
+                                android:paddingTop="0dp"
+                                android:textColor="@android:color/black" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <!--LAST NAME -->
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_weight="1"
+                            android:textColorHint="@android:color/black">
+
+                            <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                                fontPath="fonts/Roboto-Regular.ttf"
+                                android:id="@+id/editTextLastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:background="@drawable/sign_up_edittext_selector_gray"
+                                android:hint="Last Name"
+                                android:focusable="false"
+                                android:cursorVisible="false"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName|textCapWords"
+                                android:maxLength="50"
+                                android:paddingTop="0dp"
+                                android:textColor="@android:color/black" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/editEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:focusable="false"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Email"
+                            android:cursorVisible="false"
+                            android:lines="10"
+                            android:inputType="textEmailAddress"
+                            android:imeOptions="actionNext"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/editSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Subject"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/editTextMsg"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Message"
+                            android:lines="10"
+                            android:imeOptions="actionNext"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColorHint="@android:color/black">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontEditText
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/editTextImagePath"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@drawable/sign_up_edittext_selector_gray"
+                            android:hint="Add Image"
+                            android:focusable="false"
+                            android:imeOptions="actionNext"
+                            android:paddingTop="0dp"
+                            android:textColor="@android:color/black" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:id="@+id/btntakePhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/selector_login_btn"
+                        android:layout_marginRight="@dimen/margin_padding_10"
+                        android:layout_marginLeft="@dimen/margin_padding_10"
+                        android:text="@string/Take_Photo"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_height="match_parent">
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/btnsendemail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_login_btn"
+                            android:layout_marginRight="@dimen/margin_padding_10"
+                            android:text="Send mail"
+                            android:layout_marginLeft="@dimen/margin_padding_10"
+
+                            android:textColor="@color/white" />
+
+
+                        <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:id="@+id/btncancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone"
+                            android:layout_weight="1"
+
+                            android:layout_marginLeft="@dimen/margin_padding_5"
+                            android:text="@string/Cancel" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
 </LinearLayout>
+</LinearLayout>
+
+<!--    android:background="@drawable/white_border_round_shape"-->

@@ -74,7 +74,6 @@
                 android:focusable="true"
                 android:orientation="vertical">
 
-
             </RadioGroup>
         </LinearLayout>
     </ScrollView>

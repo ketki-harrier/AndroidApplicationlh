@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -51,6 +52,8 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
     SeekBar seek_bar_horizontal;
     ArrayList<Integer> arrayMinProgress = new ArrayList<>();
     ArrayList<Integer> arrayMaxProgress = new ArrayList<>();
+    String new_widget, widget_name;
+    String widget_size;
 
     public static SurveyOptionTwoFragment newInstance(String data, int position) {
         SurveyOptionTwoFragment oneFragment = new SurveyOptionTwoFragment();
@@ -139,21 +142,52 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
             seekBarVertical.setEnabled(false);
         }
 
-        if (surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("10cm Visual Analogue Scale")||surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("VAS Pain Slider With Faces")) {
+        // widget_size = String.valueOf(surveyDetailsModel.getQuestionModel().getQuestionOptions().size());
+        widget_name = surveyDetailsModel.getQuestionModel().getWidget_Name();
+        new_widget = surveyDetailsModel.getQuestionModel().getWidget_Type();
 
-            for (int i = 0; i < surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); i++) {
-                arrayMaxProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_To());
-                arrayMinProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_From());
-            }
+        try {
+            if (widget_name.equals("10cm Visual Analogue Scale Horizontal") || widget_name.equals("VAS Pain Slider With Faces")) {
+                //    if (new_widget.equals("10cm Visual Analogue Scale")) {
 
-            if (surveyDetailsModel.getQuestionModel().getWidget_Orientation().trim().equals("Vertical")) {
-                editVerticalSeekBar();
+                for (int i = 0; i < surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); i++) {
+                    arrayMaxProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_To());
+                    arrayMinProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_From());
+                }
+                if (surveyDetailsModel.getQuestionModel().getWidget_Orientation().trim().equals("Vertical")) {
+                    editVerticalSeekBar();
+                } else {
+                    editHorizontalSeekBar();
+                }
+            } else if (new_widget.equals("10cm Visual Analogue Scale") || new_widget.equals("VAS Pain Slider With Faces")) {
+                //    if (new_widget.equals("10cm Visual Analogue Scale")) {
+
+                for (int i = 0; i < surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); i++) {
+                    arrayMaxProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_To());
+                    arrayMinProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_From());
+                }
+                if (surveyDetailsModel.getQuestionModel().getWidget_Orientation().trim().equals("Vertical")) {
+                    editVerticalSeekBar();
+                } else {
+                    editHorizontalSeekBar();
+                }
+            } else if (new_widget.equals("VAS Pain Slider With Faces")) {
+                for (int i = 0; i < surveyDetailsModel.getQuestionModel().getQuestionOptions().size(); i++) {
+                    arrayMaxProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_To());
+                    arrayMinProgress.add(surveyDetailsModel.getQuestionModel().getQuestionOptions().get(i).getQuestion_Option_Value_From());
+                }
+
+                if (surveyDetailsModel.getQuestionModel().getWidget_Orientation().trim().equals("Vertical")) {
+                    editVerticalSeekBar();
+                } else {
+                    editHorizontalSeekBar();
+                }
+            } else if (surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("Deliminater And Boxes")) {
+                createViewDeliminator(view);
             } else {
-                editHorizontalSeekBar();
+                Toast.makeText(mainActivity, "error widget", Toast.LENGTH_SHORT).show();
             }
-        } else if (surveyDetailsModel.getQuestionModel().getWidget_Type().trim().equals("Deliminater And Boxes")) {
-            createViewDeliminator(view);
-        }
+        }catch (NullPointerException e){e.printStackTrace();}
 
     }
 

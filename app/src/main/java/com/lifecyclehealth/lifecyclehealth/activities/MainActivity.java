@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity {
     private static MainActivity mInstance;
     final String moxtra_access_token = MyApplication.getInstance().getFromSharedPreference(AppConstants.Moxtra_Access_Token);
     //moxtra for prodution
-     //String BASE_DOMAIN = "www.moxtra.com";
+    //String BASE_DOMAIN = "www.moxtra.com";
     //moxtra for test
     String BASE_DOMAIN = "sandbox.moxtra.com";
     boolean isPatient;
@@ -231,38 +231,43 @@ public class MainActivity extends BaseActivity {
 
     private void initialiseMoxtra() {
         try {
-            showProgressDialog(true);
+            //    showProgressDialog(true);
             mChatClientDelegate = null;
             mChatRepo = null;
             mMeetRepo = null;
-            ChatClient.linkWithAccessToken(moxtra_access_token, BASE_DOMAIN,
-                    new ApiCallback<ChatClientDelegate>() {
-                        @Override
-                        public void onCompleted(ChatClientDelegate ccd) {
-                            Log.i(TAG, "Linked to Moxtra account successfully.");
-                            //MyApplication.getInstance().addToSharedPreference(GCM_token, "");
-                            Intent intent = new Intent(getApplicationContext(), GcmRegistrationService.class);
-                            startService(intent);
 
-                            mChatClientDelegate = ChatClient.getClientDelegate();
-                            if (mChatClientDelegate == null) {
-                                Log.e(TAG, "Unlinked, ChatClient is null.");
-                                return;
-                            }
-                            //showProgressDialog(false);
-                            new asyncCreateText().execute();
-                            PreferenceUtils.saveUser(getApplicationContext(), moxtra_access_token);
-                            // startChatListActivity();
-                        }
+            ChatClient.setupDomain(BASE_DOMAIN, null, null, null);
 
-                        @Override
-                        public void onError(int errorCode, String errorMsg) {
-                            showProgressDialog(false);
-                            //Toast.makeText(getApplicationContext(), "Failed to link to Moxtra account.", Toast.LENGTH_LONG).show();
-                            Log.e(TAG, "Failed to link to Moxtra account, errorCode=" + errorCode + ", errorMsg=" + errorMsg);
-                            // showProgress(false);
-                        }
-                    });
+
+            //ChatClient.linkWithAccessToken(moxtra_access_token, BASE_DOMAIN, new ApiCallback<ChatClientDelegate>() {
+            ChatClient.linkWithAccessToken(moxtra_access_token, new ApiCallback<ChatClientDelegate>() {
+                @Override
+                public void onCompleted(ChatClientDelegate ccd) {
+                    Log.i(TAG, "Linked to Moxtra account successfully.");
+                    //MyApplication.getInstance().addToSharedPreference(GCM_token, "");
+                    Intent intent = new Intent(getApplicationContext(), GcmRegistrationService.class);
+                    startService(intent);
+
+                    mChatClientDelegate = ChatClient.getClientDelegate();
+                    if (mChatClientDelegate == null) {
+                        Log.e(TAG, "Unlinked, ChatClient is null.");
+                        return;
+                    }
+                    //showProgressDialog(false);
+                    new asyncCreateText().execute();
+                    PreferenceUtils.saveUser(getApplicationContext(), moxtra_access_token);
+                    // startChatListActivity();
+                }
+
+
+                @Override
+                public void onError(int errorCode, String errorMsg) {
+                    showProgressDialog(false);
+                    //Toast.makeText(getApplicationContext(), "Failed to link to Moxtra account.", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Failed to link to Moxtra account, errorCode=" + errorCode + ", errorMsg=" + errorMsg);
+                    // showProgress(false);
+                }
+            });
 
 
         } catch (Exception e) {
@@ -484,12 +489,11 @@ public class MainActivity extends BaseActivity {
             String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
             hashcode = arr[0].trim();
             Stringcode = arr[1].trim();
-        //}/*
-              if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                  Stringcode = "333333";
-              }
-        }
-       else if(demo == "Black#333") {
+            //}/*
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
+            }
+        } else if (demo == "Black#333") {
             Stringcode = "333333";
         }
         bottomBar.setActiveTabColor(Color.parseColor("#" + Stringcode));
@@ -812,7 +816,7 @@ public class MainActivity extends BaseActivity {
         transaction.setCustomAnimations(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left)
                 .replace(R.id.content_main, fragment, fragmentTag)
                 .addToBackStack("ScheduleMeet")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
 

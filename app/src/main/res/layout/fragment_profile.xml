@@ -117,7 +117,7 @@
                     android:layout_marginTop="@dimen/margin_extra_large"
                     android:background="#FD8F00"
                     android:textAlignment="gravity"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="#F7E8D4" />
 

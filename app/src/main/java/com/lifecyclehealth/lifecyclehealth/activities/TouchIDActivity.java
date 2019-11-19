@@ -91,6 +91,7 @@ public class TouchIDActivity extends BaseActivity implements View.OnClickListene
     private void fingerPrintStart() {
         fingerPrintLogic();
     }
+
     private void fingerPrintLogic() {
 
         fingerPrintUtil.updateAllFlagsForUser();
@@ -148,7 +149,7 @@ public class TouchIDActivity extends BaseActivity implements View.OnClickListene
                             finish();*/
                             if (MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT)) {
                                 divertToHomeScreen();
-                            }else {
+                            } else {
                                 divertToCareGiverScreen();
                             }
 

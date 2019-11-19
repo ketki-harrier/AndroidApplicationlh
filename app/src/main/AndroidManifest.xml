@@ -2,17 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lifecyclehealth.lifecyclehealth">
-
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
-
-
     <!-- moxtra meet permissions -->
+    <!-- <permission -->
+    <!-- android:name="com.lifecyclehealth.lifecyclehealth.permission.C2D_MESSAGE" -->
+    <!-- tools:remove="android:protectionLevel" /> -->
+    <!-- <uses-permission -->
+    <!-- android:name="com.lifecyclehealth.lifecyclehealth.permission.C2D_MESSAGE" -->
+    <!-- tools:node="remove" /> -->
+    <uses-permission
+        android:name="android.permission.PROCESS_OUTGOING_CALLS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        tools:node="remove" />
+    <uses-permission
+        android:name="com.google.android.c2dm.permission.RECEIVE"
+        tools:node="remove" /> <!-- <uses-permission -->
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        tools:node="remove" />
+    <!--
+    <uses-permission
+            android:name="android.permission.READ_CONTACTS"
+            tools:node="remove" />
+    -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,52 +38,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <!--
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    -->
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="ndroid.permission.INTERNAL_SYSTEM_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
-    <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-
-    <!--
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".activities.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-    -->
-    <application
-        android:name=".application.MyApplication"
-        android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:hardwareAccelerated="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup,android:name">
+        <activity android:name=".activities.Carousal"></activity>
+
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -80,9 +74,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
         <!--
-
         tools:replace="android:allowBackup,android:name"
         <activity
             android:name=".activities.LoginActivity"
@@ -95,7 +87,6 @@
             </intent-filter>
         </activity>
         -->
-
         <activity
             android:name=".activities.LoginActivity"
             android:hardwareAccelerated="false"
@@ -105,6 +96,7 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -116,7 +108,6 @@
                 <data
                     android:host="www.lifecyclehealth.com"
                     android:scheme="http" />
-
             </intent-filter>
         </activity>
         <activity
@@ -134,6 +125,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CareGiverActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.CareGiverNew"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -163,29 +158,35 @@
         <activity
             android:name=".activities.ChangePasswordAutogenerated"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <!-- Timeout services -->
+            android:windowSoftInputMode="stateHidden" /> <!-- Timeout services -->
         <service
             android:name=".services.Time_out_services"
             android:enabled="true" />
         <service
             android:name=".services.BackgroundTrackingService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" /> <!-- GCM notification -->
+        <!--
+      <receiver
+                  android:name="com.google.android.gms.gcm.GcmReceiver"
+                  android:exported="true"
+                  android:permission="com.google.android.c2dm.permission.SEND">
+                  <intent-filter>
+                      <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-        <!-- GCM notification -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.example.gcm" />
-            </intent-filter>
-        </receiver>
-
+                      <category android:name="com.example.gcm" />
+                  </intent-filter>
+              </receiver>
+        -->
+        <!--
+ <service
+             android:name=".gcm.GcmNotificationService"
+             android:exported="false">
+             <intent-filter>
+                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+             </intent-filter>
+         </service>
+        -->
         <service
             android:name=".gcm.GcmNotificationService"
             android:exported="false">
@@ -193,6 +194,14 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+        <!--
+        <service
+                    android:name=".MyFcmListenerService">
+                    <intent-filter  >
+                        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                    </intent-filter>
+                </service>
+        -->
         <service android:name=".gcm.MoxtraNotificationService" />
 
         <receiver
@@ -236,9 +245,12 @@
             android:name=".gcm.GcmRegistrationService"
             android:exported="false" />
 
+        <activity
+            android:name="com.moxtra.binder.ui.home.MainActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.TouchIDActivity" />
         <activity android:name=".activities.ChangeUsername" />
-        <activity android:name=".activities.ForgotUsernameHolderActivity"></activity>
+        <activity android:name=".activities.ForgotUsernameHolderActivity" />
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.maxVersion.toInteger()
-    buildToolsVersion "${buildToolVersion}"
 
 
     defaultConfig {

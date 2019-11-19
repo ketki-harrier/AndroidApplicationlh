@@ -162,18 +162,17 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_chat);
-      //  try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        //  try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        colorCode = new Gson().fromJson(resposne, ColorCode.class);
         String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
         String Stringcode = "";
         String hashcode = "";
 
-        if(demo == null){
+        if (demo == null) {
             hashcode = "Green";
             Stringcode = "259b24";
-        }
-        else if(demo !=null) {
+        } else if (demo != null) {
             String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
             hashcode = arr[0].trim();
             Stringcode = arr[1].trim();
@@ -183,7 +182,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 Stringcode = "333333";
             }
         }
-      //  }catch (Exception e){e.printStackTrace();}
+        //  }catch (Exception e){e.printStackTrace();}
         networkRequestUtil = new NetworkRequestUtil(this);
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
         start();
@@ -211,18 +210,18 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         }
 
         TextViewTitle = (TextView) findViewById(R.id.toolbar_title);
-        TextViewTitle.setTextColor(Color.parseColor("#"+Stringcode));
+        TextViewTitle.setTextColor(Color.parseColor("#" + Stringcode));
         ImageView imageView = (ImageView) findViewById(R.id.backArrowBtn);
-        imageView.setColorFilter(Color.parseColor("#"+Stringcode));
+        imageView.setColorFilter(Color.parseColor("#" + Stringcode));
         imageView.setOnClickListener(this);
         TextViewTitle.setOnClickListener(this);
 
         TextViewTitle.setText(mChat.getTopic());
 
         ImageView overFlowIcon = (ImageView) findViewById(R.id.overFlowIcon);
-        overFlowIcon.setColorFilter(Color.parseColor("#"+Stringcode));
+        overFlowIcon.setColorFilter(Color.parseColor("#" + Stringcode));
         ImageView search = (ImageView) findViewById(R.id.search);
-        search.setColorFilter(Color.parseColor("#"+Stringcode));
+        search.setColorFilter(Color.parseColor("#" + Stringcode));
         overFlowIcon.setOnClickListener(this);
         search.setOnClickListener(this);
 
@@ -769,7 +768,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         });
 
         Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -780,7 +779,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         });
 
         Button done = (Button) dialogView.findViewById(R.id.done);
-        done.setBackgroundColor(Color.parseColor("#"+Stringcode));
+        done.setBackgroundColor(Color.parseColor("#" + Stringcode));
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -805,6 +804,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         dialog.show();
 
     }
+
     /*Global Start*/
     private void setAdapterWithEpisode(final MeetInviteParticipantsModel.EpisodeParticipantList meetList, String Type, String pos) {
 
@@ -1359,8 +1359,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /*Global End*/
-
-
 
 
     private void submitInviteList(Activity activity) {

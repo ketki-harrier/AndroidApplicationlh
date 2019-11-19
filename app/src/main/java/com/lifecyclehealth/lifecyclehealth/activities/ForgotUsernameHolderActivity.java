@@ -41,6 +41,7 @@ import zemin.notification.NotificationView;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.REQUEST_KEY_EMAIL;
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.REQUEST_KEY_USERNAME;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.STATUS_SUCCESS;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_CHECK_USERNAME;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_FORGOT_USERNAME;
@@ -167,7 +168,7 @@ public class ForgotUsernameHolderActivity extends BaseActivity {
         try {
             if (isConnectedToNetwork(this)) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(REQUEST_KEY_EMAIL, editTextUserName.getText().toString().trim());
+                jsonObject.put(REQUEST_KEY_USERNAME, editTextUserName.getText().toString().trim());
 
                 networkRequestUtil.putData(BASE_URL + URL_FORGOT_USERNAME, jsonObject, new VolleyCallback() {
                     @Override
