@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.ChatActivity;
@@ -138,7 +139,8 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             conversationImage = (ImageView) itemView.findViewById(R.id.conversationImage);
         }
 
-        public void bind(final MessageMeetModel1 item, final MessageDialogMeetAdapter.OnItemClickListener listener, final String pos) {
+        // public void bind(final MessageMeetModel1 item, final MessageDialogMeetAdapter.OnItemClickListener listener, final String pos) {
+    /*    public void bind(final Meet item, final MessageDialogMeetAdapter.OnItemClickListener listener, final String pos) {
 
             chatRelative.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,7 +153,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
             btnAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // listener.onItemClick(item, "A", pos);
+                    listener.onItemClick(item, "A", pos);
                 }
             });
 
@@ -161,7 +163,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
                     // listener.onItemClick(item, "C", pos);
                 }
             });
-        }
+        }*/
     }
 
     @Override
@@ -173,7 +175,7 @@ public class ChatListAdapter extends RecyclerView.Adapter {
                 final ChatTypeViewHolder theHolder = (ChatTypeViewHolder) holder;
                 //Session session = sessionList.get(position + messageMeetModel.getMeetListDTO().getMeetList().size());
                 int ss = messageMeetModel.size() - sessionList.size();
-                Session session = sessionList.get(position-ss);
+                Session session = sessionList.get(position - ss);
                 theHolder.session = session;
 
                 final Chat chat = session.chat;
@@ -225,9 +227,9 @@ public class ChatListAdapter extends RecyclerView.Adapter {
 
 
                 if (meet.isInProgress()) {
-                    holderMessage.relative_join.setVisibility(View.VISIBLE);
+                    holderMessage.relative_join.setVisibility(View.GONE);
                     holderMessage.relative_accept.setVisibility(View.GONE);
-                    holderMessage.btnJoin.setVisibility(View.VISIBLE);
+                    holderMessage.btnJoin.setVisibility(View.GONE);
                     holderMessage.conversationDateTv1.setVisibility(View.GONE);
                 } else if (meet.getScheduleStartTime() > 0) {
                     holderMessage.relative_join.setVisibility(View.GONE);
@@ -249,30 +251,51 @@ public class ChatListAdapter extends RecyclerView.Adapter {
                     public void onClick(View v) {
 
 
-
                         try {
                             MainActivity.mMeetRepo.acceptMeet(meet.getID(), new ApiCallback<Meet>() {
                                 @Override
                                 public void onCompleted(Meet meet) {
+                                   /* for (int i = 0; i < MainActivity.meetLists.size(); i++) {
+                                        if (MainActivity.meetLists.get(i).getID().equals(meet.getID())) {
+                                            MainActivity.meetLists.remove(i);
+
+                                            // MainActivity.meetLists.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, MainActivity.meetLists.size());
+                                            holderMessage.chatRelative.setVisibility(View.GONE);
+
+
+                                        }
+                                    }*/
                                     for (int i = 0; i < MainActivity.meetLists.size(); i++) {
                                         if (MainActivity.meetLists.get(i).getID().equals(meet.getID())) {
                                             MainActivity.meetLists.remove(i);
                                         }
                                     }
+                                    messageMeetModel.remove(position);
+                                    notifyItemRemoved(position);
 
-                                    try {
+                                    // notifyDataSetChanged();
+                                    // notifyItemRemoved(i);
+
+                                    /*try {
                                         //  ChatListAdapter.this.notify();
-                                        ChatListAdapter.this.notifyDataSetChanged();
-                                    }catch (IllegalMonitorStateException e){}
+                                        notifyDataSetChanged();
+                                        notifyItemRemoved(position);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }*/
                                 }
 
                                 @Override
                                 public void onError(int i, String s) {
-
+                                    //       Toast.makeText(context, "error"+i+s, Toast.LENGTH_SHORT).show();
+                                    Log.e("error1", s);
                                 }
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
+                            Log.e("error2", String.valueOf(e));
                         }
                     }
                 });

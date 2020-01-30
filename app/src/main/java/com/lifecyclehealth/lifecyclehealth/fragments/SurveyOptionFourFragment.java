@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -21,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
+import com.lifecyclehealth.lifecyclehealth.adapters.SurveyPagerAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.model.ChangePasswordResponse;
@@ -63,10 +67,15 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
     Map<Integer, String> dataArray = new HashMap<>();
     ScrollView mainLinear;
     static int progress = 0;
+    Button prev, next;
+    SurveyPagerAdapter surveyPager;
+    View mVideoLayout;
+    private static int pagePosition;
 
     public static SurveyOptionFourFragment newInstance(String data, int position) {
         SurveyOptionFourFragment oneFragment = new SurveyOptionFourFragment();
         Bundle bundle = new Bundle();
+        pagePosition = position;
         bundle.putString(SURVEY_EXTRAS_FOUR_TYPE, data);
         oneFragment.setArguments(bundle);
         return oneFragment;
@@ -93,14 +102,35 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_survey_option_four, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_survey_option_four, container, false);
+       /* prev = (Button) rootView.findViewById(R.id.prev);
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                surveyPager.getItem(pagePosition);
+                Toast.makeText(mainActivity, "demo click", Toast.LENGTH_SHORT).show();
+            }
+        });
+        next = (Button) rootView.findViewById(R.id.next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                surveyPager.getItem(pagePosition);
+                //getItemnew(typ);
+
+                Toast.makeText(mainActivity, "demo click", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        return rootView;
+        //  return inflater.inflate(R.layout.fragment_survey_option_four, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated( View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewPager mProfilesViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_FOUR_TYPE), SurveyDetailsModel.class);
+
         setupView(view);
     }
 
@@ -211,7 +241,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
             }
 
             linear_deliminater.addView(editText);
-                   /* for receive code  */
+            /* for receive code  */
             final int finalPosition = position;
             TextWatcher textWatcher = new TextWatcher() {
                 @Override
@@ -281,19 +311,17 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                         }
                     }*/
 
-                    if (keyCode == KeyEvent.KEYCODE_DEL)
-                    {
-                        printLog(editText.getId()+"");
-                        if (editText.getText().length()==1){
+                    if (keyCode == KeyEvent.KEYCODE_DEL) {
+                        printLog(editText.getId() + "");
+                        if (editText.getText().length() == 1) {
                             editText.setText("");
-                        }
-                        else {
+                        } else {
                             View back = editText.focusSearch(View.FOCUS_LEFT); // or FOCUS_FORWARD
                             if (back != null) {
                                 back.requestFocus();
                                 EditText textBack = (EditText) getActivity().getCurrentFocus();
                                 textBack.setText("");
-                                printLog(textBack.getId()+"");
+                                printLog(textBack.getId() + "");
                             }
                         }
                         return true;
@@ -335,7 +363,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                             }
                         }
                         if (progress != 1)
-                        SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
+                            SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
                         SurveyDetailsItemFragment.scrollViewPager();
                         submitSurveyAnswer(answer);
                         printLog("on focus");
@@ -346,7 +374,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
                         SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
                         //SurveyDetailsItemFragment.scrollViewPager();
                         progress = 2;
-                    }else {
+                    } else {
                         SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
                         //SurveyDetailsItemFragment.scrollViewPager();
                         progress = 2;
@@ -356,6 +384,7 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
             }
         });
     }
+
 
 
 

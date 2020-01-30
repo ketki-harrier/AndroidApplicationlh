@@ -5,7 +5,7 @@
         icon="@drawable/survey_gray"
         id="@+id/tab_survey"
         title="Survey" />
-  <!--  <tab
+<!--    <tab
         icon="@drawable/patient_diary"
         id="@+id/tab_episode_list"
         title="Episode List" />-->

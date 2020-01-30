@@ -11,6 +11,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
+import com.lifecyclehealth.lifecyclehealth.adapters.SurveyPagerAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
@@ -54,10 +56,15 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
     ArrayList<Integer> arrayMaxProgress = new ArrayList<>();
     String new_widget, widget_name;
     String widget_size;
+    Button prev,next;
+    SurveyPagerAdapter surveyPager ;
+    View mVideoLayout;
+    private static int pagePosition;
 
     public static SurveyOptionTwoFragment newInstance(String data, int position) {
         SurveyOptionTwoFragment oneFragment = new SurveyOptionTwoFragment();
         Bundle bundle = new Bundle();
+        pagePosition = position;
         bundle.putString(SURVEY_EXTRAS_TWO_TYPE, data);
         oneFragment.setArguments(bundle);
         return oneFragment;
@@ -84,7 +91,10 @@ public class SurveyOptionTwoFragment extends BaseFragmentWithOptions {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_survey_option_two, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_survey_option_two, container,         false);
+
+        return rootView;
+       // return inflater.inflate(R.layout.fragment_survey_option_two, container, false);
     }
 
     @Override

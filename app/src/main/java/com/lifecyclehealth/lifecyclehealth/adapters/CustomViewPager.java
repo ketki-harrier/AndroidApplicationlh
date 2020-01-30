@@ -4,6 +4,7 @@ package com.lifecyclehealth.lifecyclehealth.adapters;
  * Created by vaibhavi on 08-08-2017.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
@@ -25,12 +26,13 @@ public class CustomViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        return disable ? false : super.onInterceptTouchEvent(event);
+        return !disable && super.onInterceptTouchEvent(event);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return disable ? false : super.onTouchEvent(event);
+        return !disable && super.onTouchEvent(event);
     }
 
     public void disableScroll(Boolean disable) {

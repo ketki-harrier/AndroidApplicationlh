@@ -34,6 +34,7 @@ import com.lifecyclehealth.lifecyclehealth.fragments.SurveyFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyNonElectronicSubmit;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyReports;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveySubmittedProgressResult;
+import com.lifecyclehealth.lifecyclehealth.fragments.TreatmentFragment;
 import com.lifecyclehealth.lifecyclehealth.gcm.GcmRegistrationService;
 import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.MeetUser;
@@ -93,7 +94,7 @@ public class MainActivity extends BaseActivity {
     private static MainActivity mInstance;
     final String moxtra_access_token = MyApplication.getInstance().getFromSharedPreference(AppConstants.Moxtra_Access_Token);
     //moxtra for prodution
-    //String BASE_DOMAIN = "www.moxtra.com";
+   // String BASE_DOMAIN = "www.moxtra.com";
     //moxtra for test
     String BASE_DOMAIN = "sandbox.moxtra.com";
     boolean isPatient;
@@ -578,7 +579,7 @@ public class MainActivity extends BaseActivity {
             case R.id.tab_more:
                 fragment = new MoreOptionsFragment();
                 break;
-         /*   case R.id.tab_episode_list:
+          /*  case R.id.tab_episode_list:
                 fragment = new TreatmentFragment();
                 break;*/
         }

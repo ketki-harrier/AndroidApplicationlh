@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -194,7 +195,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
             String emailId = AESHelper.decrypt(seedValue, MyApplication.getInstance().getFromSharedPreference(AppConstants.EMAIL_ID));
             if (fingerPrintUtil.isUserAllowToUseFingerPrint()) {
                 if (emailId.trim().equals(touchEmailId.trim()) && !touchEmailId.trim().equals("")) {
-                    fingerPrintStart();
+                 //   fingerPrintStart();
                 }
             }
         } catch (Exception e) {
@@ -311,13 +312,26 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
     }
 
 
+
+
     private void backPage() {
 
-        FragmentManager fm = getActivity()
-                .getSupportFragmentManager();
-        fm.popBackStack("SurveyElectronicSubmit", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        getActivity().getSupportFragmentManager().popBackStack();
+     //   fm.popBackStack("SurveyNonElectronicSubmit", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+      //  getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+
+            }
+        });
+
+
         //fm.popBackStack("com.lifecyclehealth.lifecyclehealth.fragments.SurveyFragment", 0);
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -365,8 +379,8 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                         if (response != null) {
                             final SurveyElectronicSubmitResponse submitResponse = new Gson().fromJson(response.toString(), SurveyElectronicSubmitResponse.class);
                             if (submitResponse.getStatus().equals(STATUS_SUCCESS)) {
-                                // mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
-                                AlertDialog.Builder builder;
+                                 mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                             /*   AlertDialog.Builder builder;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     builder = new AlertDialog.Builder(mainActivity);
                                 } else {
@@ -395,7 +409,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                                         });
 
                                 final AlertDialog dialog = builder.create();
-                                dialog.show();
+                                dialog.show();*/
 
                             } else showDialogWithOkButton(submitResponse.getMessage());
 
@@ -420,7 +434,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
 
     @Override
     public void onSuccess(FingerprintManagerCompat.AuthenticationResult result) {
-        submitSurveyWithElectronicPasswordByTouchID();
+       // submitSurveyWithElectronicPasswordByTouchID();
     }
 
 
@@ -451,8 +465,8 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                         if (response != null) {
                             final SurveyElectronicSubmitResponse submitResponse = new Gson().fromJson(response.toString(), SurveyElectronicSubmitResponse.class);
                             if (submitResponse.getStatus().equals(STATUS_SUCCESS)) {
-                                // mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
-                                AlertDialog.Builder builder;
+                                 mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                                /*AlertDialog.Builder builder;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     builder = new AlertDialog.Builder(mainActivity);
                                 } else {
@@ -483,7 +497,7 @@ public class SurveyNonElectronicSubmit extends BaseFragmentWithOptions implement
                                             }
                                         });
                                 final AlertDialog dialog = builder.create();
-                                dialog.show();
+                                dialog.show();*/
 
 
 

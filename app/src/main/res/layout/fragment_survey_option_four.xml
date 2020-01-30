@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_large"
+    android:padding="@dimen/margin_20"
     android:orientation="vertical">
 
     <ScrollView
@@ -18,39 +19,39 @@
             android:orientation="vertical">
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyForName"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:textColor="@color/black"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin_large"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/surveyName"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_extra__extra_large"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
-                fontPath="fonts/Roboto-Regular.ttf" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
                 android:id="@+id/questionTv"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin_large"
                 android:text="@string/appbar_scrolling_view_behavior"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                fontPath="fonts/Roboto-Regular.ttf" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
 
             <View
@@ -71,4 +72,35 @@
 
         </LinearLayout>
     </ScrollView>
+
+ <!--   <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="prev" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="next" />
+
+        </RelativeLayout>
+
+    </LinearLayout>-->
 </LinearLayout>

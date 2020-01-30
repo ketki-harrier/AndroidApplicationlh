@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -103,6 +105,7 @@ public class MeetEventActivity extends BaseActivity {
     private NotificationLocal mLocal;
     private ColorCode colorCode;
     String Stringcode;
+    private WindowManager mWindowManager;
 
     public static void joinMeet(Context ctx) {
         Intent intent = new Intent(ctx, MeetEventActivity.class);
@@ -132,31 +135,33 @@ public class MeetEventActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
 
+
+
         //try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
 
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcode = "";
-            String hashcode = "";
+        String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        String Stringcodes = "";
+        String hashcode = "";
 
-            if(demo == null){
-                hashcode = "Green";
-                Stringcode = "259b24";
+        if (demo == null) {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        } else if (demo != null) {
+
+            String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+            hashcode = arr[0].trim();
+            Stringcode = arr[1].trim();
+
+            /*else*/
+            if (hashcode.equals("Black") && Stringcode.length() < 6) {
+                Stringcode = "333333";
             }
-            else if(demo !=null) {
+        }
 
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
 
-                /*else*/
-                if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    Stringcode = "333333";
-                }
-            }
-
-      //  }catch (Exception e){e.printStackTrace();}
+        //  }catch (Exception e){e.printStackTrace();}
 
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, true);
         networkRequestUtil = new NetworkRequestUtil(this);
@@ -182,7 +187,11 @@ public class MeetEventActivity extends BaseActivity {
         showProgressDialog(true);
         String action = intent.getStringExtra(KEY_ACTION);
         if (ACTION_JOIN.equals(action)) {
-            joinMeet(intent);
+           joinMeet(intent);
+
+           // submitInviteList();
+
+
         } else if (ACTION_START.equals(action)) {
             startMeet(intent);
         } else if (ACTION_SHOW.equals(action)) {
@@ -197,7 +206,7 @@ public class MeetEventActivity extends BaseActivity {
     }
 
     private void finishInMainThread() {
-        mHandler.post(  new Runnable() {
+        mHandler.post(new Runnable() {
             @Override
             public void run() {
                 finish();
@@ -382,95 +391,111 @@ public class MeetEventActivity extends BaseActivity {
     MeetInviteParticipantsAdapter adapter;
 
 
-    private void showDialog1(Context view) {
-        UserIds = new ArrayList<String>();
-        // dialog = new Dialog(this.getApplicationContext());
-        dialog = new Dialog(view);
-        context = dialog.getContext();
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.fragment_meet_invite_participants);
+    private void showDialog1(final Context view) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 
-        recyclerView = (RecyclerView) dialog.findViewById(R.id.recycleViewInvities);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        final EditText search = (EditText) dialog.findViewById(R.id.search);
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 1);
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                printLog("tonTextChanged");
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+            UserIds = new ArrayList<String>();
+            // dialog = new Dialog(this.getApplicationContext());
+          //  dialog = new Dialog(view);
+            dialog = new Dialog(MeetEventActivity.this);
+            //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            context = dialog.getContext();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.fragment_meet_invite_participants);
 
-                printLog("afterTextChanged");
-                if (meetInviteParticipantsModel != null) {
-                    String searchString = search.getText().toString();
-                    filter(searchString);
+            recyclerView = (RecyclerView) dialog.findViewById(R.id.recycleViewInvities);
+            recyclerView.hasFixedSize();
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+            final EditText search = (EditText) dialog.findViewById(R.id.search);
+            search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
                 }
 
-            }
-        });
-
-        adapter = new MeetInviteParticipantsAdapter(meetInviteParticipantsModel.getEpisodeParticipantList(), getApplicationContext(), UserIds, new MeetInviteParticipantsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
-                setAdapterWithEpisode(item, Type, pos);
-
-            }
-        });
-        recyclerView.setAdapter(adapter);
-
-
-        TextView cancel = (TextView) dialog.findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search.setText("");
-                if (meetInviteParticipantsModel != null) {
-                    MeetInviteParticipantsAdapter adapter = new MeetInviteParticipantsAdapter(meetInviteParticipantsModel.getEpisodeParticipantList(), getApplicationContext(), UserIds, new MeetInviteParticipantsAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
-
-                            setAdapterWithEpisode(item, Type, pos);
-                        }
-                    });
-
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-        });
-
-        Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
-        btnCancel.setBackgroundColor(Color.parseColor("#"+Stringcode));
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserIds = new ArrayList<String>();
-                dialog.dismiss();
-                dialog.cancel();
-            }
-        });
-
-        Button btn_invite = (Button) dialog.findViewById(R.id.btn_invite);
-        btn_invite.setBackgroundColor(Color.parseColor("#"+Stringcode));
-
-        btn_invite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (MeetInviteParticipantsAdapter.selectedParticipant.size() > 0) {
-                    submitInviteList();
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    printLog("tonTextChanged");
                 }
 
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    printLog("afterTextChanged");
+                    if (meetInviteParticipantsModel != null) {
+                        String searchString = search.getText().toString();
+                        filter(searchString);
+                    }
+
+                }
+            });
+
+            adapter = new MeetInviteParticipantsAdapter(meetInviteParticipantsModel.getEpisodeParticipantList(), getApplicationContext(), UserIds, new MeetInviteParticipantsAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+                    setAdapterWithEpisode(item, Type, pos);
+
+                }
+            });
+            recyclerView.setAdapter(adapter);
+
+
+            TextView cancel = (TextView) dialog.findViewById(R.id.cancel);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    search.setText("");
+                    if (meetInviteParticipantsModel != null) {
+                        MeetInviteParticipantsAdapter adapter = new MeetInviteParticipantsAdapter(meetInviteParticipantsModel.getEpisodeParticipantList(), getApplicationContext(), UserIds, new MeetInviteParticipantsAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+
+                                setAdapterWithEpisode(item, Type, pos);
+                            }
+                        });
+
+                        recyclerView.setAdapter(adapter);
+                    }
+                }
+            });
+
+            //dialog.dismiss();
+            Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+            btnCancel.setBackgroundColor(Color.parseColor("#" + Stringcode));
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserIds = new ArrayList<String>();
+                    dialog.dismiss();
+                    //dialog.cancel();
+                }
+            });
+
+            Button btn_invite = (Button) dialog.findViewById(R.id.btn_invite);
+            btn_invite.setBackgroundColor(Color.parseColor("#" + Stringcode));
+
+            btn_invite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                      dialog.dismiss();
+                    //submitInviteList();
+                    if (MeetInviteParticipantsAdapter.selectedParticipant.size() > 0) {
+                        submitInviteList();
+                    }
+
+                }
+            });
+
+
       /*  WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -479,29 +504,53 @@ public class MeetEventActivity extends BaseActivity {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
         }
 
-        params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                LAYOUT_FLAG,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
+        params = new WindowManager.LayoutParams(  WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE );
                 dialog.getWindow().setAttributes(params);
-                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                 dialog.show();*/
 
-        try {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(dialog.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            dialog.getWindow().setAttributes(lp);
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            dialog.show();
-        }catch (Exception e){
+            // try {
+
+            /*int LAYOUT_FLAG;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+           //     LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+            } else {
+             //   LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+                LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            }*/
+
+             //   WindowManager.LayoutParams lp = new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE );
+                //lp = (WindowManager.LayoutParams)getSystemService(WINDOW_SERVICE);
+                /*lp.copyFrom(dialog.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;*/
+               // dialog.getWindow().setAttributes(lp);
+              /* dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);*/
+                dialog.show();
+
+            //  }
+       /* catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+  /*  private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            switch (view.getId()) {
+                case R.id.btn_invite: {
+                    Toast.makeText(context, "newtest", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+            }
+        }
+    };*/
 
     private void submitInviteList() {
         showProgressDialog(true);
@@ -1027,12 +1076,12 @@ public class MeetEventActivity extends BaseActivity {
             }
         });
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+   /*     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog1.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog1.getWindow().setAttributes(lp);
-        dialog1.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog1.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);*/
         dialog1.show();
     }
 
@@ -1054,12 +1103,12 @@ public class MeetEventActivity extends BaseActivity {
             }
         });
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+     /*   WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog1.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog1.getWindow().setAttributes(lp);
-        dialog1.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog1.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);*/
         dialog1.show();
     }
 

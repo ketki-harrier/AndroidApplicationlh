@@ -349,6 +349,7 @@ public class CareGiverActivity extends BaseActivity implements View.OnClickListe
 
 
             v.addView(rdbtn);
+            selectedUser = 0;
             //   String getrole = rdbtn.getText().toString();
 
             //((ViewGroup) findViewById(R.id.radioGroup)).addView(rdbtn);

@@ -840,7 +840,7 @@ public class LoginActivity extends BaseActivityLogin implements
             if (user.getUser().getRole().size() > 0) {
                 for (int i = 0; i < user.getUser().getRole().size(); i++) {
                     if (user.getUser().getRole().get(i).equals("Caregiver")) {
-                      //  String caregiver_new = String.valueOf(user.getUser().getRole());
+                        //  String caregiver_new = String.valueOf(user.getUser().getRole());
                         isCareGiver = true;
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.Is_Care_Giver, true);
                         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.PREF_IS_PATIENT, false);
@@ -867,7 +867,7 @@ public class LoginActivity extends BaseActivityLogin implements
     /* For diverting to homeScreen*/
     private void divertToHomeScreen() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-      //  Intent intent = new Intent(LoginActivity.this, Carousal.class);
+        // Intent intent = new Intent(LoginActivity.this, SliderActivity.class);
         intent.putExtra("from_notification", "2");
         startActivity(intent);
         //startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -876,7 +876,7 @@ public class LoginActivity extends BaseActivityLogin implements
 
     private void divertToCareGiverScreen() {
         startActivity(new Intent(LoginActivity.this, CareGiverActivity.class));
-       // startActivity(new Intent(LoginActivity.this, Carousal.class));
+        // startActivity(new Intent(LoginActivity.this, SliderActivity.class));
         // startActivity(new Intent(LoginActivity.this, CareGiverNew.class));
         finish();
     }

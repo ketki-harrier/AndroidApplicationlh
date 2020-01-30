@@ -1,36 +1,30 @@
-package com.lifecyclehealth.lifecyclehealth.fragments;
+/*
+package com.lifecyclehealth.lifecyclehealth.activities;
 
-
-import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
-import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
-import com.lifecyclehealth.lifecyclehealth.adapters.SurveyPagerAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.fragments.SurveyDetailsItemFragment;
+import com.lifecyclehealth.lifecyclehealth.fragments.SurveyDetailsListFragment;
 import com.lifecyclehealth.lifecyclehealth.model.ChangePasswordResponse;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
@@ -43,77 +37,30 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PAT
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.STATUS_SUCCESS;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_SURVEY_SUBMIT_ANSWER;
 
-/*
-    This fragment will represent the option 1=EditText type of questions.
-
- */
-public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
-    private static final String SURVEY_EXTRAS_ONE_TYPE = "type_one_survey_extras_data";
-    private SurveyDetailsModel surveyDetailsModel;
-    MainActivity mainActivity;
-
-    static int status = 0;
-    ScrollView mainLinear;
-    ImageView imageView;
+public class DemoSurveyOne extends AppCompatActivity {
     private static int pagePosition;
     private boolean isToDo = false, isCompleted = false;
-    Button prev, next;
-    SurveyPagerAdapter surveyPager;
-    View mVideoLayout;
+    private SurveyDetailsModel surveyDetailsModel;
+    ImageView imageView;
     int typeOfSurvey;
-
-
-
-    public static SurveyOptionOneFragment newInstance(String data, int position) {
-        SurveyOptionOneFragment oneFragment = new SurveyOptionOneFragment();
-        Bundle bundle = new Bundle();
-        pagePosition = position;
-        bundle.putString(SURVEY_EXTRAS_ONE_TYPE, data);
-        oneFragment.setArguments(bundle);
-
-        return oneFragment;
-    }
-
+    ScrollView mainLinear;
+    MainActivity mainActivity;
+    Bundle bundle = new Bundle();
+    private static final String SURVEY_EXTRAS_ONE_TYPE = "type_one_survey_extras_data";
+    static int status = 0;
 
     @Override
-    String getFragmentTag() {
-        return "SurveyOptionOneFragment";
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mainActivity = (MainActivity) context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_demo_survey_one);
+        pagePosition = position;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_survey_option_one, container, false);
-        return rootView;
-        // return inflater.inflate(R.layout.fragment_survey_option_one, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         isToDo = SurveyDetailsListFragment.isToDo;
         isCompleted = SurveyDetailsListFragment.isCompleted;
-        surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_ONE_TYPE), SurveyDetailsModel.class);
+        surveyDetailsModel = new Gson().fromJson(bundle.getString(SURVEY_EXTRAS_ONE_TYPE), SurveyDetailsModel.class);
 
 
         setupView(view);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void setupView(View view) {
@@ -203,7 +150,7 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
                 SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
             }
         }
-       /*else {
+        else {
             if (!surveyDetailsModel.getQuestionModel().getDescriptiveAnswer().trim().equals("")) {
                 editTextView.setText(surveyDetailsModel.getQuestionModel().getDescriptiveAnswer());
                 SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), true);
@@ -211,7 +158,7 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
                 SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
             }
         }
-*/
+
 
         mainLinear.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -328,6 +275,5 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
     private void callElectronicSignature(String data, String surveyId) {
         mainActivity.changeToSurveyElectronicSubmit(data, surveyId);
     }
-
-
 }
+*/

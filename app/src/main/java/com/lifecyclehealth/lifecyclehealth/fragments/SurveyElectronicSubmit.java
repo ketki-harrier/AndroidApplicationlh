@@ -364,8 +364,8 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                         if (response != null) {
                             final SurveyElectronicSubmitResponse submitResponse = new Gson().fromJson(response.toString(), SurveyElectronicSubmitResponse.class);
                             if (submitResponse.getStatus().equals(STATUS_SUCCESS)) {
-                                // mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
-                                AlertDialog.Builder builder;
+                                 mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                            /*    AlertDialog.Builder builder;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     builder = new AlertDialog.Builder(mainActivity);
                                 } else {
@@ -393,13 +393,13 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                                         });
 
                                 final AlertDialog dialog = builder.create();
-                                dialog.show();
+                                dialog.show();*/
 
-                                final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                               /* final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                                 LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
                                 positiveButtonLL.gravity = Gravity.CENTER;
                                 dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
-                                positiveButton.setLayoutParams(positiveButtonLL);
+                                positiveButton.setLayoutParams(positiveButtonLL);*/
 
                             } else showDialogWithOkButton(submitResponse.getMessage());
 
@@ -455,8 +455,8 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                         if (response != null) {
                             final SurveyElectronicSubmitResponse submitResponse = new Gson().fromJson(response.toString(), SurveyElectronicSubmitResponse.class);
                             if (submitResponse.getStatus().equals(STATUS_SUCCESS)) {
-                                // mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
-                                AlertDialog.Builder builder;
+                                 mainActivity.SurveySubmittedProgressResult(submitResponse.getSubmittedScore());
+                              /*  AlertDialog.Builder builder;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     builder = new AlertDialog.Builder(mainActivity);
                                 } else {
@@ -490,7 +490,7 @@ public class SurveyElectronicSubmit extends BaseFragmentWithOptions implements V
                                 LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
                                 positiveButtonLL.gravity = Gravity.CENTER;
                                 dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
-                                positiveButton.setLayoutParams(positiveButtonLL);
+                                positiveButton.setLayoutParams(positiveButtonLL);*/
 
                             } else showDialogWithOkButton(submitResponse.getMessage());
 

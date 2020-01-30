@@ -6,3 +6,7 @@
     </declare-styleable>-->
 </resources>
 
+<!--
+<declare-styleable name="MyViewPager">
+<attr name="swipeable" format="boolean" />
+</declare-styleable>-->

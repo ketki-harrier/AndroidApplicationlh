@@ -14,7 +14,9 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.adapters.ImageSliderAdapter;
+import com.lifecyclehealth.lifecyclehealth.adapters.IntroSliderAdapter;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback1;
 import com.lifecyclehealth.lifecyclehealth.dto.CarousalDTO;
 import com.lifecyclehealth.lifecyclehealth.model.MessageDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_CAROUSAL;
 
 public class Carousal extends AppCompatActivity {
@@ -49,17 +52,18 @@ public class Carousal extends AppCompatActivity {
 
     /* Set view*/
     private void setView() {
-        cardFirstCarousel = findViewById(R.id.card_FirstCarousel);
+    //    cardFirstCarousel = findViewById(R.id.card_FirstCarousel);
         //ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerCarouselOne = findViewById(R.id.pager_carouselOne);
+     //   pagerCarouselOne = findViewById(R.id.pager_carouselOne);
         requestUtil = new NetworkRequestUtil(Carousal.this);
         setCarousel();
     }
 
     private void setCarousel() {
-        requestUtil.getDataSecure(URL_CAROUSAL, new VolleyCallback() {
+        requestUtil.getDataSecure1(BASE_URL + URL_CAROUSAL, new VolleyCallback1() {
             @Override
-            public void onSuccess(JSONObject response) {
+
+            public void onSuccess1(String response) {
                 CarousalDTO carousalDTO = new Gson().fromJson(response.toString(), CarousalDTO.class);
                 if (carousalDTO != null) {
                     //    printLog("StatisTic:" + statisticDTO);
@@ -71,34 +75,12 @@ public class Carousal extends AppCompatActivity {
                         }
 
 
-                        /*if (carousalDTO.getReturnValues().getPosts().get(i) != null
-                                && carousalDTO.getRetur nValues().getPosts().get(i).getButtonAction() != null
-                                && !carousalDTO.getReturnValues().getPosts().get(i).getButtonAction().isEmpty()) {
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(carousalDTO.getReturnValues().getPosts().get(i).getButtonAction());
-                                if (jsonObject.get("asset_url") != null && !jsonObject.get("asset_url").toString().isEmpty()) {
-                                    buttonActions.add(jsonObject.get("asset_url").toString());
-                                }
-                                if (jsonObject.get("asset_url_secondary") != null && !jsonObject.get("asset_url_secondary").toString().isEmpty()) {
-                                    buttonActions.add(jsonObject.get("asset_url_secondary").toString());
-                                }
-                                if (jsonObject.get("asset_url_secondary_1") != null && !jsonObject.get("asset_url_secondary_1").toString().isEmpty()) {
-                                    buttonActions.add(jsonObject.get("asset_url_secondary_1").toString());
-                                }
-                                if (jsonObject.get("asset_url_secondary_2") != null && !jsonObject.get("asset_url_secondary_2").toString().isEmpty()) {
-                                    buttonActions.add(jsonObject.get("asset_url_secondary_2").toString());
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }*/
 
-                    }
 
-                    if (imgUrls.size() != 0) {
+                  /*  if (imgUrls.size() != 0) {
                         ImageSliderAdapter imageSliderAdapter1 = new ImageSliderAdapter(imgUrls, getApplicationContext());
                         pagerCarouselOne.setAdapter(imageSliderAdapter1);
-                        /*After setting the adapter use the timer */
+                        *//*After setting the adapter use the timer *//*
                         final Handler handler = new Handler();
                         final Runnable Update = new Runnable() {
                             public void run() {
@@ -121,13 +103,59 @@ public class Carousal extends AppCompatActivity {
                         cardFirstCarousel.setVisibility(View.GONE);
                     }
                 }
+            }*/
+
+
+                   /*     @Override
+                        public void onSuccess1 (String response){
+                            CarousalDTO carousalDTO = new Gson().fromJson(response.toString(), CarousalDTO.class);
+                            if (carousalDTO != null) {
+                                //    printLog("StatisTic:" + statisticDTO);
+                                final List<Object> imgUrls = new ArrayList<>(0);
+                                //         List<String> buttonActions = new ArrayList<>(0);
+                                for (int i = 0; i < carousalDTO.getUrls().size(); i++) {
+                                    if (carousalDTO.getUrls() != null) {
+                                        imgUrls.add(carousalDTO.getUrls().get(i));
+                                    }
+
+                                }*/
+
+
+                        if (imgUrls.size() != 0) {
+                            IntroSliderAdapter imageSliderAdapter1 = new IntroSliderAdapter( getApplicationContext(),imgUrls);
+                            pagerCarouselOne.setAdapter(imageSliderAdapter1);
+                            /*After setting the adapter use the timer */
+                            final Handler handler = new Handler();
+                            final Runnable Update = new Runnable() {
+                                public void run() {
+                                    if (currentPage == imgUrls.size()) {
+                                        currentPage = 0;
+                                    }
+                                    pagerCarouselOne.setCurrentItem(currentPage++, true);
+                                }
+                            };
+
+                            timer = new Timer(); // This will create a new Thread
+                            timer.schedule(new TimerTask() { // task to be scheduled
+                                @Override
+                                public void run() {
+                                    handler.post(Update);
+                                }
+                            }, DELAY_MS, PERIOD_MS);
+
+                        } else {
+                            cardFirstCarousel.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
             }
+
 
             @Override
             public void onError(VolleyError error) {
-                Log.d("PreRaceFragment", "onError: " + error);
+
             }
         });
     }
-
 }

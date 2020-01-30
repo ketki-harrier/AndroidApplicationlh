@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/margin_large"
+    android:padding="@dimen/margin_20"
     android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/mainLinear"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,37 +21,37 @@
             android:orientation="vertical">
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyForName"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:textColor="@color/black"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin_large"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/surveyName"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_extra__extra_large"
                 android:text="@string/app_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary" />
 
             <com.lifecyclehealth.lifecyclehealth.custome.CustomFontTextView
-                fontPath="fonts/Roboto-Regular.ttf"
                 android:id="@+id/questionTv"
+                fontPath="fonts/Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin_large"
                 android:text="@string/appbar_scrolling_view_behavior"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
@@ -60,12 +61,12 @@
                 android:layout_marginTop="@dimen/margin" />
 
             <ImageView
-                android:layout_margin="@dimen/margin_extra__extra_large"
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:scaleType="fitXY"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_extra__extra_large"
                 android:adjustViewBounds="true"
-                android:layout_height="wrap_content" />
+                android:scaleType="fitXY" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -92,5 +93,40 @@
         </LinearLayout>
     </ScrollView>
 
+
+
+<!--    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/button_layout"
+        android:background="@android:color/white"
+         >
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/margin_padding_60">
+
+            <Button
+                android:id="@+id/prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="prev" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="next" />
+
+        </RelativeLayout>
+
+    </LinearLayout>-->
 
 </LinearLayout>

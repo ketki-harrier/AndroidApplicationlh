@@ -32,13 +32,13 @@ public class AppConstants {
 
     /*Base Url*/
     /*1) Pooja Mam*/
-   // public static final String BASE_URL = "http://192.168.0.132:3004/api/v1/";
+    // public static final String BASE_URL = "http://192.168.0.132:3004/api/v1/";
 
     /*2) Test Url*/
-    public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
+      public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
 
     /*3) Production*/
- //   public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
+  //  public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
 
     /* URLS*/
     public static final String URL_SUPPORT = "secure/support";
@@ -90,8 +90,10 @@ public class AppConstants {
     public static final String URL_MEET_INVITE_PARTICIPANT_TO_MEET = "secure/meet/invite";
 
     /*Notification*/
-    public static final String URL_DELETE_NOTIFICATION = "secure/alert/markedRead/";
-    public static final String URL_READ_NOTIFICATION = "secure/alert/delete/";
+    // public static final String URL_DELETE_NOTIFICATION = "secure/alert/markedRead/";
+    public static final String URL_READ_NOTIFICATION = "secure/alert/markedRead/";
+    //public static final String  URL_READ_NOTIFICATION = "secure/alert/delete/";
+    public static final String URL_DELETE_NOTIFICATION = "secure/alert/delete/";
     public static final String URL_SURVEY_CHECK_AVAILABILITY_NOTIFICATION = "secure/alert/isexists";
     public static final String URL_FILTER_NOTIFICATION = "secure/alert/list";
     public static final String URL_FILTER_REPORT = "secure/patient/ActivitySurvey/Question/";

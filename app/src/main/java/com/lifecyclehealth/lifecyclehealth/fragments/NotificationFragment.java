@@ -1,6 +1,7 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,12 +11,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
+import com.lifecyclehealth.lifecyclehealth.adapters.MeetInviteParticipantsAdapter;
 import com.lifecyclehealth.lifecyclehealth.adapters.NotificationAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
@@ -33,6 +39,7 @@ import com.lifecyclehealth.lifecyclehealth.dto.NotificationFilterDto;
 import com.lifecyclehealth.lifecyclehealth.dto.SurveyPlanDto;
 import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.InviteUserMeetResponse;
+import com.lifecyclehealth.lifecyclehealth.model.MeetInviteParticipantsModel;
 import com.lifecyclehealth.lifecyclehealth.model.NotificationDialogResponse;
 import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyPlan;
@@ -47,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
@@ -90,7 +98,52 @@ public class NotificationFragment extends BaseFragmentWithOptions {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_notification, container,false);
+        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) rootView.findViewById(R.id.search);
+       // search(searchView);
+
+/*        final EditText search = (EditText) rootView.findViewById(R.id.editTextSearch);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                printLog("tonTextChanged");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                printLog("afterTextChanged");
+               // if (meetInviteParticipantsModel != null) {
+                    String searchString = search.getText().toString();
+                    notificationAdapter.getFilter(searchString);
+            //    }
+
+            }
+        });*/
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //showSnackBar(query.toString());
+                notificationAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+               notificationAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+       // return inflater.inflate(R.layout.fragment_notification, container, false);
+        return  rootView;
     }
 
     @Override
@@ -99,6 +152,56 @@ public class NotificationFragment extends BaseFragmentWithOptions {
         isPatient = MyApplication.getInstance().getBooleanFromSharedPreference(PREF_IS_PATIENT);
         initializeView(view);
     }
+
+   /* public void filter(String charText) {
+
+        charText = charText.toLowerCase(Locale.getDefault());
+        meetInviteParticipantsModelSearch = new ArrayList<>();
+        if (charText.equals("")) {
+            meetInviteParticipantsModelSearch = meetInviteParticipantsModel.getEpisodeParticipantList();
+        } else {
+            meetInviteParticipantsModelSearch = new ArrayList<>();
+            for (MeetInviteParticipantsModel.EpisodeParticipantList cs : meetInviteParticipantsModel.getEpisodeParticipantList()) {
+                if (cs.getFullName().toLowerCase().contains(charText)) {
+                    meetInviteParticipantsModelSearch.add(cs);
+                }
+            }
+
+        }
+        if (meetInviteParticipantsModelSearch.size() > 0)
+            notifyDataSetChanged();
+    }
+
+    private void notifyDataSetChanged() {
+
+        MeetInviteParticipantsAdapter adapter = new MeetInviteParticipantsAdapter(meetInviteParticipantsModelSearch, getApplicationContext(), UserIds, new MeetInviteParticipantsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+                setAdapterWithEpisode(item, Type, pos);
+            }
+        });
+
+        notificationRecycler.setAdapter(adapter);
+    }*/
+
+   /* private void search(SearchView searchView) {
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                notificationAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                notificationAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+    }*/
 
 
     private void initializeView(View view) {

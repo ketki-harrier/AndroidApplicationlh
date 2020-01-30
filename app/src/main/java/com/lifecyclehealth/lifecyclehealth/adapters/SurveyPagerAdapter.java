@@ -1,11 +1,16 @@
 package com.lifecyclehealth.lifecyclehealth.adapters;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
+import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionFourFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionOneFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionThreeFragment;
@@ -14,20 +19,36 @@ import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionZeroFragment;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by satyam on 14/04/2017.
  */
 
-public class SurveyPagerAdapter extends FragmentPagerAdapter {
+//public class SurveyPagerAdapter extends FragmentPagerAdapter {
+public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
     public static List<SurveyDetailsModel> surveyDetails;
     CustomViewPager viewPager;
     public static int surveyPosition;
+    private Fragment mFragmentAtPos0;
+    FragmentManager mFragmentManager;
+    Handler handler = new Handler();
+    Runnable Update;
+    Timer timer;
+    final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000;
+
 
     public SurveyPagerAdapter(FragmentManager fm, List<SurveyDetailsModel> surveyDetails) {
         super(fm);
         this.surveyDetails = surveyDetails;
         this.viewPager = null;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -37,12 +58,16 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
         surveyPosition = position;
         int typeOfSurvey = surveyDetailsModel.getQuestionModel().getTypeOfAnswer();
         Log.e("position", position + "");
-        String data = new Gson().toJson(surveyDetailsModel);
+        final String data = new Gson().toJson(surveyDetailsModel);
         switch (typeOfSurvey) {
             case 0:
                 Log.e("call", "0");
                 //return SurveyOptionThreeFragment.newInstance(data, position);
+
                 return SurveyOptionZeroFragment.newInstance(data, position);
+
+            /*return*/
+
             case 1:
                 Log.e("call", "1");
                 return SurveyOptionOneFragment.newInstance(data, position);
@@ -59,8 +84,11 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
             default:
                 Log.e("call", "default");
                 return SurveyOptionZeroFragment.newInstance(data, position);
+
         }
+
     }
+
 
     @Override
     public int getCount() {

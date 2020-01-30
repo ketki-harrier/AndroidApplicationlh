@@ -10,21 +10,26 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.model.NotificationDialogResponse;
+import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vaibhavi on 18-01-2018.
  */
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> implements Filterable {
 
     private List<NotificationDialogResponse.AlertList> notificationAlertLists;
+    private List<NotificationDialogResponse.AlertList> notificationAlertListsFiltered;
     Context context;
     private NotificationAdapter.OnItemClickListener listener;
 
@@ -34,6 +39,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return new MyViewHolder(view);
     }
 
+
+
     public interface OnItemClickListener {
         void onItemClick(NotificationDialogResponse.AlertList item, String Type, String pos);
     }
@@ -41,7 +48,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        NotificationDialogResponse.AlertList alertList = notificationAlertLists.get(position);
+      //  NotificationDialogResponse.AlertList alertList = notificationAlertLists.get(position);
+        NotificationDialogResponse.AlertList alertList = notificationAlertListsFiltered.get(position);
         Spannable title = new SpannableString(alertList.getTitle());
         title.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_color)), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.conversationTitleTv.setText(title + "  ");
@@ -71,11 +79,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-        if (notificationAlertLists != null) {
-            return notificationAlertLists.size();
+        if (notificationAlertListsFiltered != null) {
+            return notificationAlertListsFiltered.size();
         } else {
             return 0;
         }
+
+        //return notificationAlertListsFiltered.size();
+        //return notificationAlertLists.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -110,11 +121,58 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
+    //This method will filter the list
+    //here we are passing the filtered data
+    //and assigning it to the list with notifydatasetchanged method
+    public void filterList(List<NotificationDialogResponse.AlertList> unread_messageList) {
+        this.notificationAlertListsFiltered = unread_messageList;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    notificationAlertListsFiltered = notificationAlertLists;
+                } else {
+                    List<NotificationDialogResponse.AlertList> filteredList = new ArrayList<>();
+                    for (NotificationDialogResponse.AlertList row : notificationAlertLists) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name  match
+                        if (row.getDescription().toLowerCase().contains(charString.toLowerCase()) ) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    notificationAlertListsFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = notificationAlertListsFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                notificationAlertListsFiltered = (ArrayList<NotificationDialogResponse.AlertList>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public NotificationAdapter(List<NotificationDialogResponse.AlertList> unread_messageList, Context context, OnItemClickListener listener) {
         this.notificationAlertLists = unread_messageList;
         this.context = context;
         this.listener = listener;
+        this.notificationAlertListsFiltered = unread_messageList;
     }
 
+   /* public interface ContactsAdapterListener {
+        void onContactSelected(Contact contact);
+    }*/
 }

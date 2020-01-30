@@ -90,6 +90,7 @@ public class ForgotUsernameHolderActivity extends BaseActivity {
         buttonSendCode.setOnClickListener(onClickListener);
         btnSignIn.setOnClickListener(onClickListener);
         linear_signin = (LinearLayout) findViewById(R.id.linear_signin);
+
         linear_username = (LinearLayout) findViewById(R.id.linear_username);
         linear_signin.setVisibility(View.GONE);
         showError(false);

@@ -7,15 +7,19 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.lifecyclehealth.lifecyclehealth.activities.LoginActivity;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
+import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback1;
 import com.lifecyclehealth.lifecyclehealth.db.LifecycleDatabase;
 
 import org.json.JSONObject;
@@ -253,6 +257,60 @@ public class NetworkRequestUtil {
             MyApplication.getInstance().getRequestQueue().cancelAll(TAG);
         }
     }
+
+
+    public void getDataSecure1(String url, final VolleyCallback1 callback) {
+        try {
+
+            final RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+            final StringRequest jsonObjReq = new StringRequest (Request.Method.GET,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            printLog("Response: " + response);
+                            callback.onSuccess1(response);
+                            requestQueue.stop();
+
+                        }
+                    },
+
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            printLog("Error:" + error.getMessage());
+                            callback.onError(error);
+                            requestQueue.stop();
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    //headers.put("X-Access-Token", MyApplication.getInstance().getFromSharedPreference(AppConstants.USER_TOKEN));
+                    //headers.put("X-Access-Token", LoginActivity.loginToken);
+                    token = lifecycleDatabase.retrieveToken();
+                    headers.put("X-Access-Token", token);
+                    return headers;
+                }
+            };
+            RetryPolicy policy = new DefaultRetryPolicy(AppConstants.REQUEST_TIMEOUT, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            jsonObjReq.setRetryPolicy(policy);
+            MyApplication.getInstance().addToRequestQueue(jsonObjReq, TAG);
+
+
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+
+            // Cancelling request
+            MyApplication.getInstance().getRequestQueue().cancelAll(TAG);
+        }
+    }
+
+
 
     public void putData(String url, JSONObject requestJson, final VolleyCallback callback) {
         try {

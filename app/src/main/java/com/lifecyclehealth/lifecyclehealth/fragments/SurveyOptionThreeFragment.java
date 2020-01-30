@@ -103,11 +103,16 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     private static final int CAPTURE_CODE = 202;
     public static String fileType, fileName;
     public static byte[] byteData;
+    Button prev,next;
+    SurveyPagerAdapter surveyPager ;
+    View mVideoLayout;
+    private static int pagePosition;
 
 
     public static SurveyOptionThreeFragment newInstance(String data, int position) {
         SurveyOptionThreeFragment threeFragment = new SurveyOptionThreeFragment();
         Bundle bundle = new Bundle();
+        pagePosition = position;
         bundle.putString(SURVEY_EXTRAS_TWO_TYPE, data);
         threeFragment.setArguments(bundle);
         return threeFragment;
@@ -134,7 +139,10 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_survey_option_three, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_survey_option_three, container,         false);
+
+        return rootView;
+      //  return inflater.inflate(R.layout.fragment_survey_option_three, container, false);
     }
 
     @Override
@@ -590,7 +598,7 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     private int cachedHeight;
     private boolean isFullscreen;
 
-    View mVideoLayout;
+    //View mVideoLayout;
     UniversalVideoView mVideoView;
     UniversalMediaController mMediaController;
 
