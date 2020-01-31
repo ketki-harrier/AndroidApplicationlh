@@ -82,12 +82,13 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     Handler handler = new Handler();
     Runnable Update;
 
+
     //int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
     //static List<SurveySection> surveySection;
-    int status;
+    int status=0;
 
 
     public static SurveyDetailsItemFragment newInstance(String data) {
@@ -422,7 +423,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
 
     /* Set view pager with values*/
-    private void setViewPager1(final List<SurveySection> surveySection) {
+    /*private void setViewPager1(final List<SurveySection> surveySection) {
         arrayKey = new ArrayList<String>();
         hashmapOfKey = new HashMap<String, Boolean>();
         hashmapOfKeyTitle = new HashMap<String, String>();
@@ -471,7 +472,8 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                         showScore(getListFormattedForViewCreation(surveySection).get(0));
                                     }
                                 } else {
-                                    if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                    //Nikhil
+                                    if (arrayKey.size() < (viewPager.getCurrentItem()) +1) {
                                         //     viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
                                         showScore(getListFormattedForViewCreation(surveySection).get(0));
                                     }
@@ -491,7 +493,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     //handler.removeCallbacks(Update);
                                     viewPager.disableScroll(false);
                                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                                    /* changes 08/11/19*/
+                                    *//* changes 08/11/19*//*
                                     //viewPager.setOffscreenPageLimit(0);
                                     //  viewPager.setOffscreenPageLimit(arrayKey.size() - 1);
                                     status = 0;
@@ -529,11 +531,11 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                     showScore(getListFormattedForViewCreation(surveySection).get(0));
                                 }
-                            } /*else if (SurveyDetailsListFragment.isSchedule) {
+                            } *//*else if (SurveyDetailsListFragment.isSchedule) {
                                 if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                     showScore(getListFormattedForViewCreation(surveySection).get(0));
                                 }
-                            }*/ else if (SurveyDetailsListFragment.isToDo) {
+                            }*//* else if (SurveyDetailsListFragment.isToDo) {
                                 int currentPage = viewPager.getCurrentItem();
                                 printLog("Total arraysize" + arrayKey.size());
                                 printLog("currentPage" + currentPage);
@@ -556,7 +558,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     //  viewPager.invalidate();
                                     //   viewPager.setEnabled(false);
                                     selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                                    /* new changes 20/12/19*/
+                                    *//* new changes 20/12/19*//*
                                     viewPager.setCurrentItem(viewPager.getCurrentItem(), false);
                                     //  pagerAdapter.notifyDataSetChanged();
                                     //  viewPager.setPagingEnabled(false);
@@ -571,7 +573,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
                                         if (PreferenceUtils.getESignature(getContext()).equals(true)) {
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                  /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                  *//* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
                                         public void onSwipeOutAtStart() {
                                             printLog("swipe start");
@@ -582,7 +584,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             printLog("swipe end");
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
-                                    });*/
+                                    });*//*
                                         } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
                                             mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
@@ -630,11 +632,12 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 if (SurveyDetailsListFragment.isCompleted) {
                     if (arrayKey.size() == 1) {
                         if (arrayKey.size() <= (viewPager.getCurrentItem())) {
-                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                            viewPager.setCurrentItem(viewPager.getCurrentItem());
                             showScore(getListFormattedForViewCreation(surveySection).get(0));
                         }
                     } else {
-                        if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                        //Nikhil
+                        if (arrayKey.size() < (viewPager.getCurrentItem()) + 1) {
 
                             showScore(getListFormattedForViewCreation(surveySection).get(0));
                         } else {
@@ -642,20 +645,20 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         }
                     }
                 } else if (SurveyDetailsListFragment.isSchedule) {
-                  /*  if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                  *//*  if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
 
                         showScore(getListFormattedForViewCreation(surveySection).get(0));
                     } else {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                    }*/
+                    }*//*
 
                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                 } else if (SurveyDetailsListFragment.isToDo) {
-                /*    int currentPage = viewPager.getCurrentItem();
+                *//*    int currentPage = viewPager.getCurrentItem();
                     printLog("Total arraysize" + arrayKey.size());
                     printLog("currentPage" + currentPage);
                     String s = arrayKey.get(currentPage);
-                    boolean a = hashmapOfKey.get(s);*/
+                    boolean a = hashmapOfKey.get(s);*//*
                     //   if(hashmapOfKey.get(arrayKey.get(viewPager.getCurrentItem())))
                     //      abcd = hashmapOfKey.get(viewPager.getCurrentItem()-1);
                     if (hashmapOfKey.get(arrayKey.get(viewPager.getCurrentItem()))) {
@@ -667,7 +670,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         // viewPager.setCurrentItem(getNextPossibleItemIndex(1), true);
                         // viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
                         //  viewPager.setCurrentItem(viewPager.getCurrentItem() , true);
-                        /* changes 08/11/19*/
+                        *//* changes 08/11/19*//*
                         //viewPager.setOffscreenPageLimit(0);
                         //  viewPager.setOffscreenPageLimit(arrayKey.size() - 1);
                         status = 0;
@@ -707,12 +710,12 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                     }
                 } else if (SurveyDetailsListFragment.isSchedule) {
-                   /* if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                   *//* if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
 
                         showScore(getListFormattedForViewCreation(surveySection).get(0));
                     } else {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-                    }*/
+                    }*//*
                     viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                 } else if (SurveyDetailsListFragment.isToDo) {
                     int currentPage = viewPager.getCurrentItem();
@@ -738,7 +741,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         //  viewPager.invalidate();
                         //   viewPager.setEnabled(false);
                         selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                        /* new changes 20/12/19*/
+                        *//* new changes 20/12/19*//*
                         viewPager.setCurrentItem(viewPager.getCurrentItem(), false);
                         //  pagerAdapter.notifyDataSetChanged();
                         //  viewPager.setPagingEnabled(false);
@@ -753,6 +756,135 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
                             if (PreferenceUtils.getESignature(getContext()).equals(true)) {
                                 mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                  *//* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                        @Override
+                                        public void onSwipeOutAtStart() {
+                                            printLog("swipe start");
+                                        }
+
+                                        @Override
+                                        public void onSwipeOutAtEnd() {
+                                            printLog("swipe end");
+                                            mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                        }
+                                    });*//*
+                            } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
+                                mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        //  checkDirection = false;
+    }*/
+
+
+
+    private void setViewPager1(final List<SurveySection> surveySection) {
+        arrayKey = new ArrayList<String>();
+        hashmapOfKey = new HashMap<String, Boolean>();
+        hashmapOfKeyTitle = new HashMap<String, String>();
+
+        for (int i = 0; i < getListFormattedForViewCreation(surveySection).size(); i++) {
+            arrayKey.add(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId());
+            hashmapOfKeyTitle.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), getListFormattedForViewCreation(surveySection).get(i).getName());
+
+            if (getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().isRequired()) {
+                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), false);
+            } else {
+                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), true);
+            }
+        }
+
+        final SurveyPagerAdapter pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
+        viewPager.setAdapter(pagerAdapter);
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
+                Log.d("position", position + "");
+                printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
+                printLog("Total arraysize" + arrayKey.size());
+
+
+                status = 0;
+                if (checkflag) {
+
+                    if (checkDirection) {
+                        if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
+                            //for completed
+                            if (SurveyDetailsListFragment.isCompleted) {
+                                if (arrayKey.size() == 1) {
+                                    if (arrayKey.size() <= (viewPager.getCurrentItem())) {
+                                        showScore(getListFormattedForViewCreation(surveySection).get(0));
+                                    }
+                                } else {
+                                    if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                        showScore(getListFormattedForViewCreation(surveySection).get(0));
+                                    }
+                                }
+                            } else if (SurveyDetailsListFragment.isToDo) {
+                                int currentPage = viewPager.getCurrentItem();
+                                printLog("Total arraysize" + arrayKey.size());
+                                printLog("currentPage" + currentPage);
+                                String s = arrayKey.get(currentPage);
+                                boolean a = hashmapOfKey.get(s);
+
+                                if (hashmapOfKey.get(s)) {
+                                    viewPager.disableScroll(false);
+                                    status = 0;
+                                } else {
+                                    selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                    viewPager.disableScroll(true);
+                                    // viewPager.beginFakeDrag();
+                                    status = 1;
+                                    //selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                }
+                                if (status == 0) {
+                                    SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                                    if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(true))) {
+                                        mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                    } else if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(false))) {
+                                        mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                    }
+                                }
+                            }
+                        } else {
+                            printLog("left");
+                            if (SurveyDetailsListFragment.isCompleted) {
+                                if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                    showScore(getListFormattedForViewCreation(surveySection).get(0));
+                                }
+                            }  //*if (SurveyDetailsListFragment.isSchedule) {
+                            if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                //showScore(getListFormattedForViewCreation(surveySection).get(0));
+                            }
+                            //*else if (SurveyDetailsListFragment.isToDo) {
+                            int currentPage = viewPager.getCurrentItem();
+                            printLog("Total arraysize" + arrayKey.size());
+                            printLog("currentPage" + currentPage);
+                            String s = arrayKey.get(currentPage);
+                            if (hashmapOfKey.get(s)) {
+                                viewPager.disableScroll(false);
+                                status = 0;
+                            } else {
+                                selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                viewPager.getCurrentItem();
+                                //viewPager.beginFakeDrag();
+                                //  viewPager.disableScroll(true);
+                                status = 1;
+                                // selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                            }
+
+                            //String net = PreferenceUtils.getESignature(getContext());
+                            if (status == 0) {
+                                final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                                if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
+                                    if (PreferenceUtils.getESignature(getContext()).equals(true)) {
+                                        mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                   /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
                                         public void onSwipeOutAtStart() {
@@ -765,16 +897,141 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
                                     });*/
-                            } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
-                                mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                    } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
+                                        mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                    }
+                                }
                             }
+                        }
+                    }
+                }
+                    checkDirection = false;
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (!scrollStarted && state == ViewPager.SCROLL_STATE_DRAGGING) {
+                    scrollStarted = true;
+                    checkDirection = true;
+                } else {
+                    scrollStarted = false;
+                }
+            }
+        });
+
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkDirection = true;
+                checkflag = false;
+                if (SurveyDetailsListFragment.isCompleted) {
+                    if (arrayKey.size() == 1) {
+                        if (arrayKey.size() <= (viewPager.getCurrentItem())) {
+                            showScore(getListFormattedForViewCreation(surveySection).get(0));
+                        }
+                    } else {
+                        if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                            showScore(getListFormattedForViewCreation(surveySection).get(0));
+                        }
+                    }
+                } else if (SurveyDetailsListFragment.isToDo) {
+                    int currentPage = viewPager.getCurrentItem();
+                    printLog("Total arraysize" + arrayKey.size());
+                    printLog("currentPage" + currentPage);
+                    String s = arrayKey.get(currentPage);
+                    boolean a = hashmapOfKey.get(s);
+
+                    if (hashmapOfKey.get(s)) {
+                        viewPager.disableScroll(false);
+                        //Nik
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                        checkflag = true;
+                        status = 0;
+                    } else {
+                        selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                        viewPager.disableScroll(true);
+                        checkflag = true;
+                        // viewPager.beginFakeDrag();
+                        status = 1;
+                        //selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                    }
+                    if (status == 0) {
+                        SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                        if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(true))) {
+                            mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                        } else if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(false))) {
+                            mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                         }
                     }
                 }
             }
         });
-        //  checkDirection = false;
+
+
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkflag = false;
+                if (SurveyDetailsListFragment.isCompleted) {
+                    if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                        showScore(getListFormattedForViewCreation(surveySection).get(0));
+                    }
+                }  //*if (SurveyDetailsListFragment.isSchedule) {
+                if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                    //showScore(getListFormattedForViewCreation(surveySection).get(0));
+                }
+                //*else if (SurveyDetailsListFragment.isToDo) {
+                int currentPage = viewPager.getCurrentItem();
+                printLog("Total arraysize" + arrayKey.size());
+                printLog("currentPage" + currentPage);
+                String s = arrayKey.get(currentPage);
+                if (hashmapOfKey.get(s)) {
+                    viewPager.disableScroll(false);
+                    status = 0;
+                } else {
+                    selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                    viewPager.getCurrentItem();
+                    //viewPager.beginFakeDrag();
+                    //  viewPager.disableScroll(true);
+                    status = 1;
+                    // selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                }
+
+                //String net = PreferenceUtils.getESignature(getContext());
+                if (status == 0) {
+                    final SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                    if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
+                        if (PreferenceUtils.getESignature(getContext()).equals(true)) {
+                            mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                  /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                        @Override
+                                        public void onSwipeOutAtStart() {
+                                            printLog("swipe start");
+                                        }
+
+                                        @Override
+                                        public void onSwipeOutAtEnd() {
+                                            printLog("swipe end");
+                                            mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                        }
+                                    });*/
+                        } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
+                            mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                        }
+                    }
+                }
+            }
+        });
     }
+
 
     private int getNextPossibleItemIndex(int change) {
 

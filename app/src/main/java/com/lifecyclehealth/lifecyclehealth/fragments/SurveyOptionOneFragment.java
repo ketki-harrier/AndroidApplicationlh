@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -223,7 +224,8 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
                         submitSurveyAnswer(editTextView.getText().toString());
                         printLog("on focus");
                     }
-                } else if (isRequiredEditText) {
+                } else if (isRequiredEditText && editTextView.getText().toString().trim().equals("")
+                && TextUtils.isEmpty(editTextView.getText().toString())) {
                     SurveyDetailsItemFragment.disableScrollViewPager();
                     SurveyDetailsItemFragment.hashmapOfKey.put(surveyDetailsModel.getQuestionModel().getPatientSurveyId(), false);
                 }
