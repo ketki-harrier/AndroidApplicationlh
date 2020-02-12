@@ -1,12 +1,19 @@
 package com.lifecyclehealth.lifecyclehealth.fragments;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.OperationApplicationException;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -17,14 +24,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
+import android.os.RemoteException;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ActivityCompat;
+/*import android.support.v4.app.Fragment;*/
 import android.support.v4.content.ContextCompat;
 import android.support.v4.print.PrintHelper;
 import android.text.Html;
@@ -47,6 +58,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -66,7 +78,9 @@ import com.lifecyclehealth.lifecyclehealth.universal_video.UniversalVideoView;
 import com.lifecyclehealth.lifecyclehealth.upload_download.DownloadService;
 import com.lifecyclehealth.lifecyclehealth.upload_download.UploadService;
 import com.lifecyclehealth.lifecyclehealth.utils.InputStreamVolleyRequest;
+import com.lifecyclehealth.lifecyclehealth.utils.SavedInstanceFragment;
 import com.lifecyclehealth.lifecyclehealth.utils.TouchImageView;
+import com.lifecyclehealth.lifecyclehealth.utils.TransactionTooLargeException;
 
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -74,6 +88,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +106,8 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_SURVEY_
 public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implements View.OnClickListener {
 
 
-    private static final String SURVEY_EXTRAS_TWO_TYPE = "type_two_survey_extras_data";
+    // private static final String SURVEY_EXTRAS_TWO_TYPE = "type_two_survey_extras_data";
+    private static final String SURVEY_EXTRAS_TWO_TYPE = "type_two_survey";
     private SurveyDetailsModel surveyDetailsModel;
     MainActivity mainActivity;
     InputStreamVolleyRequest request;
@@ -103,20 +120,38 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     private static final int CAPTURE_CODE = 202;
     public static String fileType, fileName;
     public static byte[] byteData;
-    Button prev,next;
-    SurveyPagerAdapter surveyPager ;
-    View mVideoLayout;
-    private static int pagePosition;
+    private final static int PERMISION_CAMERA = 98;
+    private final static int PERMISION_EXTERNAL_STORAGE = 99;
+    private final static int PERMISION_AVATAR = 97;
+    private static final int REQUEST_CAMERA = 12;
+    /*Multipart Image Upload*/
+    private static int IMG_RESULT = 1;
+    ContentResolver cr;
+    private static SurveyOptionThreeFragment instance;
+    //static  TransactionTooLargeException exceptionlarge ;
 
 
-    public static SurveyOptionThreeFragment newInstance(String data, int position) {
+    public static SurveyOptionThreeFragment newInstance(/*String data*/Serializable data, int position) {
         SurveyOptionThreeFragment threeFragment = new SurveyOptionThreeFragment();
         Bundle bundle = new Bundle();
-        pagePosition = position;
-        bundle.putString(SURVEY_EXTRAS_TWO_TYPE, data);
+         bundle.putSerializable(SURVEY_EXTRAS_TWO_TYPE, data);
+       // bundle.putParcelable(SURVEY_EXTRAS_TWO_TYPE, data);
         threeFragment.setArguments(bundle);
+       // final ContentResolver resolver = context.getContentResolver();
+
+
+
+     //   TransactionTooLargeException largeException =  new TransactionTooLargeException(data);
         return threeFragment;
     }
+
+
+   /* public static SurveyOptionThreeFragment getInstance(){
+        if(instance == null)
+            instance = new SurveyOptionThreeFragment();
+
+        return instance;
+    }*/
 
 
     @Override
@@ -136,22 +171,33 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
         super.onCreate(savedInstanceState);
     }
 
+    /*@Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SavedInstanceFragment.getInstance( getFragmentManager()).pushData( (Bundle) outState.clone() );
+        outState.clear(); // We don't want a TransactionTooLargeException, so we handle things via the SavedInstanceFragment
+    }*/
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_survey_option_three, container,         false);
-
-        return rootView;
-      //  return inflater.inflate(R.layout.fragment_survey_option_three, container, false);
+        return inflater.inflate(R.layout.fragment_survey_option_three, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        surveyDetailsModel = new Gson().fromJson(getArguments().getString(SURVEY_EXTRAS_TWO_TYPE), SurveyDetailsModel.class);
+
+//        savedInstanceState.clear();
+
+        surveyDetailsModel = new Gson().fromJson(String.valueOf(getArguments().getSerializable(SURVEY_EXTRAS_TWO_TYPE)), SurveyDetailsModel.class);
+     //   surveyDetailsModel = new Gson().fromJson(String.valueOf(getArguments().getParcelable(SURVEY_EXTRAS_TWO_TYPE)), SurveyDetailsModel.class);
         setupView(view);
     }
+
 
     private void setupView(final View view) {
 
@@ -268,7 +314,8 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
             case R.id.btnSelectFile: {
                 byteData = null;
                 //dialogForImageOption();
-                dialogForIMAGE_PDFOption();
+                 dialogForIMAGE_PDFOption();
+                //checkPermisionsExternalStorage();
                 break;
             }
             case R.id.btnUploadImage: {
@@ -295,6 +342,28 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
         }
     }
 
+    private void galleryIntent() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, IMG_RESULT);
+        }
+        catch (Exception e) {
+            if (!Environment.isExternalStorageEmulated()) {
+                // showSnackBar(rootLayout, getString(R.string.no_external_storage_found));
+            }
+            e.printStackTrace();
+        }
+    }
+
+    private void checkPermisionsExternalStorage() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISION_EXTERNAL_STORAGE);
+            return;
+        } else {
+            galleryIntent();
+        }
+    }
 
     private void startUpload() {
        /* Intent intent = new Intent(mainActivity, UploadService.class);
@@ -403,6 +472,7 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     }
 
 
+    @RequiresApi
     public void dialogForIMAGE_PDFOption() {
         byteData = null;
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -432,11 +502,14 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
                 }).setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT);
-                //intent1.setType("video/*, image/*,pdf/*");
-                intent1.setType("*/*");
-                startActivityForResult(Intent.createChooser(intent1, "Open with ..."), FILE_SELECT_CODE);
+                //     Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT);
+                //     intent1.setType("video/*, image/*,pdf/*");
+                //     intent1.setType("*/*");
+                //    startActivityForResult(Intent.createChooser(intent1, "Open with ..."), FILE_SELECT_CODE);
 
+
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, FILE_SELECT_CODE);
 
                 //video/*, image/*,pdf/*
             }
@@ -598,7 +671,7 @@ public class SurveyOptionThreeFragment extends BaseFragmentWithOptions implement
     private int cachedHeight;
     private boolean isFullscreen;
 
-    //View mVideoLayout;
+    View mVideoLayout;
     UniversalVideoView mVideoView;
     UniversalMediaController mMediaController;
 
