@@ -45,6 +45,7 @@ import com.lifecyclehealth.lifecyclehealth.utils.VerticalSeekBar;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,11 +73,12 @@ public class SurveyOptionFourFragment extends BaseFragmentWithOptions {
     View mVideoLayout;
     private static int pagePosition;
 
-    public static SurveyOptionFourFragment newInstance(String data, int position) {
+    public static SurveyOptionFourFragment newInstance(Serializable data, int position) {
         SurveyOptionFourFragment oneFragment = new SurveyOptionFourFragment();
         Bundle bundle = new Bundle();
         pagePosition = position;
-        bundle.putString(SURVEY_EXTRAS_FOUR_TYPE, data);
+       // bundle.putString(SURVEY_EXTRAS_FOUR_TYPE, data);
+        bundle.putSerializable(SURVEY_EXTRAS_FOUR_TYPE, data);
         oneFragment.setArguments(bundle);
         return oneFragment;
     }

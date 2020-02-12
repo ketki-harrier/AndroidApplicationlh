@@ -15,7 +15,7 @@ android {
         minSdkVersion project.minVersion.toInteger()
         targetSdkVersion project.maxVersion.toInteger()
         multiDexEnabled true
-        versionCode 114
+        versionCode 117
         versionName "1.6.28"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -63,6 +63,13 @@ android {
         exclude 'META-INF/dependencies.txt'
     }
 
+    repositories {
+        maven {
+            url uri('mint-plugin-repo-5.2.5')
+        }
+
+    }
+
 
 }
 
@@ -93,6 +100,7 @@ dependencies {
     //implementation "com.moxtra:chat-sdk:5.0.15"
     //implementation "com.moxtra:chat-sdk:4.3.3"
     implementation "com.segment.analytics.android:analytics:4.+"
+    implementation 'com.splunk:mint-android-sdk:5.2.5'
     // implementation "com.google.android.gms:play-services-gcm:10.2.6"
     //implementation "com.google.android.gms:play-services-gcm:16.0.1"
 

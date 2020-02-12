@@ -34,6 +34,7 @@ import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.services.BackgroundTrackingService;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.moxtra.sdk.common.ContextWrapper;
+import com.splunk.mint.Mint;
 
 import zemin.notification.NotificationBuilder;
 import zemin.notification.NotificationDelegater;
@@ -62,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             //timer();
         }
         setProgressDialog();
+        Mint.initAndStartSession(this.getApplication(), "e80566ed");
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_TIMEOUT, false);
         stopService(new Intent(this, BackgroundTrackingService.class));
         mDelegater = NotificationDelegater.getInstance();
@@ -208,36 +210,35 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void setProgressDialog() {
         String Stringcode = "";
         String hashcode = "";
-       // try {
-            String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-            if (resposne != null){
-                ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+        // try {
+        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
+        if (resposne != null) {
+            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
 
-                if(demo == null){
-                    hashcode = "Green";
-                    Stringcode = "259b24";
-                }
-                else if(demo !=null) {
-                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                    hashcode = arr[0].trim();
-                    Stringcode = arr[1].trim();
-                }
-            }else  {
+            if (demo == null) {
                 hashcode = "Green";
-                Stringcode  = "259b24";
+                Stringcode = "259b24";
+            } else if (demo != null) {
+                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                hashcode = arr[0].trim();
+                Stringcode = arr[1].trim();
             }
-       // }catch (Exception e){e.printStackTrace();}
+        } else {
+            hashcode = "Green";
+            Stringcode = "259b24";
+        }
+        // }catch (Exception e){e.printStackTrace();}
 
 
         progressDialog = ProgressDialog.show(this, null, null);
-        if(hashcode.equals("Blue")){
+        if (hashcode.equals("Blue")) {
             progressDialog.setContentView(R.layout.progress_blue);
-        }else if (hashcode.equals("Black")){
+        } else if (hashcode.equals("Black")) {
             progressDialog.setContentView(R.layout.progress_black);
-        }else if (hashcode.equals("SkyBlue")){
+        } else if (hashcode.equals("SkyBlue")) {
             progressDialog.setContentView(R.layout.progress_skyblue);
-        }else {
+        } else {
             progressDialog.setContentView(R.layout.layout_progress_bar);
         }
         //progressDialog.setContentView(R.layout.layout_progress_bar);

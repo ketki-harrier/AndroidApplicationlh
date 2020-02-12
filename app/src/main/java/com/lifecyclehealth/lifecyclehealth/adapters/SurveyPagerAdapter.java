@@ -1,6 +1,8 @@
 package com.lifecyclehealth.lifecyclehealth.adapters;
 
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +20,7 @@ import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionTwoFragment;
 import com.lifecyclehealth.lifecyclehealth.fragments.SurveyOptionZeroFragment;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,8 +29,8 @@ import java.util.TimerTask;
  * Created by satyam on 14/04/2017.
  */
 
-//public class SurveyPagerAdapter extends FragmentPagerAdapter {
-public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
+public class SurveyPagerAdapter extends FragmentPagerAdapter {
+//public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
     public static List<SurveyDetailsModel> surveyDetails;
     CustomViewPager viewPager;
     public static int surveyPosition;
@@ -46,6 +49,7 @@ public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
         this.viewPager = null;
     }
 
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
@@ -58,7 +62,9 @@ public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
         surveyPosition = position;
         int typeOfSurvey = surveyDetailsModel.getQuestionModel().getTypeOfAnswer();
         Log.e("position", position + "");
-        final String data = new Gson().toJson(surveyDetailsModel);
+     //   final String data = new Gson().toJson(surveyDetailsModel);
+      //   Parcelable data1 = new Gson().toJson(surveyDetailsModel);
+        final Serializable data = new Gson().toJson(surveyDetailsModel);
         switch (typeOfSurvey) {
             case 0:
                 Log.e("call", "0");
@@ -76,7 +82,6 @@ public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
                 return SurveyOptionTwoFragment.newInstance(data, position);
             case 3:
                 Log.e("call", "3");
-                //return SurveyOptionZeroFragment.newInstance(data, position);
                 return SurveyOptionThreeFragment.newInstance(data, position);
             case 4:
                 Log.e("call", "4");
@@ -88,6 +93,7 @@ public class SurveyPagerAdapter extends FragmentStatePagerAdapter {
         }
 
     }
+
 
 
     @Override

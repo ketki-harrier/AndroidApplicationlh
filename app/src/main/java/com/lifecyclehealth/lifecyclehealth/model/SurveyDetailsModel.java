@@ -1,17 +1,40 @@
 package com.lifecyclehealth.lifecyclehealth.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  *
  * this is custom list made for view pager logic as answer type is inside sub-list and need to sum main list during view creation
  * this is combination of SURVEY STATUS MODEL and QUESTION MODEL;
  */
 
-public class SurveyDetailsModel {
+public class SurveyDetailsModel implements Serializable {
+//public class SurveyDetailsModel implements Parcelable {
+    @SerializedName("questionModel")
+    @Expose
     private QuestionModel questionModel;
+    @SerializedName("patientSurveySectionId")
+    @Expose
     private int patientSurveySectionId;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("description")
+    @Expose
     private String description;
+    @SerializedName("typeOfSection")
+    @Expose
     private int typeOfSection;
+
+
+
+
 
     public AnswerOption getAnswerOption() {
         return answerOption;
@@ -84,7 +107,7 @@ public class SurveyDetailsModel {
         this.typeOfSection = typeOfSection;
     }
 
-    @Override
+ /*   @Override
     public String toString() {
         return "SurveyDetailsModel{" +
                 "questionModel=" + questionModel +
@@ -93,7 +116,7 @@ public class SurveyDetailsModel {
                 ", description='" + description + '\'' +
                 ", typeOfSection=" + typeOfSection +
                 '}';
-    }
+    }*/
 
     public int getPagesQuantity() {
         return pagesQuantity;
@@ -192,5 +215,6 @@ public class SurveyDetailsModel {
     }
 
     private int pagePosition;
+
 
 }

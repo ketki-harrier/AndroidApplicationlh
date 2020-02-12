@@ -72,7 +72,7 @@
         android:layout_alignParentBottom="true">
 
         <com.lifecyclehealth.lifecyclehealth.custome.CustomFontButton
-            android:id="@+id/btn_invite"
+                android:id="@+id/btn_invite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin"

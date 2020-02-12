@@ -457,30 +457,35 @@ public abstract class BaseFragmentWithOptions extends Fragment {
         String hashcode = "";
         String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
         ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-        if (resposne != null) {
-            // ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
+        try {
+            if (resposne != null) {
+                // ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
 
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
+                String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
 
-            if (demo == null) {
+                if (demo == null) {
+                    hashcode = "Green";
+                    Stringcode = "259b24";
+                } else {
+                    String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
+                    hashcode = arr[0].trim();
+                    Stringcode = arr[1].trim();
+                }
+            } else if (colorCode.getVisualBrandingPreferences().getColorPreference().equals(null)) {
                 hashcode = "Green";
                 Stringcode = "259b24";
-            } else {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
             }
-        } else if (colorCode.getVisualBrandingPreferences().getColorPreference().equals(null)) {
-            hashcode = "Green";
-            Stringcode = "259b24";
-        }
 /*else if () {
                 Toast.makeText(activity, "Response Null", Toast.LENGTH_SHORT).show();
             }*/
-        else {
-            hashcode = "Green";
-            Stringcode = "259b24";
-        }
+            else if (resposne == null) {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            } else {
+                hashcode = "Green";
+                Stringcode = "259b24";
+            }
+        }catch (NullPointerException e){e.printStackTrace();}
 
 
         progressDialog = ProgressDialog.show(getActivity(), null, null);

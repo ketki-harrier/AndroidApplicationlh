@@ -136,7 +136,6 @@ public class MeetEventActivity extends BaseActivity {
         setContentView(R.layout.activity_meet);
 
 
-
         //try {
         String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
         ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
@@ -187,9 +186,9 @@ public class MeetEventActivity extends BaseActivity {
         showProgressDialog(true);
         String action = intent.getStringExtra(KEY_ACTION);
         if (ACTION_JOIN.equals(action)) {
-           joinMeet(intent);
+            joinMeet(intent);
 
-           // submitInviteList();
+            // submitInviteList();
 
 
         } else if (ACTION_START.equals(action)) {
@@ -403,7 +402,7 @@ public class MeetEventActivity extends BaseActivity {
 
             UserIds = new ArrayList<String>();
             // dialog = new Dialog(this.getApplicationContext());
-          //  dialog = new Dialog(view);
+            //  dialog = new Dialog(view);
             dialog = new Dialog(MeetEventActivity.this);
             //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             context = dialog.getContext();
@@ -486,7 +485,7 @@ public class MeetEventActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
 
-                      dialog.dismiss();
+                    dialog.dismiss();
                     //submitInviteList();
                     if (MeetInviteParticipantsAdapter.selectedParticipant.size() > 0) {
                         submitInviteList();
@@ -519,21 +518,20 @@ public class MeetEventActivity extends BaseActivity {
                 LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
             }*/
 
-             //   WindowManager.LayoutParams lp = new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE );
-                //lp = (WindowManager.LayoutParams)getSystemService(WINDOW_SERVICE);
+            //   WindowManager.LayoutParams lp = new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE );
+            //lp = (WindowManager.LayoutParams)getSystemService(WINDOW_SERVICE);
                 /*lp.copyFrom(dialog.getWindow().getAttributes());
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
                 lp.height = WindowManager.LayoutParams.WRAP_CONTENT;*/
-               // dialog.getWindow().setAttributes(lp);
-              /* dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);*/
-                dialog.show();
+            // dialog.getWindow().setAttributes(lp);
+            /* dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);*/
+            dialog.show();
 
             //  }
        /* catch (Exception e) {
             e.printStackTrace();
         }*/
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

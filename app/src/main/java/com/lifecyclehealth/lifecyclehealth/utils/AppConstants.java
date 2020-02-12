@@ -35,10 +35,10 @@ public class AppConstants {
     // public static final String BASE_URL = "http://192.168.0.132:3004/api/v1/";
 
     /*2) Test Url*/
-      public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
+  //    public static final String BASE_URL = "https://tst.api.lifecyclehealth.com/api/v1/";
 
     /*3) Production*/
-  //  public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
+    public static final String BASE_URL = "https://api.lifecyclehealth.com/api/v1/";
 
     /* URLS*/
     public static final String URL_SUPPORT = "secure/support";

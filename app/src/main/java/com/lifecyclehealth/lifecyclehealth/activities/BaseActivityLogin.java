@@ -31,6 +31,7 @@ import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.OnOkClick;
 import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
+import com.splunk.mint.Mint;
 
 import zemin.notification.NotificationBuilder;
 import zemin.notification.NotificationDelegater;
@@ -53,6 +54,7 @@ public abstract class BaseActivityLogin extends AppCompatActivity {
         setContentView(R.layout.base_activity);
         mInstance = this;
         setProgressDialog();
+        Mint.initAndStartSession(this.getApplication(), "e80566ed");
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_LOGINACTIVITY_ALIVE, true);
         MyApplication.getInstance().addBooleanToSharedPreference(AppConstants.IS_MAINACTIVITY_ALIVE, false);
         mDelegater = NotificationDelegater.getInstance();

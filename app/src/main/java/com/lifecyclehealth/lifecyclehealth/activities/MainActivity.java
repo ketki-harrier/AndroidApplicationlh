@@ -49,6 +49,7 @@ import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 import com.lifecyclehealth.lifecyclehealth.utils.MultipartRequest;
 import com.lifecyclehealth.lifecyclehealth.utils.NetworkRequestUtil;
 import com.lifecyclehealth.lifecyclehealth.utils.PreferenceUtils;
+import com.lifecyclehealth.lifecyclehealth.utils.SavedInstanceFragment;
 import com.moxtra.sdk.ChatClient;
 import com.moxtra.sdk.chat.model.Chat;
 import com.moxtra.sdk.chat.repo.ChatRepo;
@@ -94,9 +95,9 @@ public class MainActivity extends BaseActivity {
     private static MainActivity mInstance;
     final String moxtra_access_token = MyApplication.getInstance().getFromSharedPreference(AppConstants.Moxtra_Access_Token);
     //moxtra for prodution
-   // String BASE_DOMAIN = "www.moxtra.com";
+    String BASE_DOMAIN = "www.moxtra.com";
     //moxtra for test
-    String BASE_DOMAIN = "sandbox.moxtra.com";
+   // String BASE_DOMAIN = "sandbox.moxtra.com";
     boolean isPatient;
     public static ChatClientDelegate mChatClientDelegate;
     public static ChatRepo mChatRepo;
@@ -121,10 +122,26 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+      //  super.onCreate(SavedInstanceFragment.getInstance(getFragmentManager()).popData());
         setContentView(R.layout.content_main);
         printLog("onCreate");
         initialiseData();
     }
+
+   /* @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState( SavedInstanceFragment.getInstance( getFragmentManager() ).popData() );
+    }*/
+
+   @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SavedInstanceFragment.getInstance( getFragmentManager() ).pushData( (Bundle) outState.clone() );
+        outState.clear(); // We don't want a TransactionTooLargeException, so we handle things via the SavedInstanceFragment
+    }
+
 
     private void initialiseData() {
         mInstance = this;
@@ -696,7 +713,7 @@ public class MainActivity extends BaseActivity {
                 .replace(R.id.content_main, fragment, fragmentTag)
                 .addToBackStack(fragmentTag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     protected void replaceFragmentNotificationMessage(Fragment fragment) {
@@ -706,7 +723,7 @@ public class MainActivity extends BaseActivity {
                 .replace(R.id.content_main, fragment, fragmentTag)
                 .addToBackStack(fragmentTag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     /* Change fragment for survey Details view*/

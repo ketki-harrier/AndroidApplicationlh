@@ -51,6 +51,7 @@ import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,10 +90,11 @@ public class SurveyOptionZeroFragment extends BaseFragmentWithOptions {
 
 
 
-    public static SurveyOptionZeroFragment newInstance(String data, int position) {
+    public static SurveyOptionZeroFragment newInstance(Serializable data, int position) {
         SurveyOptionZeroFragment zeroFragment = new SurveyOptionZeroFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(SURVEY_EXTRAS_ZERO_TYPE, data);
+      //  bundle.putString(SURVEY_EXTRAS_ZERO_TYPE, data);
+        bundle.putSerializable(SURVEY_EXTRAS_ZERO_TYPE, data);
         zeroFragment.setArguments(bundle);
         pagePosition = position;
         return zeroFragment;

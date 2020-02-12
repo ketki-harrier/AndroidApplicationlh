@@ -37,6 +37,7 @@ import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
@@ -65,11 +66,12 @@ public class SurveyOptionOneFragment extends BaseFragmentWithOptions {
 
 
 
-    public static SurveyOptionOneFragment newInstance(String data, int position) {
+    public static SurveyOptionOneFragment newInstance(Serializable data, int position) {
         SurveyOptionOneFragment oneFragment = new SurveyOptionOneFragment();
         Bundle bundle = new Bundle();
         pagePosition = position;
-        bundle.putString(SURVEY_EXTRAS_ONE_TYPE, data);
+     //  bundle.putString(SURVEY_EXTRAS_ONE_TYPE, data);
+        bundle.putSerializable(SURVEY_EXTRAS_ONE_TYPE, data);
         oneFragment.setArguments(bundle);
 
         return oneFragment;
