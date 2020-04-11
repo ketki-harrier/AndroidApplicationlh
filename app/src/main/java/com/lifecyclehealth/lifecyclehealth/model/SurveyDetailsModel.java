@@ -14,7 +14,14 @@ import java.io.Serializable;
  * this is combination of SURVEY STATUS MODEL and QUESTION MODEL;
  */
 
+<<<<<<< Updated upstream
 public class SurveyDetailsModel implements Serializable {
+=======
+public class SurveyDetailsModel/* implements Serializable*/ {
+    //public Fragment fragment;
+
+
+>>>>>>> Stashed changes
 //public class SurveyDetailsModel implements Parcelable {
     @SerializedName("questionModel")
     @Expose

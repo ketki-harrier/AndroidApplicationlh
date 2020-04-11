@@ -2,6 +2,7 @@ package com.lifecyclehealth.lifecyclehealth.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 
 
 public class PreferenceUtils {
@@ -9,6 +10,8 @@ public class PreferenceUtils {
     private final static String PREF = "PREF";
     private final static String UNIQUE_ID = "UNIQUE_ID";
     private final static String PATIENT_NAME = "PATIENT_NAME";
+
+    public Fragment newfragment;
    // private final static Boolean E_SIGNATURE = "E_SIGNATURE";
 //    private final static String GCM_REG_ID = "GCM_REG_ID";
 //    private final static String APP_VERSION = "APP_VERSION";

@@ -4,17 +4,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+<<<<<<< Updated upstream
 import android.os.Handler;
+=======
+>>>>>>> Stashed changes
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+<<<<<<< Updated upstream
 import android.support.v7.widget.RecyclerView;
+=======
+>>>>>>> Stashed changes
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,7 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.lifecyclehealth.lifecyclehealth.R;
 import com.lifecyclehealth.lifecyclehealth.activities.MainActivity;
 import com.lifecyclehealth.lifecyclehealth.adapters.CustomViewPager;
@@ -30,15 +35,13 @@ import com.lifecyclehealth.lifecyclehealth.adapters.SurveyPagerAdapter;
 import com.lifecyclehealth.lifecyclehealth.application.MyApplication;
 import com.lifecyclehealth.lifecyclehealth.callbacks.VolleyCallback;
 import com.lifecyclehealth.lifecyclehealth.dto.SurveyDetailsQuestionDto;
-import com.lifecyclehealth.lifecyclehealth.model.ColorCode;
 import com.lifecyclehealth.lifecyclehealth.model.PatientSurveyItem;
 import com.lifecyclehealth.lifecyclehealth.model.QuestionModel;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyDetailsModel;
 import com.lifecyclehealth.lifecyclehealth.model.SurveyElectronicSubmitResponse;
 import com.lifecyclehealth.lifecyclehealth.model.SurveySection;
-//import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
-//import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListenerPager;
-import com.lifecyclehealth.lifecyclehealth.utils.AppConstants;
+import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListener;
+import com.lifecyclehealth.lifecyclehealth.utils.OnSwipeTouchListenerPager;
 import com.lifecyclehealth.lifecyclehealth.utils.PreferenceUtils;
 
 import org.json.JSONObject;
@@ -46,8 +49,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.BASE_URL;
 import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.PREF_IS_PATIENT;
@@ -70,12 +71,12 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     public static ArrayList<String> arrayKey;
     public static HashMap<String, Boolean> hashmapOfKey;
     public static HashMap<String, String> hashmapOfKeyTitle;
-    boolean checkflag = true;
 
     //scroll viewpager
     private static final float thresholdOffset = 0.1f;
     private static final int thresholdOffsetPixels = 1;
     public static boolean scrollStarted, checkDirection;
+<<<<<<< Updated upstream
     Boolean e_submit;
     Button prev, next;
     SurveyPagerAdapter pagerAdapter;
@@ -89,6 +90,9 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     final long PERIOD_MS = 3000;
     //static List<SurveySection> surveySection;
     int status = 0;
+=======
+    private String TAG = getClass().getSimpleName();
+>>>>>>> Stashed changes
 
 
     public static SurveyDetailsItemFragment newInstance(String data) {
@@ -96,7 +100,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         Bundle bundle = new Bundle();
         bundle.putString(SURVEY_EXTRAS_HOLDER, data);
         holderFragment.setArguments(bundle);
-        //  surveySection1 = null;
         return holderFragment;
     }
 
@@ -124,24 +127,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-        View rootview = inflater.inflate(R.layout.fragment_survey_details_holder, container, false);
-        prev = (Button) rootview.findViewById(R.id.prev);
-    /*    prev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-            }
-        });*/
-        next = (Button) rootview.findViewById(R.id.next);
-       /* next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-            }
-        });*/
-
-        return rootview;
+        return inflater.inflate(R.layout.fragment_survey_details_holder, container, false);
     }
 
     @Override
@@ -162,95 +148,35 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
 
     private void initView(View view) {
         viewPager = (CustomViewPager) view.findViewById(R.id.viewPager);
-        viewPager.setOffscreenPageLimit(0);
-//        getSurveyList(surveyItem.getPatientSurveyResponseId());
-        //next.setBackgroundResource(R.drawable.next_light_blue);
-        // prev.setBackgroundResource(R.drawable.prev_light_blue);
-        getSurveyList1(surveyItem.getPatientSurveyResponseId());
-        String resposne = MyApplication.getInstance().getColorCodeJson(AppConstants.SET_COLOR_CODE);
-        if (resposne != null) {
-            ColorCode colorCode = new Gson().fromJson(resposne, ColorCode.class);
-            String demo = colorCode.getVisualBrandingPreferences().getColorPreference();
-            String Stringcodes = "";
-            String hashcode = "";
-
-            /*if (demo == null) {
-                hashcode = "Green";
-                Stringcode = "259b24";
-                next.setBackgroundResource(R.drawable.next_green);
-                prev.setBackgroundResource(R.drawable.prev_green);
-            } else*/
-            if (demo != null) {
-                String[] arr = colorCode.getVisualBrandingPreferences().getColorPreference().split("#");
-                hashcode = arr[0].trim();
-                Stringcode = arr[1].trim();
-             /*   }
-               else*/
-             /*   if (hashcode.equals("Black") && Stringcode.length() < 6) {
-                    //Stringcode = "#333333";
-                    Stringcode = "333333";
-                    next.setBackgroundResource(R.drawable.next_blck);
-                    prev.setBackgroundResource(R.drawable.prev_black);
-                }*/
-
-                if (hashcode.equals("SkyBlue")) {
-                    //Stringcode = "#333333";
-                    //   Stringcode = "189ad3";
-                    next.setBackgroundResource(R.drawable.next_light_blue);
-                    prev.setBackgroundResource(R.drawable.prev_light_blue);
-                } else if (hashcode.equals("Green")) {
-                    //Stringcode = "#333333";
-                    //   Stringcode = "189ad3";
-                    next.setBackgroundResource(R.drawable.next_green);
-                    prev.setBackgroundResource(R.drawable.prev_green);
-                } else if (hashcode.equals("Black")) {
-                    //Stringcode = "#333333";
-                    //   Stringcode = "189ad3";
-                    next.setBackgroundResource(R.drawable.next_blck);
-                    prev.setBackgroundResource(R.drawable.prev_black);
-                } else if (hashcode.equals("Blue")) {
-                    //Stringcode = "#333333";
-                    //   Stringcode = "189ad3";
-                    next.setBackgroundResource(R.drawable.next_blue);
-                    prev.setBackgroundResource(R.drawable.prev_blue);
-                }
-            }
-        }
-
-        // next.setBackgroundResource(R.drawable.next_light_blue);
-        // prev.setBackgroundResource(R.drawable.prev_light_blue);
+        getSurveyList(surveyItem.getPatientSurveyResponseId());
     }
-
 
     /* Set view pager with values*/
     private void setViewPager(final List<SurveySection> surveySection) {
         arrayKey = new ArrayList<String>();
         hashmapOfKey = new HashMap<String, Boolean>();
         hashmapOfKeyTitle = new HashMap<String, String>();
-        //checkflag = false;
 
-        for (int i = 0; i < getListFormattedForViewCreation(surveySection).size(); i++) {
-            arrayKey.add(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId());
-            hashmapOfKeyTitle.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), getListFormattedForViewCreation(surveySection).get(i).getName());
+        if (getListFormattedForViewCreation(surveySection) != null) {
+            for (int i = 0; i < getListFormattedForViewCreation(surveySection).size(); i++) {
+                arrayKey.add(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId());
+                hashmapOfKeyTitle.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), getListFormattedForViewCreation(surveySection).get(i).getName());
 
-            if (getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().isRequired()) {
-
-
-                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), false);
-            } else {
-                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), true);
+                if (getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().isRequired()) {
+                    hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), false);
+                } else {
+                    hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), true);
+                }
             }
         }
 
-
-        pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
-        // pagerAdapter = new SurveyPagerAdapter(this.getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
+        final SurveyPagerAdapter pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
         viewPager.setAdapter(pagerAdapter);
-
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+<<<<<<< Updated upstream
                 //  Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
                 Log.d("position", position + "");
                 printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
@@ -374,195 +300,79 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                         @Override
                                         public void onSwipeOutAtStart() {
                                             printLog("swipe start");
-                                        }
+=======
+                //Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
+//                Log.d("position", position + "");
+//                printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
+//                printLog("Total arraysize" + arrayKey.size());
 
-                                        @Override
-                                        public void onSwipeOutAtEnd() {
-                                            printLog("swipe end");
+                try {
+                    int status = 0;
+                    if (arrayKey != null) {
+                        if (checkDirection) {
+                            if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
+                                //for completed
+                                if (SurveyDetailsListFragment.isCompleted) {
+                                    if (arrayKey.size() == 1) {
+                                        if (arrayKey.size() <= (viewPager.getCurrentItem())) {
+                                            showScore(getListFormattedForViewCreation(surveySection).get(0));
+>>>>>>> Stashed changes
+                                        }
+                                    } else {
+                                        if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                            showScore(getListFormattedForViewCreation(surveySection).get(0));
+                                        }
+                                    }
+                                } else if (SurveyDetailsListFragment.isToDo) {
+                                    int currentPage = viewPager.getCurrentItem();
+                                    printLog("Total arraysize" + arrayKey.size());
+                                    printLog("currentPage" + currentPage);
+                                    String s = arrayKey.get(currentPage);
+                                    boolean a = hashmapOfKey.get(s);
+
+                                    if (hashmapOfKey.get(s)) {
+                                        viewPager.disableScroll(false);
+                                        status = 0;
+                                    } else {
+                                        selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                        viewPager.disableScroll(true);
+                                        // viewPager.beginFakeDrag();
+                                        status = 1;
+                                        //selectSurveyDialog(hashmapOfKeyTitle.get(s));
+                                    }
+                                    if (status == 0) {
+                                        SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
+                                        if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(true))) {
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
+                                        } else if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(false))) {
+                                            mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
-                                    });*/
-                                    } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
-                                        mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-                checkDirection = false;
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if (!scrollStarted && state == ViewPager.SCROLL_STATE_DRAGGING) {
-                    scrollStarted = true;
-                    checkDirection = true;
-
-
-                    // handler.removeCallbacks(Update);
-                } else {
-
-                    scrollStarted = false;
-                }
-
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-
-
-                }
-            }
-        });
-
-    }
-
-
-    /* Set view pager with values*/
-    /*private void setViewPager1(final List<SurveySection> surveySection) {
-        arrayKey = new ArrayList<String>();
-        hashmapOfKey = new HashMap<String, Boolean>();
-        hashmapOfKeyTitle = new HashMap<String, String>();
-
-        for (int i = 0; i < getListFormattedForViewCreation(surveySection).size(); i++) {
-            arrayKey.add(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId());
-            hashmapOfKeyTitle.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), getListFormattedForViewCreation(surveySection).get(i).getName());
-
-            if (getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().isRequired()) {
-
-
-                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), false);
-            } else {
-                hashmapOfKey.put(getListFormattedForViewCreation(surveySection).get(i).getQuestionModel().getPatientSurveyId(), true);
-            }
-        }
-
-
-        pagerAdapter = new SurveyPagerAdapter(getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
-        // pagerAdapter = new SurveyPagerAdapter(this.getChildFragmentManager(), getListFormattedForViewCreation(surveySection));
-        viewPager.setAdapter(pagerAdapter);
-
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //  Toast.makeText(mainActivity, "position" + position, Toast.LENGTH_SHORT).show();
-                Log.d("position", position + "");
-                printLog("Total pages quantity" + getListFormattedForViewCreation(surveySection).get(0).getPagesQuantity() + "");
-                printLog("Total arraysize" + arrayKey.size());
-
-                //  Toast.makeText(mainActivity, "" + positionOffset, Toast.LENGTH_SHORT).show();
-                //   Toast.makeText(mainActivity, "" + positionOffsetPixels, Toast.LENGTH_SHORT).show();
-
-                e_submit = PreferenceUtils.getESignature(getContext()).equals(true);
-
-                status = 0;
-                if (checkflag) {
-                    if (checkDirection) {
-                        if (thresholdOffset > positionOffset && positionOffsetPixels > thresholdOffsetPixels) {
-                            //for completed
-                            if (SurveyDetailsListFragment.isCompleted) {
-                                if (arrayKey.size() == 1) {
-                                    if (arrayKey.size() <= (viewPager.getCurrentItem())) {
-                                        //   viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+                            } else {
+                                printLog("left");
+                                if (SurveyDetailsListFragment.isCompleted) {
+                                    if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
                                         showScore(getListFormattedForViewCreation(surveySection).get(0));
                                     }
-                                } else {
-                                    //Nikhil
-                                    if (arrayKey.size() < (viewPager.getCurrentItem()) +1) {
-                                        //     viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-                                        showScore(getListFormattedForViewCreation(surveySection).get(0));
-                                    }
+                                }  //*if (SurveyDetailsListFragment.isSchedule) {
+                                if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
+                                    //showScore(getListFormattedForViewCreation(surveySection).get(0));
                                 }
-                            } else if (SurveyDetailsListFragment.isToDo) {
+                                //*else if (SurveyDetailsListFragment.isToDo) {
                                 int currentPage = viewPager.getCurrentItem();
                                 printLog("Total arraysize" + arrayKey.size());
                                 printLog("currentPage" + currentPage);
                                 String s = arrayKey.get(currentPage);
-                                boolean a = hashmapOfKey.get(s);
-                                //   final Handler handler = new Handler();
-                                //  Runnable mLoopingRunnable = null;
-
                                 if (hashmapOfKey.get(s)) {
-
-
-                                    //handler.removeCallbacks(Update);
                                     viewPager.disableScroll(false);
-                                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                                    *//* changes 08/11/19*//*
-                                    //viewPager.setOffscreenPageLimit(0);
-                                    //  viewPager.setOffscreenPageLimit(arrayKey.size() - 1);
                                     status = 0;
                                 } else {
-                                    viewPager.disableScroll(true);
-                                    //   viewPager.invalidate();
-                                    //   viewPager.setEnabled(false);
                                     selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                                    viewPager.setCurrentItem(viewPager.getCurrentItem(), false);
-                                    //      pagerAdapter.notifyDataSetChanged();
-                                    //viewPager.setOnTouchListener(null);
+                                    viewPager.getCurrentItem();
                                     //viewPager.beginFakeDrag();
-                                    //viewPager.setPagingEnabled(false);
-                                    //viewPager.getCurrentItem();
+                                    //  viewPager.disableScroll(true);
                                     status = 1;
-                                    //  viewPager.setOffscreenPageLimit(arrayKey.size() - 1);
-                                    //viewPager.setOffscreenPageLimit(0);
-
-                                    //selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                                }
-                                if (status == 0) {
-                                    SurveyDetailsModel surveyDetailsModel = getListFormattedForViewCreation(surveySection).get(0);
-                                    if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(true))) {
-                                        mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                    } else if (surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1 && (PreferenceUtils.getESignature(getContext()).equals(false))) {
-                                        mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                    }
-                                }
-                            }
-                        } else {
-                            //   final Handler handler = new Handler();
-                            //   Runnable mLoopingRunnable = null;
-                            printLog("left");
-                            if (SurveyDetailsListFragment.isCompleted) {
-                                if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
-                                    showScore(getListFormattedForViewCreation(surveySection).get(0));
-                                }
-                            } *//*else if (SurveyDetailsListFragment.isSchedule) {
-                                if (arrayKey.size() <= (viewPager.getCurrentItem()) + 1) {
-                                    showScore(getListFormattedForViewCreation(surveySection).get(0));
-                                }
-                            }*//* else if (SurveyDetailsListFragment.isToDo) {
-                                int currentPage = viewPager.getCurrentItem();
-                                printLog("Total arraysize" + arrayKey.size());
-                                printLog("currentPage" + currentPage);
-                                String s = arrayKey.get(currentPage);
-                                if (hashmapOfKey.get(s)) {
-
-                                    viewPager.disableScroll(false);
-                                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                                    status = 0;
-                                } else {
-
-
-                                    // handler.removeCallbacks(Update);
-                                    // handler.postDelayed(Update, 3000);
-                                    // viewPager.getCurrentItem();
-                                    // viewPager.setOffscreenPageLimit(arrayKey.size() - 1);
-                                    //viewPager.setOmit(1);
-                                    //    viewPager.ffscreenPageLibeginFakeDrag();
-                                    viewPager.disableScroll(true);
-                                    //  viewPager.invalidate();
-                                    //   viewPager.setEnabled(false);
-                                    selectSurveyDialog(hashmapOfKeyTitle.get(s));
-                                    *//* new changes 20/12/19*//*
-                                    viewPager.setCurrentItem(viewPager.getCurrentItem(), false);
-                                    //  pagerAdapter.notifyDataSetChanged();
-                                    //  viewPager.setPagingEnabled(false);
-                                    status = 1;
-
                                     // selectSurveyDialog(hashmapOfKeyTitle.get(s));
                                 }
 
@@ -572,7 +382,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     if ((surveyDetailsModel.getPagesQuantity() <= (viewPager.getCurrentItem()) + 1)) {
                                         if (PreferenceUtils.getESignature(getContext()).equals(true)) {
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
-                                  *//* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
+                                  /* viewPager.setOnSwipeOutListener(new CustomViewPager.OnSwipeOutListener() {
                                         @Override
                                         public void onSwipeOutAtStart() {
                                             printLog("swipe start");
@@ -583,7 +393,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                             printLog("swipe end");
                                             mainActivity.changeToSurveyElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
-                                    });*//*
+                                    });*/
                                         } else if (PreferenceUtils.getESignature(getContext()).equals(false)) {
                                             mainActivity.changeToSurveyNonElectronicSubmit(surveyDetailsModel.getPatient_Survey_ResponseID(), surveyDetailsModel.getSurveyID());
                                         }
@@ -593,6 +403,8 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                         }
                     }
                     checkDirection = false;
+                } catch (Exception e) {
+                    Log.e(TAG, "onPageScrolled " + e.getMessage());
                 }
             }
 
@@ -606,6 +418,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                 if (!scrollStarted && state == ViewPager.SCROLL_STATE_DRAGGING) {
                     scrollStarted = true;
                     checkDirection = true;
+<<<<<<< Updated upstream
                     // handler.removeCallbacks(Update);
                 } else {
 
@@ -1081,6 +894,13 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         }
 
         return Math.abs((currentIndex + change) % total);
+=======
+                } else {
+                    scrollStarted = false;
+                }
+            }
+        });
+>>>>>>> Stashed changes
     }
 
     public static void scrollViewPager1() {
@@ -1098,7 +918,6 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     private void showScore(SurveyDetailsModel surveyDetailsModel1) {
         viewPager.disableScroll(false);
         int currentItem = viewPager.getCurrentItem();
-
         printLog("current page" + currentItem);
         SurveyDetailsModel surveyDetailsModel = surveyDetailsModel1;
 
@@ -1114,12 +933,18 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     }
 
     /* reconstruct List for view creation*/
+<<<<<<< Updated upstream
    // private List<SurveyDetailsModel> getListFormattedForViewCreation(List<SurveySection> surveySection) {
+=======
+>>>>>>> Stashed changes
     private List<SurveyDetailsModel> getListFormattedForViewCreation(List<SurveySection> surveySection) {
         List<SurveyDetailsModel> detailsModels = new ArrayList<>();
         for (SurveySection section : surveySection) {
             for (QuestionModel questionModel : section.getQuestionModels()) {
+<<<<<<< Updated upstream
                // SurveyDetailsModel detailsModel = new SurveyDetailsModel();
+=======
+>>>>>>> Stashed changes
                 SurveyDetailsModel detailsModel = new SurveyDetailsModel();
                 detailsModel.setDescription(section.getDescription());
                 detailsModel.setName(section.getName());
@@ -1142,7 +967,11 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         return detailsModels;
     }
 
+<<<<<<< Updated upstream
    /* private void getSurveyList(int id) {
+=======
+    private void getSurveyList(int id) {
+>>>>>>> Stashed changes
         showProgressDialog(true);
         String url;
         if (isPatient) {
@@ -1163,6 +992,7 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 // printLog("QuestionDto" + questionDto);
                                 if (questionDto.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     int id = questionDto.getSurveyQuestion().getSurveyDetails().getSurveyId();
+<<<<<<< Updated upstream
                                     final List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
                                     printLog("Type: " + questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus());
 
@@ -1229,6 +1059,9 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                 if (questionDto.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     int id = questionDto.getSurveyQuestion().getSurveyDetails().getSurveyId();
                                     final List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
+=======
+                                    List<SurveySection> surveySection = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection();
+>>>>>>> Stashed changes
                                     printLog("Type: " + questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus());
 
                                     /*if (questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseStatus().equals("Completed")) {
@@ -1244,24 +1077,27 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
                                     }*/
 
                                     int questionSize = 0;
-                                    for (int i = 0; i < questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().size(); i++) {
-                                        questionSize = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().get(i).getQuestionModels().size() + questionSize;
-                                    }
+                                    try {
+                                        for (int i = 0; i < questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().size(); i++) {
+                                            questionSize = questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().get(i).getQuestionModels().size() + questionSize;
+                                        }
 
-                                    for (int i = 0; i < questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().size(); i++) {
-                                        surveySection.get(i).setPatient_Survey_ResponseID(questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseId());
-                                        //surveySection.get(i).setSizeOfSurvey(surveySection.get(i).getQuestionModels().size());
-                                        surveySection.get(i).setSizeOfSurvey(questionSize);
-                                        surveySection.get(i).setSurveyID(id + "");
-                                        surveySection.get(i).setPatient_Total_Survey_Score(questionDto.getSurveyQuestion().getSurveyDetails().getTotalSurveyScore());
-                                        surveySection.get(i).setSubmission_DateTime(questionDto.getSurveyQuestion().getSurveyDetails().getSubmissionDateAndTime());
-                                        surveySection.get(i).setSubmitting_User_FirstName(questionDto.getSurveyQuestion().getSurveyDetails().getSubmittingUserFirstName());
-                                        surveySection.get(i).setSubmitting_User_LastName(questionDto.getSurveyQuestion().getSurveyDetails().getSubmittingUserLastName());
-                                        surveySection.get(i).setFirstName(questionDto.getSurveyQuestion().getSurveyDetails().getFirstName());
-                                        surveySection.get(i).setLastName(questionDto.getSurveyQuestion().getSurveyDetails().getLastName());
+                                        for (int i = 0; i < questionDto.getSurveyQuestion().getSurveyDetails().getSurveySection().size(); i++) {
+                                            surveySection.get(i).setPatient_Survey_ResponseID(questionDto.getSurveyQuestion().getSurveyDetails().getPatientSurveyResponseId());
+                                            //surveySection.get(i).setSizeOfSurvey(surveySection.get(i).getQuestionModels().size());
+                                            surveySection.get(i).setSizeOfSurvey(questionSize);
+                                            surveySection.get(i).setSurveyID(id + "");
+                                            surveySection.get(i).setPatient_Total_Survey_Score(questionDto.getSurveyQuestion().getSurveyDetails().getTotalSurveyScore());
+                                            surveySection.get(i).setSubmission_DateTime(questionDto.getSurveyQuestion().getSurveyDetails().getSubmissionDateAndTime());
+                                            surveySection.get(i).setSubmitting_User_FirstName(questionDto.getSurveyQuestion().getSurveyDetails().getSubmittingUserFirstName());
+                                            surveySection.get(i).setSubmitting_User_LastName(questionDto.getSurveyQuestion().getSurveyDetails().getSubmittingUserLastName());
+                                            surveySection.get(i).setFirstName(questionDto.getSurveyQuestion().getSurveyDetails().getFirstName());
+                                            surveySection.get(i).setLastName(questionDto.getSurveyQuestion().getSurveyDetails().getLastName());
+                                        }
+                                    } catch (Exception e) {
+                                        Log.e(TAG, "onJSONSuccess " + e.getMessage());
                                     }
-
-                                    setViewPager1(surveySection);
+                                    setViewPager(surveySection);
                                 } else showDialogWithOkButton(questionDto.getMessage());
 
                             } else
@@ -1283,14 +1119,35 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
         }
     }
 
-
     private void selectSurveyDialog(String title) {
         AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(mainActivity);
-        } else {
-            builder = new AlertDialog.Builder(mainActivity);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(mainActivity);
+            } else {
+                builder = new AlertDialog.Builder(mainActivity);
+            }
+            builder.setMessage("Please answer all mandatory question marked with asterisk(*)")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setTitle(title);
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            viewPager.setOffscreenPageLimit(1);
+
+            final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+            positiveButtonLL.gravity = Gravity.CENTER;
+            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
+            positiveButton.setLayoutParams(positiveButtonLL);
+        } catch (Exception e) {
+            Log.e(TAG, "onselectSurveyDialog " + e.getMessage());
         }
+<<<<<<< Updated upstream
         builder.setMessage("Please answer all mandatory question marked with asterisk(*)")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -1316,4 +1173,8 @@ public class SurveyDetailsItemFragment extends BaseFragmentWithOptions {
     }
 
 
+=======
+
+    }
+>>>>>>> Stashed changes
 }

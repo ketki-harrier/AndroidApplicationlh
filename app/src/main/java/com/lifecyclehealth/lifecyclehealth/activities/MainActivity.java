@@ -95,7 +95,11 @@ public class MainActivity extends BaseActivity {
     private static MainActivity mInstance;
     final String moxtra_access_token = MyApplication.getInstance().getFromSharedPreference(AppConstants.Moxtra_Access_Token);
     //moxtra for prodution
+<<<<<<< Updated upstream
     String BASE_DOMAIN = "www.moxtra.com";
+=======
+    //String BASE_DOMAIN = "www.moxtra.com";
+>>>>>>> Stashed changes
     //moxtra for test
    // String BASE_DOMAIN = "sandbox.moxtra.com";
     boolean isPatient;
@@ -110,6 +114,8 @@ public class MainActivity extends BaseActivity {
     // public static String messageCount = "0";
     public static BottomBar bottomBar, bottomBarCaregiver;
     public static boolean meetPushNotification = false;
+
+    public Fragment fragmentforSurvey;
 
     String value = "0";
     public ColorCode colorCode;

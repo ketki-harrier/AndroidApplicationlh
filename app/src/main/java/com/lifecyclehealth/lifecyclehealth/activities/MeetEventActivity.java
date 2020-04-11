@@ -110,7 +110,7 @@ public class MeetEventActivity extends BaseActivity {
     public static void joinMeet(Context ctx) {
         Intent intent = new Intent(ctx, MeetEventActivity.class);
         intent.putExtra(KEY_ACTION, ACTION_JOIN);
-        // intent.putExtra(KEY_MEET, meet);
+//         intent.putExtra(KEY_MEET, meet);
         ctx.startActivity(intent);
     }
 
@@ -125,6 +125,7 @@ public class MeetEventActivity extends BaseActivity {
     public static void showMeet(Context ctx) {
         Intent intent = new Intent(ctx, MeetEventActivity.class);
         intent.putExtra(KEY_ACTION, ACTION_SHOW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(intent);
 
     }
@@ -233,15 +234,16 @@ public class MeetEventActivity extends BaseActivity {
 
             @Override
             public void onError(int errorCode, String errorMsg) {
-                Log.e(TAG, "Failed to join meet, errorCode=" + errorCode + ", errorMsg=" + errorMsg);
 
-                showDialogWithOkButton("Join Meet failed. Please check Meet ID and try again.", new OnOkClick() {
+                Log.e(TAG, "Failed to join meet, errorCode=" + errorCode + ", errorMsg=" + errorMsg);
+                finishInMainThread();
+               /* showDialogWithOkButton("Join Meet failed. Please check Meet ID and try again.", new OnOkClick() {
                     @Override
                     public void OnOkClicked() {
                         showProgressDialog(false);
                         finishInMainThread();
                     }
-                });
+                });*/
             }
         });
 
@@ -271,7 +273,20 @@ public class MeetEventActivity extends BaseActivity {
                 meetSessionConfig.setAutoJoinVoIPEnabled(true);
                 meetSessionConfig.setMeetIDEnabled(false);
                 meetSessionConfig.setMeetLinkEnabled(false);
+//                meetSessionConfig.setAutoStartVideoEnabled(true);
+//                meetSessionConfig.setVideoEnabled(true);
 
+                mMeetSession.startVideo(1, new ApiCallback<Void>() {
+                    @Override
+                    public void onCompleted(Void aVoid) {
+
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+                });
 
                 mMeetSession.inviteParticipants(userList, new ApiCallback<Void>() {
                     @Override
@@ -293,14 +308,15 @@ public class MeetEventActivity extends BaseActivity {
             public void onError(int errorCode, String errorMsg) {
                 Log.e(TAG, "Failed to start meet, errorCode=" + errorCode + ", errorMsg=" + errorMsg);
                 //finishInMainThread();
-
-                showDialogWithOkButton("Join Meet failed. Please check Meet ID and try again.", new OnOkClick() {
+                showProgressDialog(false);
+                finishInMainThread();
+                /*showDialogWithOkButton("Join Meet failed. Please check Meet ID and try again.", new OnOkClick() {
                     @Override
                     public void OnOkClicked() {
                         showProgressDialog(false);
                         finishInMainThread();
                     }
-                });
+                });*/
             }
         });
     }
@@ -318,6 +334,7 @@ public class MeetEventActivity extends BaseActivity {
         return null;
     }
 
+    //    BATMAN
     private void showMeetFragment() {
         mHandler.post(new Runnable() {
             @Override
@@ -336,6 +353,7 @@ public class MeetEventActivity extends BaseActivity {
                     fragment = mMeetSessionController.createMeetFragment();
                     getSupportFragmentManager().beginTransaction().add(R.id.meet_frame, fragment).commit();
                 }
+
                 mMeetSessionController.setSwitchToNormalViewActionListener(new ActionListener<Void>() {
                     @Override
                     public void onAction(View view, Void aVoid) {
@@ -374,13 +392,29 @@ public class MeetEventActivity extends BaseActivity {
                     }
                 });
 
+                mMeetSession.startVideo(1, new ApiCallback<Void>() {
+                    @Override
+                    public void onCompleted(Void aVoid) {
+
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+                });
 
                 MeetSessionConfig meetSessionConfig = new MeetSessionConfig();
                 meetSessionConfig.setVoIPEnabled(true);
                 meetSessionConfig.setAutoJoinVoIPEnabled(true);
                 meetSessionConfig.setMeetIDEnabled(false);
-                mMeetSessionController.setMeetSessionConfig(meetSessionConfig);
+//                meetSessionConfig.setAutoStartVideoEnabled(true);
+//                meetSessionConfig.setVideoEnabled(true);
 
+//                System.out.println("In Video Camera");
+//                Toast.makeText(getApplicationContext(), "In video", Toast.LENGTH_LONG).show();
+
+                mMeetSessionController.setMeetSessionConfig(meetSessionConfig);
                 showProgressDialog(false);
             }
         });

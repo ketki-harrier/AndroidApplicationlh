@@ -100,7 +100,7 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.seedValue;
 public class ScheduleMeet extends BaseFragmentWithOptions {
 
 
-    String Name, Patient_UserID, PatientID, Title, Episode_Care_PlanID, Episode_Care_Plan_Name , Timezone;
+    String Name, Patient_UserID, PatientID, Title, Episode_Care_PlanID, Episode_Care_Plan_Name, userIDPatient;
     ArrayList<String> UserIDs = new ArrayList<>();
     private Button btnInvitees, btnCancel, startMeet;
     private EditText meetingTitle;
@@ -259,6 +259,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 switch (checkedId) {
                     case R.id.patient_related_episode:
                         selectedTypePatient = 2;
+                        UserIDs.clear();
+                        userIDPatient = "";
                         patient_related_episode.setSupportButtonTintList(getColorList());
                         patient_related_episode.setChecked(true);
                         provider_patient_with_no_episode.setSupportButtonTintList(deSelectColorList());
@@ -268,11 +270,14 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         linear_provider_patient_with_no_episode.setVisibility(View.GONE);
                         setSpinnerAdapter();
                         getPatientList();
+                        meetingTitle.setText("eVisit");
                         comingFromMultiplePatient = false;
                         break;
 
                     case R.id.provider_patient_with_no_episode:
                         selectedTypePatient = 3;
+                        UserIDs.clear();
+                        userIDPatient = "";
                         provider_patient_with_no_episode.setSupportButtonTintList(getColorList());
                         provider_patient_with_no_episode.setChecked(true);
                         patient_related_episode.setSupportButtonTintList(deSelectColorList());
@@ -281,11 +286,14 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         linear_patient_related_episode.setVisibility(View.GONE);
                         linear_provider_patient_with_no_episode.setVisibility(View.VISIBLE);
                         getPatientList();
+                        meetingTitle.setText("eVisit");
                         comingFromMultiplePatient = false;
                         break;
 
                     case R.id.provider_to_provider:
                         selectedTypePatient = 1;
+                        UserIDs.clear();
+                        userIDPatient = "";
                         provider_to_provider.setSupportButtonTintList(getColorList());
                         provider_to_provider.setChecked(true);
                         provider_patient_with_no_episode.setSupportButtonTintList(deSelectColorList());
@@ -298,6 +306,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                     case R.id.provider_with_multiple_patient:
                         selectedTypePatient = 4;
+                        UserIDs.clear();
+                        userIDPatient = "";
                         provider_with_multiple_patient.setSupportButtonTintList(getColorList());
                         provider_with_multiple_patient.setChecked(true);
                         provider_patient_with_no_episode.setSupportButtonTintList(deSelectColorList());
@@ -322,7 +332,13 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 if (position > 0) {
                     PatientID = PatientNameListId.get(position);
                     Patient_UserID = PatientNameListUserID.get(position);
+<<<<<<< Updated upstream
 
+=======
+                    UserIDs.add(Patient_UserID);
+                    userIDPatient = Patient_UserID;
+                    meetingTitle.setText("eVisit-" + " " + spinnerPatientName.getSelectedItem());
+>>>>>>> Stashed changes
                     if (Patient_UserID.equals("-99")) {
                         EpisodeStatusList = new ArrayList<String>();
                         EpisodeNameList = new ArrayList<String>();
@@ -337,6 +353,22 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                     } else {
                         callPatientEpisodeList(PatientNameListId.get(position));
                     }
+                }else if(position == 0){
+                    meetingTitle.setText("eVisit");
+                    PatientID = "";
+                    Patient_UserID = "";
+                    userIDPatient = "";
+                    UserIDs.clear();
+                    EpisodeStatusList = new ArrayList<String>();
+                    EpisodeNameList = new ArrayList<String>();
+                    EpisodeNameListId = new ArrayList<String>();
+                    EpisodeNameList.add("Select Episode");
+                    EpisodeNameListId.add("-99");
+                    EpisodeStatusList.add("-99");
+
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, EpisodeNameList);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_episode_name.setAdapter(dataAdapter);
                 }
             }
 
@@ -353,6 +385,20 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 if (position > 0) {
                     PatientID = PatientNameListId.get(position);
                     Patient_UserID = PatientNameListUserID.get(position);
+<<<<<<< Updated upstream
+=======
+                    userIDPatient = Patient_UserID;
+//                    UserIDs.add(Patient_UserID);
+                    meetingTitle.setText("eVisit-" + " " + spinner_no_episode_PatientName.getSelectedItem());
+//                    System.out.println("SMM111==> " + Patient_UserID);
+                    getInviteesWithOutEpisode(PatientID, false);
+
+                }else if(position == 0){
+                    meetingTitle.setText("eVisit");
+                    PatientID = "";
+                    Patient_UserID = "";
+                    userIDPatient = "";
+>>>>>>> Stashed changes
                 }
             }
 
@@ -397,8 +443,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     private View.OnClickListener inviteesListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Analytics.with(getContext()).track("Invite participants for evisit during scheduling eVisit", new Properties().putValue("category", "Mobile"));
+            getInvitees();
+        }
+    };
 
+<<<<<<< Updated upstream
             switch (selectedTypePatient) {
                 case 1: {
                     if (meetingTitle.getText().toString().trim().equals("")) {
@@ -406,21 +455,20 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         return;
                     }
                     Name = meetingTitle.getText().toString();
+=======
 
-                    getInviteesWithOutEpisode("");
-                    break;
-                }
-                case 4: {
-                    if (meetingTitle.getText().toString().trim().equals("")) {
-                        showDialogWithOkButton("Please enter meeting title");
-                        return;
-                    }
-                    Name = meetingTitle.getText().toString();
-                    getInviteesWithOutEpisode("");
-                    break;
-                }
-                case 2: {
+    private void getInvitees() {
+        Analytics.with(getContext()).track("Invite participants for evisit during scheduling eVisit", new Properties().putValue("category", "Mobile"));
+>>>>>>> Stashed changes
 
+        switch (selectedTypePatient) {
+            case 1: {
+                if (meetingTitle.getText().toString().trim().equals("")) {
+                    showDialogWithOkButton("Please enter meeting title");
+                    return;
+                }
+
+<<<<<<< Updated upstream
                     int position = spinner_episode_name.getSelectedItemPosition();
                     int positionPatient = spinnerPatientName.getSelectedItemPosition();
                     Episode_Care_Plan_Name = EpisodeNameList.get(position);
@@ -439,10 +487,19 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         selectedEpisode = EpisodeNameListId.get(position);
                     }
                     Name = meetingTitle.getText().toString();
+=======
+                Name = meetingTitle.getText().toString();
+>>>>>>> Stashed changes
 
-                    getInviteesWithEpisode();
-                    break;
+                getInviteesWithOutEpisode("", true);
+                break;
+            }
+            case 4: {
+                if (meetingTitle.getText().toString().trim().equals("")) {
+                    showDialogWithOkButton("Please enter meeting title");
+                    return;
                 }
+<<<<<<< Updated upstream
                 case 3: {
                     selectedEpisode = "";
                     Episode_Care_Plan_Name = "";
@@ -454,17 +511,62 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         showDialogWithOkButton("Please select Patient");
                         return;
                     }
-
-                    Name = meetingTitle.getText().toString();
-
-                    getInviteesWithOutEpisode(PatientID);
-                    break;
-                }
+=======
+                Name = meetingTitle.getText().toString();
+                getInviteesWithOutEpisode("", true);
+                break;
             }
+            case 2: {
 
+                int position = spinner_episode_name.getSelectedItemPosition();
+                int positionPatient = spinnerPatientName.getSelectedItemPosition();
+                Episode_Care_Plan_Name = EpisodeNameList.get(position);
+                Episode_Care_PlanID = EpisodeNameListId.get(position);
+>>>>>>> Stashed changes
+
+                // meetingTitle.setText("eVisit"+spinnerPatientName.getSelectedItem());
+
+                if (meetingTitle.getText().toString().trim().equals("")) {
+                    showDialogWithOkButton("Please enter meeting title");
+                    return;
+                } else if (positionPatient == 0) {
+                    showDialogWithOkButton("Please select Patient");
+                    return;
+                } else if (position == 0) {
+                    selectedEpisode = "";
+                    Episode_Care_PlanID = "0";
+                    showDialogWithOkButton("Please select episode");
+                    return;
+                } else {
+                    selectedEpisode = EpisodeNameListId.get(position);
+                }
+                Name = meetingTitle.getText().toString();
+
+                getInviteesWithEpisode(true);
+                break;
+            }
+            case 3: {
+                selectedEpisode = "";
+                Episode_Care_Plan_Name = "";
+                Episode_Care_PlanID = "";
+
+                //  meetingTitle.setText("eVisit"+spinnerPatientName.getSelectedItem());
+                if (meetingTitle.getText().toString().trim().equals("")) {
+                    showDialogWithOkButton("Please enter meeting title");
+                    return;
+                } else if (spinner_no_episode_PatientName.getSelectedItemPosition() == 0) {
+                    showDialogWithOkButton("Please select Patient");
+                    return;
+                }
+
+                Name = meetingTitle.getText().toString();
+
+                getInviteesWithOutEpisode(PatientID, true);
+                break;
+            }
         }
-    };
 
+    }
 
     @SuppressLint("RestrictedApi")
     private void setSpinnerAdapter() {
@@ -550,13 +652,15 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 try {
                     String type = null;
 
+//                    UserIDs.add("1590");
+//                    UserIDs.add("1484");
                     if (meetingTitle.getText().toString().trim().equals("")) {
                         showDialogWithOkButton("Please enter meeting title");
                         return;
-                    } /*else if (UserIDs.size() <= 0) {
+                    } else if (UserIDs.size() <= 0) {
                         showDialogWithOkButton("Please select Invitees");
                         return;
-                    }*/
+                    }
 
                     switch (selectedTypePatient) {
                         case 1:
@@ -573,7 +677,8 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             if (positionPatient == 0) {
                                 showDialogWithOkButton("Please select Patient");
                                 return;
-                            } else if (position == 0) {
+                            }
+                            else if (position == 0) {
                                 showDialogWithOkButton("Please select episode");
                                 return;
                             }
@@ -599,10 +704,12 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             break;
                     }
 
+
                     if (UserIDs.size() <= 0) {
                         showDialogWithOkButton("Please select Invitees");
                         return;
                     }
+                    Name = meetingTitle.getText().toString();
 
                     showProgressDialog(true);
 
@@ -621,6 +728,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                     meetDetails.setDurationInMinute(duration.getSelectedItem().toString().substring(0, 2));
                     meetDetails.setEpisode_Care_Plan_Name(Episode_Care_Plan_Name);
                     meetDetails.setEpisode_Care_PlanID(Episode_Care_PlanID);
+
                     meetDetails.setUserIDs(UserIDs);
                     meetDetails.setOffSet(offsetFromUtc + "");
                     meetDetails.setMeeting_Type(type);
@@ -676,7 +784,11 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 showProgressDialog(false);
                 showNoNetworkMessage();
             }
-
+//            ln("SMEpisode_Care_Plan_Name:" + Episode_Care_Plan_Name);
+//            System.out.println("SMEpisode_Care_PlanID:" + Episode_Care_PlanID);
+//            System.out.println("SMPatientID:" + PatientID);
+//            System.out.println("SMPatient_UserID:" + Patient_UserID);
+//            System.out.printlSystem.out.printn("SM==> 2 " + UserIDs + " * " + UserIDs.size());
 
         }
     };
@@ -854,17 +966,43 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinner_episode_name.setAdapter(dataAdapter);
                             if (EpisodeNameList != null) {
-                                if (EpisodeNameList.size() == 2) {
-                                    spinner_episode_name.setSelection(1, true);
+
+                                if (EpisodeNameList.size() == 1) {
+                                    spinner_episode_name.setSelection(0, true);
+//                                    Episode_Care_Plan_Name = "";
+//                                    Episode_Care_PlanID = "0";
+//                                    System.out.println("SMM==> " + EpisodeNameList.get(0));
                                 } else {
-                                    int index = EpisodeStatusList.indexOf("In Process");
-                                    printLog("index : " + index);
-                                    if (index > 0) {
-                                        spinner_episode_name.setSelection(index, true);
-                                    } else if (EpisodeNameList.size() > 1) {
+                                    if (EpisodeNameList.size() == 2) {
                                         spinner_episode_name.setSelection(1, true);
+//                                        System.out.println("SMM1==> " + EpisodeNameList.get(1));
+                                    } else {
+                                        int index = EpisodeStatusList.indexOf("In Process");
+                                        printLog("index : " + index);
+                                        if (index > 0) {
+                                            spinner_episode_name.setSelection(index, true);
+//                                            System.out.println("SMM2==> " + spinner_episode_name.getSelectedItemPosition());
+                                        } else if (EpisodeNameList.size() > 1) {
+                                            spinner_episode_name.setSelection(1, true);
+//                                            System.out.println("SMM3==> " + spinner_episode_name.getSelectedItemPosition());
+                                        }
                                     }
+                                    try {
+                                        int position = spinner_episode_name.getSelectedItemPosition();
+                                        int positionPatient = spinnerPatientName.getSelectedItemPosition();
+                                        Episode_Care_Plan_Name = EpisodeNameList.get(position);
+                                        Episode_Care_PlanID = EpisodeNameListId.get(position);
+                                        selectedEpisode = EpisodeNameListId.get(position);
+                                        if (selectedEpisode != null && selectedEpisode != "") {
+                                            UserIDs.clear();
+                                            getInviteesWithEpisode(false);
+                                        }
+                                    } catch (Exception e) {
+
+                                    }
+
                                 }
+                                //BATMAN
                             }
                         }
                     }
@@ -884,7 +1022,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
     }
 
 
-    private void getInviteesWithEpisode() {
+    private void getInviteesWithEpisode(final Boolean sts) {
         showProgressDialog(true);
         String url = null;
         switch (selectedTypePatient) {
@@ -894,7 +1032,9 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                 break;
             }
             case 2: {
+//                System.out.println("SMM5==> " + selectedEpisode);
                 url = BASE_URL + URL_MESSAGE_INVITEE_LIST_FOR_EPISODE + "/" + selectedEpisode;
+//                System.out.println("SM==> 16***88 99" + url);
                 comingFromMultiplePatient = false;
                 break;
             }
@@ -922,13 +1062,25 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                         showProgressDialog(false);
                         printLog("Response Of Invitees:" + response);
                         if (response != null) {
+//                            System.out.println("SM==> 16*** " + response);
                             meetInviteParticipantsModelMeetNow = new Gson().fromJson(response.toString(), MeetInviteParticipantsModel.class);
                             if (meetInviteParticipantsModelMeetNow != null) {
+//                                System.out.println("SM==> 16***8 " + meetInviteParticipantsModelMeetNow);
                                 if (meetInviteParticipantsModelMeetNow.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size() > 0) {
+                                        if(UserIDs.size() == 0 && userIDPatient != ""){
+//                                            UserIDs.add(userIDPatient);
+                                            UserIDs.add(userIDPatient);
+                                            MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(userIDPatient);
+
+                                        }
+
                                         for (int i = 0; i < meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size(); i++) {
+
                                             if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isLoggedInUser()) {
+//                                                System.out.println("SM==> 16***88 55 " + meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size());
                                                 if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).isDesignate_Exist()) {
+//                                                    System.out.println("SM==> 16***88 66" + meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().size());
                                                     NetworkAdapter networkAdapter = new NetworkAdapter();
                                                     final int finalI = i;
                                                     networkAdapter.checkProviderList(getContext(), mainActivity.networkRequestUtil, meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID(), new DesignateCallBack() {
@@ -959,23 +1111,32 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                                     UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
                                                                     MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
                                                                 } else if (role.contains("Patient")) {
+
+//                                                                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+//                                                                    MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
                                                                     if (meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).isPatientSelected()) {
                                                                     } else {
-                                                                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
-                                                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+
+//                                                                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+//                                                                        MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+//                                                                        System.out.println("SM==> 16***44 " + response);
                                                                     }
                                                                 }
                                                             }
 
-                                                            adapterWithEpisode = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs, new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
-                                                                @Override
-                                                                public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
-                                                                    setAdapterWithEpisodeMeet(item, Type, pos);
-                                                                }
-                                                            });
-                                                            recyclerViewDialog.setAdapter(adapterWithEpisode);
+
+                                                            if (sts) {
+                                                                adapterWithEpisode = new MeetInviteParticipantsWithEpisodeAdapter(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList(), getContext(), UserIDs, new MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener() {
+                                                                    @Override
+                                                                    public void onItemClick(MeetInviteParticipantsModel.EpisodeParticipantList item, String Type, String pos) {
+                                                                        setAdapterWithEpisodeMeet(item, Type, pos);
+                                                                    }
+                                                                });
+                                                                recyclerViewDialog.setAdapter(adapterWithEpisode);
+                                                            }
 
                                                         }
+
 
                                                         @Override
                                                         public void onFailure() {
@@ -992,7 +1153,9 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                             }
                                         }
 
-                                        showDialogInviteesWithEpisode(getContext());
+                                        if (sts) {
+                                            showDialogInviteesWithEpisode(getContext());
+                                        }
                                     }
                                 } else {
                                     //showDialogWithOkButton(meetInviteParticipantsModel.getMessage());
@@ -1158,6 +1321,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
             if (UserIDs != null) {
                 if (UserIDs.size() > 0) {
                     if (UserIDs.contains(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID())) {
+                        UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
                         MeetInviteParticipantsWithEpisodeAdapter.selectedParticipant.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(i).getUserID());
                     }
                 } else {
@@ -1502,7 +1666,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
     /*Without Episode*/
 
-    private void getInviteesWithOutEpisode(String PatientID) {
+    private void getInviteesWithOutEpisode(String PatientID, final Boolean sts) {
         showProgressDialog(true);
         String url = null;
 
@@ -1545,7 +1709,10 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                             if (meetInviteParticipantsWithoutEpisodeModel != null) {
                                 if (meetInviteParticipantsWithoutEpisodeModel.getStatus().equalsIgnoreCase(STATUS_SUCCESS)) {
                                     if (meetInviteParticipantsWithoutEpisodeModel.getUserList().size() > 0) {
-
+                                        if (UserIDs.size() ==0 && userIDPatient != "") {
+                                            MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(userIDPatient);
+                                            UserIDs.add(userIDPatient);
+                                        }
                                         for (int i = 0; i < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); i++) {
                                             if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).isLoggedInUser()) {
                                                 if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).isDesignate_Exist()) {
@@ -1556,6 +1723,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                         public void onSuccess(final CheckProviderResponse response) {
                                                             for (int k = 0; k < meetInviteParticipantsWithoutEpisodeModel.getUserList().size(); k++) {
                                                                 if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).getUserID().equals(response.getDesignateList().get(0).getProvider_UserID())) {
+//                                                                    System.out.println("SM==> " + k);
                                                                     meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).setChecked(true);
                                                                     meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).setDesignate_Id(response.getDesignateList().get(0).getDesignate_UserID());
                                                                     //UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).getUserID());
@@ -1563,6 +1731,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
 
                                                                 if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).getUserID().equals(response.getDesignateList().get(0).getDesignate_UserID())) {
                                                                     meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).setChecked(true);
+//                                                                    System.out.println("SM==> 1 " + k);
                                                                     // UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(k).getUserID());
                                                                 }
                                                             }
@@ -1574,26 +1743,37 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                                                 if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).isLoggedInUser()) {
                                                                     MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
                                                                     UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
+//                                                                    System.out.println("SM==>16  " + meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
                                                                 } else if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).isChecked()) {
                                                                     MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
                                                                     UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
-                                                                } else if (role.contains("Patient")) {
-                                                                    if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).isPatientSelected()) {
+//                                                                    System.out.println("SM==>166  " + meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
+                                                                } else if (role.contains("Patient") && meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID() == Patient_UserID) {
+
+//                                                                    UserIDs.add(meetInviteParticipantsModelMeetNow.getEpisodeParticipantList().get(h).getUserID());
+//                                                                    MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
+                                                                }
+                                                                /* else if (role.contains("Patient")) {
+                                                                 *//* if (meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).isPatientSelected()) {
                                                                     } else {
                                                                         MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
                                                                         UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
-                                                                    }
-                                                                }
+                                                                        System.out.println("SM==>1666  " + meetInviteParticipantsWithoutEpisodeModel.getUserList().get(h).getUserID());
+                                                                    }*//*
+                                                                }*/
                                                             }
 
 
-                                                            adapterWithoutEpisode = new MeetInviteParticipantsWithoutEpisodeAdapter(meetInviteParticipantsWithoutEpisodeModel.getUserList(), getContext(), UserIDs, new MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener() {
-                                                                @Override
-                                                                public void onItemClick(MeetInviteParticipantsWithoutEpisodeModel.UserList item, String Type, String pos) {
-                                                                    setAdapterWithOutEpisode(item, Type, pos);
-                                                                }
-                                                            });
-                                                            recyclerViewDialog.setAdapter(adapterWithoutEpisode);
+//                                                            System.out.println("SM==> **" + UserIDs);
+                                                            if (sts) {
+                                                                adapterWithoutEpisode = new MeetInviteParticipantsWithoutEpisodeAdapter(meetInviteParticipantsWithoutEpisodeModel.getUserList(), getContext(), UserIDs, new MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener() {
+                                                                    @Override
+                                                                    public void onItemClick(MeetInviteParticipantsWithoutEpisodeModel.UserList item, String Type, String pos) {
+                                                                        setAdapterWithOutEpisode(item, Type, pos);
+                                                                    }
+                                                                });
+                                                                recyclerViewDialog.setAdapter(adapterWithoutEpisode);
+                                                            }
                                                         }
 
                                                         @Override
@@ -1611,8 +1791,9 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
                                             }
                                         }
 
-
-                                        showDialogInviteesWithOutEpisode(getContext());
+                                        if (sts) {
+                                            showDialogInviteesWithOutEpisode(getContext());
+                                        }
                                     }
                                 } else {
                                     showDialogWithOkButton(meetInviteParticipantsWithoutEpisodeModel.getMessage());
@@ -1752,6 +1933,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
             if (UserIDs != null) {
                 if (UserIDs.size() > 0) {
                     if (UserIDs.contains(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID())) {
+                        UserIDs.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID());
                         MeetInviteParticipantsWithoutEpisodeAdapter.selectedParticipantWithout.add(meetInviteParticipantsWithoutEpisodeModel.getUserList().get(i).getUserID());
                     }
                 } else {
@@ -2134,7 +2316,7 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         if (window != null) {
             WindowManager.LayoutParams wmlp = window.getAttributes();
             wmlp.windowAnimations = R.style.dialog_animation;
-            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setAttributes(wmlp);
         }
         alertDialog.show();
@@ -2161,10 +2343,12 @@ public class ScheduleMeet extends BaseFragmentWithOptions {
         if (window != null) {
             WindowManager.LayoutParams wmlp = window.getAttributes();
             wmlp.windowAnimations = R.style.dialog_animation;
-            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setAttributes(wmlp);
         }
         alertDialog.show();
     }
 
 }
+
+

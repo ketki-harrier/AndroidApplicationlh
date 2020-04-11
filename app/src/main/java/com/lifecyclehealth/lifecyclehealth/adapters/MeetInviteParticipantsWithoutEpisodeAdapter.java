@@ -36,14 +36,14 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
     private List<MeetInviteParticipantsWithoutEpisodeModel.UserList> meetResponseList;
     private ArrayList<String> selectedUsers = new ArrayList<>();
 
-    private MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
     public static ArrayList selectedParticipantWithout = new ArrayList<>();
     Context context;
 
     @Override
-    public MeetInviteParticipantsWithoutEpisodeAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meet_invite_participant_inflater, parent, false);
-        return new MeetInviteParticipantsWithoutEpisodeAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
 
@@ -53,7 +53,7 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
 
 
     @Override
-    public void onBindViewHolder(final MeetInviteParticipantsWithoutEpisodeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final MeetInviteParticipantsWithoutEpisodeModel.UserList meetList = meetResponseList.get(position);
         holder.addParticipant.setVisibility(View.GONE);
@@ -68,6 +68,8 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
                 if (selectedUsers.contains(meetList.getUserID())) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipantWithout.add(meetList.getUserID());
+                }else{
+                    holder.addParticipant.setVisibility(View.GONE);
                 }
             } else {
                 if (meetResponseList.size() == 1) {
@@ -79,6 +81,7 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
                     selectedParticipantWithout.add(meetList.getUserID());
                 } else if (role.contains("Patient") && !ScheduleMeet.comingFromMultiplePatient) {
                     if (meetList.isPatientSelected()) {
+                        holder.addParticipant.setVisibility(View.GONE);
                     } else {
                         holder.addParticipant.setVisibility(View.VISIBLE);
                         selectedParticipantWithout.add(meetList.getUserID());
@@ -87,27 +90,37 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
                 if (meetList.isChecked()) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipantWithout.add(meetList.getUserID());
+                }else{
+                    holder.addParticipant.setVisibility(View.GONE);
                 }
 
             }
         } else {
             if (meetResponseList.size() == 1) {
                 holder.addParticipant.setVisibility(View.VISIBLE);
+
                 selectedParticipantWithout.add(meetList.getUserID());
             }
             if (meetList.isLoggedInUser()) {
                 holder.addParticipant.setVisibility(View.VISIBLE);
+
                 selectedParticipantWithout.add(meetList.getUserID());
             } else if (role.contains("Patient")) {
                 if (meetList.isPatientSelected()) {
+                    holder.addParticipant.setVisibility(View.GONE);
                 } else {
                     holder.addParticipant.setVisibility(View.VISIBLE);
+
                     selectedParticipantWithout.add(meetList.getUserID());
                 }
             }
             if (meetList.isChecked()) {
                 holder.addParticipant.setVisibility(View.VISIBLE);
+
                 selectedParticipantWithout.add(meetList.getUserID());
+            }
+            else{
+                holder.addParticipant.setVisibility(View.GONE);
             }
         }
 
@@ -129,6 +142,16 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
         return meetResponseList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name, provider, designate;
@@ -147,7 +170,7 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
             imageView = (CircularImageView) itemView.findViewById(R.id.imageView2);
         }
 
-        public void bind(final MeetInviteParticipantsWithoutEpisodeModel.UserList item, final MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener listener, final String pos) {
+        public void bind(final MeetInviteParticipantsWithoutEpisodeModel.UserList item, final OnItemClickListener listener, final String pos) {
 
             linear.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,10 +187,11 @@ public class MeetInviteParticipantsWithoutEpisodeAdapter extends RecyclerView.Ad
         }
     }
 
-    public MeetInviteParticipantsWithoutEpisodeAdapter(List<MeetInviteParticipantsWithoutEpisodeModel.UserList> responseList, Context context, ArrayList<String> selectedUsers, MeetInviteParticipantsWithoutEpisodeAdapter.OnItemClickListener listener) {
+    public MeetInviteParticipantsWithoutEpisodeAdapter(List<MeetInviteParticipantsWithoutEpisodeModel.UserList> responseList, Context context, ArrayList<String> selectedUsers, OnItemClickListener listener) {
         this.meetResponseList = responseList;
         selectedParticipantWithout = new ArrayList();
         selectedParticipantWithout.clear();
+
         this.selectedUsers = selectedUsers;
         this.context = context;
         this.listener = listener;

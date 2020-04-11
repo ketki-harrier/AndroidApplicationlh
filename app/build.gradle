@@ -15,7 +15,11 @@ android {
         minSdkVersion project.minVersion.toInteger()
         targetSdkVersion project.maxVersion.toInteger()
         multiDexEnabled true
+<<<<<<< Updated upstream
         versionCode 117
+=======
+        versionCode 127
+>>>>>>> Stashed changes
         versionName "1.6.28"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

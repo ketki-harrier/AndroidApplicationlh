@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 public class SavedInstanceFragment extends Fragment {
 
+
     private static final String TAG = "SavedInstanceFragment";
     private Bundle mInstanceBundle = null;
 

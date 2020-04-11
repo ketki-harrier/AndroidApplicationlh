@@ -41,6 +41,7 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
     Timer timer;
     final long DELAY_MS = 3000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
+    private Fragment fragment;
 
 
     public SurveyPagerAdapter(FragmentManager fm, List<SurveyDetailsModel> surveyDetails) {
@@ -60,6 +61,15 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
         SurveyDetailsModel surveyDetailsModel = surveyDetails.get(position);
         surveyDetailsModel.setPagePosition(position + 1);
         surveyPosition = position;
+<<<<<<< Updated upstream
+=======
+        if(fragment!=null){
+            return  fragment;
+        }
+        /*if(surveyDetailsModel.fragment != null){
+            return surveyDetailsModel.fragment;
+        }*/
+>>>>>>> Stashed changes
         int typeOfSurvey = surveyDetailsModel.getQuestionModel().getTypeOfAnswer();
         Log.e("position", position + "");
      //   final String data = new Gson().toJson(surveyDetailsModel);
@@ -68,13 +78,22 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
         switch (typeOfSurvey) {
             case 0:
                 Log.e("call", "0");
+<<<<<<< Updated upstream
                 //return SurveyOptionThreeFragment.newInstance(data, position);
 
                 return SurveyOptionZeroFragment.newInstance(data, position);
+=======
+                return SurveyOptionThreeFragment.newInstance(data, position);
+                /*SurveyOptionZeroFragment surveyOptionZeroFragment = SurveyOptionZeroFragment.newInstance(data, position);
+                fragment = surveyOptionZeroFragment;
+                //surveyDetailsModel.fragment = surveyOptionZeroFragment;
+                return surveyOptionZeroFragment;*/
+>>>>>>> Stashed changes
 
             /*return*/
 
             case 1:
+<<<<<<< Updated upstream
                 Log.e("call", "1");
                 return SurveyOptionOneFragment.newInstance(data, position);
             case 2:
@@ -88,6 +107,44 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                 return SurveyOptionFourFragment.newInstance(data, position);
             default:
                 Log.e("call", "default");
+=======
+               /* Log.e("call", "1");
+                Log.e("SurveyAdapterrr", "SurveyOptionOneFragment: "+ position );
+                SurveyOptionOneFragment surveyOptionOneFragment = SurveyOptionOneFragment.newInstance(data,position);
+                fragment = surveyOptionOneFragment;
+                return surveyOptionOneFragment;*/
+               // surveyDetailsModel.fragment = surveyOptionOneFragment;
+                return SurveyOptionOneFragment.newInstance(data, position);
+
+            case 2:
+               /* Log.e("call", "2");
+                Log.e("SurveyAdapterrr", "SurveyOptionTwoFragment: "+ position );
+                SurveyOptionTwoFragment surveyOptionTwoFragment = SurveyOptionTwoFragment.newInstance(data,position);
+                fragment = surveyOptionTwoFragment;
+                surveyDetailsModel.fragment = surveyOptionTwoFragment;
+                return surveyOptionTwoFragment;*/
+                return SurveyOptionTwoFragment.newInstance(data, position);
+            case 3:
+                /*Log.e("call", "3");
+                Log.e("SurveyAdapterrr", "SurveyOptionThreeFragment: "+ position );
+                SurveyOptionThreeFragment surveyOptionThreeFragment = SurveyOptionThreeFragment.newInstance(data,position);
+                surveyDetailsModel.fragment = surveyOptionThreeFragment;
+                return surveyOptionThreeFragment;*/
+                return SurveyOptionThreeFragment.newInstance(data, position);
+            case 4:
+              /*  Log.e("call", "4");
+                Log.e("SurveyAdapterrr", "SurveyOptionFourFragment: "+ position );
+                SurveyOptionFourFragment surveyOptionFourFragment = SurveyOptionFourFragment.newInstance(data,position);
+                surveyDetailsModel.fragment = surveyOptionFourFragment;
+                return surveyOptionFourFragment;*/
+                return SurveyOptionFourFragment.newInstance(data, position);
+            default:
+               /* Log.e("call", "default");
+                Log.e("SurveyAdapterrr", "surveyOptionZeroFragmentdefault: "+ position );
+                SurveyOptionZeroFragment surveyOptionZeroFragmentdefault = SurveyOptionZeroFragment.newInstance(data, position);
+                surveyDetailsModel.fragment = surveyOptionZeroFragmentdefault;
+                return surveyOptionZeroFragmentdefault;*/
+>>>>>>> Stashed changes
                 return SurveyOptionZeroFragment.newInstance(data, position);
 
         }

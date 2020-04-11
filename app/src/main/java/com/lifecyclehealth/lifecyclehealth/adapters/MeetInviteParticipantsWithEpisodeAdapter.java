@@ -44,15 +44,15 @@ import static com.lifecyclehealth.lifecyclehealth.utils.AppConstants.URL_MEET_CH
 public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapter<MeetInviteParticipantsWithEpisodeAdapter.MyViewHolder> {
 
     List<MeetInviteParticipantsModel.EpisodeParticipantList> meetResponseList;
-    private MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
     public static ArrayList selectedParticipant = new ArrayList<>();
     ArrayList<String> selectedUsers = new ArrayList<>();
     Context context;
 
     @Override
-    public MeetInviteParticipantsWithEpisodeAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meet_invite_participant_inflater, parent, false);
-        return new MeetInviteParticipantsWithEpisodeAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
 
@@ -62,7 +62,7 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
 
 
     @Override
-    public void onBindViewHolder(final MeetInviteParticipantsWithEpisodeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final MeetInviteParticipantsModel.EpisodeParticipantList meetList = meetResponseList.get(position);
 
@@ -77,6 +77,8 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
                 if (selectedUsers.contains(meetList.getUserID())) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipant.add(meetList.getUserID());
+                }else{
+                    holder.addParticipant.setVisibility(View.GONE);
                 }
 
             } else {
@@ -98,6 +100,8 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
                 if (meetList.isChecked()) {
                     holder.addParticipant.setVisibility(View.VISIBLE);
                     selectedParticipant.add(meetList.getUserID());
+                }else{
+                    holder.addParticipant.setVisibility(View.GONE);
                 }
 
             }
@@ -120,6 +124,8 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
             if (meetList.isChecked()) {
                 holder.addParticipant.setVisibility(View.VISIBLE);
                 selectedParticipant.add(meetList.getUserID());
+            }else{
+                holder.addParticipant.setVisibility(View.GONE);
             }
 
         }
@@ -198,7 +204,7 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
          //   }catch (Exception e){e.printStackTrace();}
         }
 
-        public void bind(final MeetInviteParticipantsModel.EpisodeParticipantList item, final MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener listener, final String pos) {
+        public void bind(final MeetInviteParticipantsModel.EpisodeParticipantList item, final OnItemClickListener listener, final String pos) {
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -216,7 +222,7 @@ public class MeetInviteParticipantsWithEpisodeAdapter extends RecyclerView.Adapt
         }
     }
 
-    public MeetInviteParticipantsWithEpisodeAdapter(List<MeetInviteParticipantsModel.EpisodeParticipantList> responseList, Context context, ArrayList<String> selectedUsers, MeetInviteParticipantsWithEpisodeAdapter.OnItemClickListener listener) {
+    public MeetInviteParticipantsWithEpisodeAdapter(List<MeetInviteParticipantsModel.EpisodeParticipantList> responseList, Context context, ArrayList<String> selectedUsers, OnItemClickListener listener) {
         this.meetResponseList = responseList;
         this.selectedUsers = selectedUsers;
         selectedParticipant = new ArrayList();
